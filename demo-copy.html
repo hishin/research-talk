@@ -1432,62 +1432,99 @@
 				border-radius: 4px;
 			}
 
-			.reveal .slides section.content-slide .pipeline-row {
-				flex: 1;
-				min-height: 0;
-				display: flex;
-				flex-direction: row;
-				align-items: stretch;
-				justify-content: center;
-				gap: var(--slide-gap);
-				padding-top: 0;
-				width: 100%;
-			}
+		.reveal .slides section.content-slide .pipeline-row {
+			flex: 1;
+			min-height: 0;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1.35fr;
+			grid-template-rows: auto 1fr;
+			column-gap: var(--slide-gap);
+			row-gap: 0;
+			padding-top: 0;
+			width: 100%;
+		}
 
-			.reveal .slides section.content-slide .pipeline-stage {
-				flex: 1;
-				min-width: 0;
-				min-height: 0;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-			}
+		.reveal .slides section.content-slide .pipeline-stage {
+			min-width: 0;
+			min-height: 0;
+			display: grid;
+			grid-row: span 2;
+			grid-template-rows: subgrid;
+			align-items: start;
+		}
 
-			.reveal .slides section.content-slide .pipeline-stage--wide {
-				flex: 1.35;
-			}
+		.reveal .slides section.content-slide .pipeline-stage--wide {
+			/* width handled by grid-template-columns above */
+		}
 
-			.reveal .slides section.content-slide .pipeline-stage-label {
-				font-size: 0.6em;
-				font-weight: 600;
-				color: var(--slide-slate);
-				margin: 0 0 0.35em;
-				text-align: center;
-				flex-shrink: 0;
-			}
+		.reveal .slides section.content-slide .pipeline-stage-label {
+			font-size: 0.6em;
+			font-weight: 600;
+			color: var(--slide-slate);
+			margin: 0 0 0.35em;
+			text-align: center;
+		}
 
-			.reveal .slides section.content-slide .pipeline-stage img {
-				flex: 1;
-				min-height: 0;
-				max-width: 100%;
-				width: auto;
-				object-fit: contain;
-				display: block;
-				border-radius: 4px;
-				margin: 0;
-			}
+		.reveal .slides section.content-slide .pipeline-img-wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			align-self: stretch;
+			width: 100%;
+			min-height: 0;
+		}
 
-			.reveal .slides section.content-slide .pipeline-stage img.pipeline-gif {
-				clip-path: inset(0 0 12px 0);
-			}
+		.reveal .slides section.content-slide .pipeline-stage img {
+			max-width: 100%;
+			width: auto;
+			max-height: 100%;
+			min-height: 0;
+			flex-shrink: 1;
+			object-fit: contain;
+			display: block;
+			border-radius: 4px;
+			margin: 0;
+		}
 
-			.reveal .slides section.content-slide .pipeline-note {
-				font-size: 0.5em;
-				color: var(--slide-accent);
-				margin: 0.35em 0 0;
-				text-align: center;
-				flex-shrink: 0;
-			}
+		.reveal .slides section.content-slide .pipeline-note {
+			font-size: 0.42em;
+			color: var(--slide-accent);
+			margin: 0.35em 0 0;
+			text-align: center;
+			flex-shrink: 0;
+		}
+
+		.reveal .slides section.content-slide .pipeline-cluster-wrap {
+			position: relative;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 0;
+			max-height: 100%;
+			flex-shrink: 1;
+		}
+
+		.reveal .slides section.content-slide .pipeline-cluster-wrap img {
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain;
+			display: block;
+		}
+
+		.reveal .slides section.content-slide .cluster-count {
+			position: absolute;
+			right: 4px;
+			transform: translateY(-100%);
+			font-size: 0.45em;
+			font-weight: 700;
+			color: #fff;
+			background: rgba(255, 0, 0, 0.55);
+			padding: 1px 5px;
+			border-radius: 3px;
+			line-height: 1.4;
+			pointer-events: none;
+		}
 
 			.reveal .slides section.content-slide .quote-slide {
 				max-width: 90%;
@@ -2633,7 +2670,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						This is how a creator thinks about a lyric video — a single, high-level intention. But to actually produce it, they must translate that into dozens of low-level operations: segmenting text, positioning bounding boxes, aligning timestamps, picking colors, and setting keyframes. This is an example of what Don Norman called the Gulf of Execution.
+						When creators think about making a lyric video, they have a high-level intention that can be simplified as: show the lyrics on the screen naturally within the scene.However the production process of converting music videos into lyric videos is challenging because users need to translate this high-level intention into many detached low-level operations, like segmenting text, adjusting the bounding boxes, aligning timestamps, picking colors and setting keyframes. This is an example of what Don Norman called the Gulf of Execution. There's a big gap between the user's goal and what the system's interface allows them to do in order to achieve that goal.
 					</aside>
 				</section>
 
@@ -2658,7 +2695,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						This work is from Jiaju Ma, Anyi Rao, and collaborators at Stanford University and Adobe Research, published at UIST 2023. It tackles exactly the Gulf of Execution we just described — automating the low-level operations so creators can stay at the level of intent.
+						So in this work, Automated Conversion of Music Videos into Lyric Videos, with collaborators from Stanford, we looked at how do we map the user's high-level intent into a automated pipeline?
 					</aside>
 				</section>
 
@@ -2669,16 +2706,18 @@
 							Show the lyrics on the screen naturally within the scene.
 						</p>
 
-						<p class="energy-section-label">Temporally &mdash; show readable segments</p>
-						<div class="energy-temporal energy-temporal--standalone">
-							<p class="energy-temporal-placeholder">[ Stage&nbsp;1 preprocessing visual &mdash; placeholder ]</p>
-							<p class="energy-temporal-detail">
-								AutoLyrixAlign &rarr; group by temporal proximity &rarr; break long lines
-							</p>
+						<div class="fragment" data-fragment-index="1">
+							<p class="energy-section-label">Temporally &mdash; show readable segments</p>
+							<div class="energy-temporal energy-temporal--standalone">
+								<p class="energy-temporal-placeholder">[ Stage&nbsp;1 preprocessing visual &mdash; placeholder ]</p>
+								<p class="energy-temporal-detail">
+									AutoLyrixAlign &rarr; group by temporal proximity &rarr; break long lines
+								</p>
+							</div>
 						</div>
 					</div>
 					<aside class="notes">
-						The temporal half of the intent is readable segments: lyrics should land in sync with the song, in chunks people can actually read. In the UIST pipeline that is a first-stage text treatment. We align words to audio with AutoLyrixAlign, group words into phrases when gaps stay within a beat so phrasing follows the music, guideline one, then break overlong phrases into lines near a median length for readability, guideline two. When the final figure is in place, use it to point at those two guidelines in one glance.
+						Let's break down the user's intent. What it means to place lyrics naturally within the scene. First, there's the temporal element: lyrics should land in sync with the song, in chunks people can actually read. To achieve this, we have a pre-processing step to align words to the song and group them into phrases taking into account the beat of the song. We break lines for long lyric phrases. This groups the lyric text into chunks that can be displayed one at a time. 
 					</aside>
 				</section>
 
@@ -2689,7 +2728,7 @@
 							Show the lyrics on the screen naturally within the scene.
 						</p>
 
-						<p class="energy-section-label">Spatially &mdash; computed from these input frames</p>
+						<p class="energy-section-label">Spatially &mdash; find optimal placement</p>
 						<div class="energy-input">
 							<img src="media/input-scenes.png" alt="Input video frames spanned by the lyric phrase" />
 						</div>
@@ -2725,7 +2764,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Now the spatial half: “naturally within the scene.” In the paper we operationalize that with four energies over the frames each lyric phrase spans: avoid covering the main subject, stay near where viewers already look, keep contrast with the background, and stay close to where the previous phrase sat. Each term is computed from the same stack of frames, then combined with weights and minimized. That is the semantic bridge: one sentence of intent becomes a weighted objective the solver can run.
+						The other part of the user's high-level intent is spatial. Finding an optimal placement has several components. We operationalize each of these into an energy function. First, we don't want to occlude the main subject in the video. Given the collection of frames spanned by a lyric phrase, we compute the average foreground mask, and focus of attention mask. The first energy term computes the overlap between the text and the foreground mask. Second, we want to place the lyrics near the salient region, where the viewer's attention is likely to be at. The second term tries to minimize the distance between the text and the center of mass of the focus mask. Third, we want to place the text against background regions with high color contrast. And Finally, we want to place the text close to the previous phrase to maintain consistency.
 					</aside>
 				</section>
 
@@ -2989,42 +3028,45 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Concrete example from the CHI twenty twenty-one paper: a physics streamer asks how friction applies to a box on a ramp. Step one is specify: the streamer locks the vocabulary of marks.
-
-						On clicks: leave position free so viewers can point anywhere on the scene; lock shape to arrows so everyone draws the same primitive; leave rotation free for direction of force; leave size free for magnitude.
-
-						Constraining shape while leaving other axes free is how you keep answers comparable without crushing expression. The next slide shows aggregate and visualize on the same scenario.
+						A streamer teaching physics asks how friction applies to a box on a ramp. To gather viewer input, the streamer can specify the visual attribute constraints. For example, the streamer can leave the position free so viewers can put an arrow anywhere in the box; lock the shape to an arrow so everyone draws the same primitive; leave the rotation and size free for direction and magnitude of force; 
 					</aside>
 				</section>
 
 				<section class="content-slide">
 					<div class="slide-body pipeline-row">
-						<div class="pipeline-stage">
-							<p class="pipeline-stage-label">Viewer input</p>
+					<div class="pipeline-stage">
+						<p class="pipeline-stage-label">Viewer input</p>
+						<div class="pipeline-img-wrap">
 							<img
 								class="pipeline-gif"
 								src="media/viewer-input.gif"
 								alt="Viewer input animation showing multiple viewers drawing friction arrows"
 							/>
 						</div>
-						<div class="fragment pipeline-stage" data-fragment-index="1">
-							<p class="pipeline-stage-label">Clustered by rotation &amp; size</p>
-							<img
-								src="media/clusters.png"
-								alt="Viewer inputs clustered by rotation and size attributes"
-							/>
-						</div>
-						<div class="fragment pipeline-stage pipeline-stage--wide" data-fragment-index="2">
-							<p class="pipeline-stage-label">Aggregated visualization</p>
-							<img
-								src="media/aggregated.png"
-								alt="Aggregated arrows showing consensus visualization"
-							/>
-							<p class="pipeline-note">Width of arrow &prop; input count</p>
+					</div>
+				<div class="fragment pipeline-stage" data-fragment-index="1">
+					<p class="pipeline-stage-label">Clustered by rotation &amp; size</p>
+					<div class="pipeline-img-wrap">
+						<div class="pipeline-cluster-wrap">
+							<img src="media/clusters.png" alt="Viewer inputs clustered by rotation and size attributes" />
+							<span class="cluster-count" style="top: 30%;">×50</span>
+							<span class="cluster-count" style="top: 63%;">×20</span>
+							<span class="cluster-count" style="top: 96%;">×10</span>
 						</div>
 					</div>
+				</div>
+				<div class="fragment pipeline-stage pipeline-stage--wide" data-fragment-index="2">
+					<p class="pipeline-stage-label">Aggregated visualization<br> <span style="font-size: 0.7em;">Width of arrow <span style="font-size: 1.2em;">&prop;</span> input count</span></p>
+					<div class="pipeline-img-wrap">
+						<img
+							src="media/aggregated.png"
+							alt="Aggregated arrows showing consensus visualization"
+						/>
+					</div>
+				</div>
+					</div>
 					<aside class="notes">
-						Step two after specify: aggregate. Because every submission uses the same attribute space, we can cluster by meaningful dimensions, here rotation and size. Step three: visualize a small number of thick arrows where width reflects support. The streamer sees consensus modes, not ten thousand raw strokes.
+						By constraining the visual attributes, the streamer will receive a more coherent set of inputs. Streameres can run aggregation with visual attributes that they find important. FOr example, here the stream aggregated the inputs by the size and rotation of the arrows. Finally, they can also visualize the viewer inputs and share it with the audience. Here, the streamer aggregated the clusters and visualized a small number of thick arrows where width reflects the number of viewers who answered so.
 					</aside>
 				</section>
 
@@ -3039,7 +3081,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Examples from Beyond Show of Hands: quick coloring tasks, fill-in-the-blank sketches, and other prompts where the streamer needs a readable crowd signal, not a wall of unrelated doodles. Call out one panel and ask what pedagogical move it supports.
+						We observed a range of application scenarios. For example, in educational streams, stremeras asked questions like "how would electrolysis work on water" and asked vieweres to place hydrogen and oxygen atoms. In history streaming, they could ask "what the troops decided to do" and viewers could indicate actions with a shield or sword symbol and position. 
 					</aside>
 				</section>
 
@@ -3054,7 +3096,18 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Second plate: science explanations such as electrolysis and history prompts where spatial marks carry meaning. Emphasize that the same attribute machinery supports very different domains because the streamer designs the affordance, not the pixels.
+						In creative streaming, artist streamers leveraged viewer opinions on coloring or asked feedback on a drawing. Viewers could leave their input on adequate positions of the drawing with markers, text or symbols.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center">
+						<p class="theme-callout">
+							Establishing common ground facilitates collaboration.
+						</p>
+					</div>
+					<aside class="notes">
+						Let's zoom out for a second. We looked at two very different ways of establishing common ground between people. One using a screenshot as a visual reference, and the other using visual attributes to parameterize visual inputs. The principle I want to return to is that common ground is necessary for collaboration, whether it is between humans like streamers and viewers, or between humans and AI as we will see next. Effective interfaces need to provide this common ground. 
 					</aside>
 				</section>
 
@@ -3066,7 +3119,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Third pillar: creative work is looping, not shipping in one shot. The VideOrigami line of work, including our CHI twenty twenty-five paper on compositional structures as substrates for human-AI co-creation, asks how interfaces can keep people oriented and in control while models propose edits. I will connect that to intermediate artifacts and to why “one-shot agent” fantasies miss the point.
+						Finally, let's talk about supporting iteration.
 					</aside>
 				</section>
 
