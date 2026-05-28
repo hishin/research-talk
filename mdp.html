@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Markov Decision Process</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/white.css" id="theme" />
+
+    <style>
+      :root {
+        --r-main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        --primary-blue: #1473E6;
+        --accent-purple: #9256D9;
+        --gray-900: #1A1A1A;
+        --text-body: #3a3a3a;
+        --text-strong: #1a1a1a;
+        --text-muted: #6e6e6e;
+        --accent: #1473e6;
+      }
+
+      .reveal h1, .reveal h2, .reveal h3 {
+        text-transform: none;
+        letter-spacing: -0.01em;
+      }
+
+      .reveal .accent { color: var(--accent); font-weight: 600; }
+      .reveal .muted  { color: var(--text-muted); }
+
+      /* Emphasis system (3 patterns):
+         1. strong — key terms in prose
+         2. accent — keywords, labels, math
+         3. muted  — secondary / helper text */
+      .reveal .content-section strong,
+      .reveal .content-section .term {
+        color: var(--text-strong);
+        font-weight: 700;
+      }
+
+      .reveal .content-section .accent,
+      .reveal .content-section .lo-verb,
+      .reveal .content-section .cb-math,
+      .reveal .content-section .def-table .def-math,
+      .reveal .content-section .reward-label {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .reveal .content-section .reward-label {
+        font-size: 0.82em;
+        letter-spacing: 0;
+        text-transform: none;
+        margin-bottom: 0.25em;
+      }
+
+      .reveal .subtle {
+        font-size: 0.6em;
+        color: #6e6e6e;
+      }
+
+      /* Title slide text */
+      .reveal .slides section.title-slide h1,
+      .reveal .slides section.title-slide h3,
+      .reveal .slides section.title-slide p {
+        color: #fff;
+      }
+
+      .reveal .slides section.title-slide .meta {
+        opacity: 0.75;
+        font-size: 0.7em;
+        margin-top: 2em;
+      }
+
+      /* Content slides — dark text on light background */
+      .reveal .slides section {
+        color: #1a1a1a;
+      }
+
+      .reveal .slides section h2 {
+        color: #1a1a1a;
+      }
+
+      .reveal .slides section .muted {
+        color: #6e6e6e;
+      }
+
+      /* Content slides — shared layout */
+      .reveal .slides section.content-section {
+        height: 100%;
+        display: flex !important;
+        flex-direction: column;
+        padding: 15px 32px;
+        box-sizing: border-box;
+        font-size: 1.2em;
+      }
+
+      .reveal .slides section.content-section h2 {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 0.2em;
+      }
+
+      .content-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        width: 100%;
+        padding-top: 1.6em;
+        text-align: left;
+      }
+
+      .reveal .content-section .content-block {
+        margin-top: 0.65em;
+      }
+
+      .reveal .content-section .content-body > * + * {
+        margin-top: 0.65em;
+      }
+
+      .reveal .content-section .content-body > .fragment > * + * {
+        margin-top: 0.65em;
+      }
+
+      .reveal .content-section .content-body > .fragment:not(.visible) {
+        display: none;
+      }
+
+      .reveal .content-section .content-block:first-child {
+        margin-top: 0;
+      }
+
+      .reveal .content-section .cb-desc {
+        font-size: 0.82em;
+        line-height: 1.65;
+        color: var(--text-body);
+        text-align: left;
+      }
+
+      .reveal .content-section .cb-math {
+        font-size: 0.82em;
+        line-height: 1.65;
+      }
+
+      .reveal .lo-intro {
+        font-size: 0.82em;
+        margin: 0 0 0.25em;
+        text-align: left;
+      }
+
+      .reveal ol.lo-outcomes {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65em;
+        font-size: 0.82em;
+        line-height: 1.65;
+        text-align: left;
+        margin: 0;
+        padding-left: 1.6em;
+        list-style-type: decimal;
+        list-style-position: outside;
+      }
+
+      .reveal ol.lo-outcomes li {
+        margin-bottom: 0;
+        padding-left: 0.4em;
+      }
+
+      .reveal ol.lo-outcomes li.fragment:not(.visible) {
+        display: none;
+      }
+
+      .reveal .gridworld-frame {
+        display: block;
+        width: 700px;
+        height: 560px;
+        border: 1px solid #dde0e6;
+        border-radius: 10px;
+        background: #f5f6f8;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        margin: 0 auto;
+      }
+
+      .reveal .slide-heading {
+        font-size: 1.4em;
+        margin: 0 0 2px;
+      }
+
+      .reveal .slide-sub {
+        font-size: 0.5em;
+        color: #6e6e6e;
+        margin-bottom: 14px;
+      }
+
+      /* Definitions slide */
+      .reveal .content-section .def-intro {
+        margin: 0 0 0.25em;
+        font-size: 0.82em;
+        color: var(--text-body);
+        line-height: 1.65;
+        text-align: left;
+      }
+
+      .reveal .def-table .def-math {
+        white-space: nowrap;
+        width: 260px;
+      }
+
+      .reveal .def-table .def-desc {
+        color: var(--text-body);
+      }
+
+      /* Interactive Definitions slide */
+      .reveal .def-interactive-slide .def-body {
+        padding-top: 0.2em;
+      }
+
+      .reveal .def-chips {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 0.5em;
+      }
+
+      .reveal .def-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        border: 2px solid #c8cad0;
+        border-radius: 10px;
+        padding: 8px 18px;
+        font-size: 0.78em;
+        transition: border-color 0.25s, box-shadow 0.25s;
+      }
+
+      .reveal .def-chip.active {
+        border-color: #1473e6;
+        box-shadow: 0 0 0 3px rgba(20, 115, 230, 0.15);
+      }
+
+      .reveal .def-chip .def-chip-label {
+        color: #6e6e6e;
+        font-size: 0.85em;
+        font-weight: 500;
+      }
+
+      .reveal .def-chips .fragment:not(.visible) {
+        visibility: hidden;
+      }
+
+      .reveal .def-main {
+        display: flex;
+        align-items: flex-start;
+        gap: 32px;
+        flex: 1;
+        min-height: 0;
+      }
+
+      .reveal .def-visual {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      .reveal .def-visual canvas {
+        background: #f5f6f8;
+      }
+
+      .reveal .def-side {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 20px;
+        min-width: 0;
+        gap: 16px;
+      }
+
+      .reveal .def-arrow-grid {
+        display: grid;
+        grid-template-columns: 52px 52px 52px;
+        grid-template-rows: 52px 52px;
+        gap: 8px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s, visibility 0.25s;
+      }
+
+      .reveal .def-arrow-grid.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .reveal .def-arrow-grid .arrow-btn {
+        background: #9256d9;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 22px;
+        font-weight: 700;
+        cursor: default;
+        font-family: inherit;
+        transition: box-shadow 0.25s, transform 0.25s;
+      }
+
+      .reveal .def-arrow-grid.highlight .arrow-btn {
+        box-shadow: 0 0 0 4px rgba(146, 86, 217, 0.35);
+        transform: scale(1.08);
+      }
+
+      .reveal .def-transition-wrap {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s, visibility 0.25s;
+      }
+
+      .reveal .def-transition-wrap.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .reveal .def-utility-caption {
+        font-size: 0.72em;
+        font-family: 'SF Mono', Menlo, monospace;
+        color: #0d66d0;
+        text-align: center;
+        line-height: 1.5;
+        opacity: 0;
+        transition: opacity 0.25s;
+        max-width: 320px;
+      }
+
+      .reveal .def-utility-caption.visible {
+        opacity: 1;
+      }
+
+      .reveal .def-utility-result {
+        margin-top: 6px;
+        font-size: 1.1em;
+        font-weight: 700;
+        color: #1473e6;
+      }
+
+      .reveal .def-interactive-slide .def-intro {
+        margin-top: 0.4em;
+        max-width: 1200px;
+        font-size: 0.72em;
+      }
+
+      .reveal .def-interactive-slide .def-intro.fragment:not(.visible) {
+        display: none;
+      }
+
+      /* Definitions table */
+      .reveal .content-section .def-table {
+        border-collapse: collapse;
+        margin: 0;
+        width: 100%;
+        font-size: 0.82em;
+        text-align: left;
+      }
+
+      .reveal .def-table td {
+        padding: 14px 20px;
+        vertical-align: top;
+        border-bottom: 1px solid rgba(0,0,0,0.07);
+        line-height: 1.5;
+      }
+
+      /* Concept blocks (policy / utility / optimal policy) */
+      .reveal .concept-block {
+        max-width: 1100px;
+        margin: 0 auto 1em;
+        text-align: left;
+      }
+
+      .reveal .concept-block h3 {
+        font-size: 0.65em;
+        color: #1473e6;
+        margin: 0 0 0.2em;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .reveal .concept-block.optimal h3 {
+        color: #7a40bf;
+      }
+
+      .reveal .concept-block .cb-math {
+        font-size: 0.68em;
+        color: #0d66d0;
+        margin-bottom: 0.25em;
+      }
+
+      .reveal .concept-block.optimal .cb-math {
+        color: #7a40bf;
+      }
+
+      .reveal .concept-block .cb-desc {
+        font-size: 0.5em;
+        color: #3a3a3a;
+        line-height: 1.5;
+      }
+
+      .reveal .concept-block .cb-desc strong {
+        color: #1a1a1a;
+        font-weight: 700;
+      }
+
+      .reveal .concept-blocks {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      /* Discounted rewards */
+      .reveal .intuition-callout {
+        font-size: 0.7em;
+        color: #1a1a1a;
+        line-height: 1.4;
+        margin: 4px auto 22px;
+        max-width: 1200px;
+        font-weight: 300;
+        text-align: center;
+      }
+
+      .reveal .intuition-callout .now {
+        color: #1a7a40;
+        font-weight: 700;
+      }
+
+      .reveal .intuition-callout .later {
+        color: #b34a00;
+        font-weight: 700;
+      }
+
+      .reveal .decay-strip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 20px auto 0;
+        max-width: 1300px;
+        font-size: 0.42em;
+        color: #555;
+      }
+
+      .reveal .decay-strip .decay-label {
+        margin-right: 6px;
+        color: #666;
+      }
+
+      .reveal .decay-strip .decay-chip {
+        font-family: "SF Mono", Menlo, monospace;
+        font-weight: 600;
+        color: #0d66d0;
+      }
+
+      .reveal .reward-label {
+        font-size: 0.42em;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
+        margin-bottom: 0.4em;
+        color: var(--accent);
+      }
+
+      /* ── Policy Iteration inline demo ──────────────────────────────────── */
+      .reveal .slides section.pi-section {
+        height: 100%;
+        display: flex !important;
+        flex-direction: column;
+        padding: 15px 32px;
+        box-sizing: border-box;
+        font-size: 1.2em;
+      }
+
+      .reveal .slides section.pi-section h2 {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 0.2em;
+      }
+      .pi-demo {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .pi-demo .main-row {
+        flex: 1;
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        min-height: 0;
+      }
+      .pi-demo canvas { background: #f5f6f8; display: block; flex-shrink: 0; }
+      .pi-demo .detail-panel {
+        flex: 1;
+        min-width: 0;
+        font-size: 1em;
+        color: #1a1a1a;
+        line-height: 1.6;
+        overflow: auto;
+      }
+      .pi-demo .detail-panel h3 {
+        font-size: 1.06em;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .pi-demo .bellman-eq {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 0.93em;
+        color: var(--accent);
+        margin-bottom: 12px;
+        padding: 10px 14px;
+        background: #eef3fb;
+        border-radius: 4px;
+        line-height: 1.6;
+      }
+      .pi-demo .section-label {
+        font-size: 0.82em;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: none;
+        letter-spacing: 0;
+        margin-bottom: 6px;
+        margin-top: 12px;
+      }
+      .pi-demo .section-label:first-of-type { margin-top: 0; }
+      .pi-demo .cell-detail { margin-bottom: 12px; }
+      .pi-demo .cell-label {
+        font-weight: 600;
+        color: var(--accent);
+        font-size: 1em;
+      }
+      .pi-demo .dir-tag {
+        font-size: 1em;
+        color: #555;
+        margin-left: 4px;
+      }
+      .pi-demo .arith {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 0.89em;
+        color: #444;
+        white-space: nowrap;
+        line-height: 1.6;
+      }
+      .pi-demo .arith.muted  { color: #888; }
+      .pi-demo .arith.result { font-weight: 700; color: #1a1a1a; }
+      .pi-demo .change-item {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 0.89em;
+        color: #3a3a3a;
+        margin-bottom: 3px;
+      }
+      .pi-demo .status-msg {
+        margin-top: 14px;
+        font-size: 0.95em;
+        font-family: "SF Mono", Menlo, monospace;
+        color: #666;
+      }
+      .pi-demo .status-msg.converged { color: #1a7a40; font-weight: 600; }
+      .pi-demo .pi-controls {
+        margin-top: 14px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+      .pi-demo button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        font-weight: 500;
+        border-radius: 5px;
+      }
+      .pi-demo button:disabled { opacity: 0.4; cursor: default; }
+      .pi-demo .btn-primary {
+        background: #1473e6;
+        color: white;
+        padding: 9px 20px;
+        font-size: 0.5em;
+      }
+      .pi-demo .btn-primary:hover:not(:disabled) { background: #0d66d0; }
+      .pi-demo .btn-secondary {
+        background: #e4e6eb;
+        color: #1a1a1a;
+        padding: 9px 16px;
+        font-size: 0.5em;
+      }
+      .pi-demo .btn-secondary:hover { background: #d4d6db; }
+
+      /* ── Gridworld interactive demo ──────────────────────────────────── */
+      .gw-demo {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        background: #f5f6f8;
+        color: #1a1a1a;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+      }
+      .gw-main-row {
+        flex: 1;
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        min-height: 0;
+      }
+      .gw-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .gw-desc-panel {
+        flex: 1;
+        min-width: 0;
+        font-size: 0.82em;
+        line-height: 1.65;
+        color: var(--text-body);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        text-align: left;
+      }
+      .gw-desc-panel canvas,
+      .gw-desc-panel .gw-panel-arrow-grid {
+        align-self: center;
+      }
+      .gw-desc-panel .gw-desc-label {
+        font-size: 0.82em;
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0;
+        color: var(--accent);
+        margin-bottom: 0.25em;
+      }
+      .gw-desc-panel .gw-desc-title {
+        font-size: 1em;
+        font-weight: 400;
+        margin-bottom: 0.65em;
+        color: var(--text-body);
+        line-height: 1.65;
+      }
+      .gw-desc-panel .gw-desc-body {
+        font-size: 1em;
+        color: var(--text-body);
+        line-height: 1.65;
+      }
+      .gw-desc-panel .gw-desc-formula {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 0.78em;
+        background: #eef3fb;
+        color: #0d66d0;
+        border-radius: 4px;
+        padding: 10px 14px;
+        margin-top: 1em;
+        line-height: 1.7;
+      }
+      .gw-desc-panel.mdp .gw-desc-formula {
+        background: #f3eeff;
+        color: #7a40bf;
+      }
+      .gw-title-toggle {
+        cursor: pointer;
+        padding: 2px 12px;
+        border-radius: 8px;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        color: #999;
+      }
+      .gw-title-toggle:hover {
+        color: #555;
+      }
+      .gw-title-toggle.active[data-mode="astar"] {
+        background: #1473e6;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(20,115,230,0.3);
+      }
+      .gw-title-toggle.active[data-mode="mdp"] {
+        background: #9256d9;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(146,86,217,0.3);
+      }
+      .gw-title-vs {
+        color: #aaa;
+        font-weight: 400;
+        font-size: 0.7em;
+        vertical-align: middle;
+      }
+      .gw-demo .formula {
+        font-size: 14px;
+        font-family: "SF Mono", Menlo, monospace;
+        padding: 6px 16px;
+        border-radius: 6px;
+        margin-bottom: 14px;
+        display: inline-block;
+      }
+      .gw-demo .formula.astar {
+        background: rgba(20,115,230,0.08);
+        border: 1px solid rgba(20,115,230,0.3);
+        color: #0d66d0;
+      }
+      .gw-demo .formula.mdp {
+        background: rgba(146,86,217,0.08);
+        border: 1px solid rgba(146,86,217,0.3);
+        color: #7a40bf;
+      }
+      .gw-demo canvas { background: #f5f6f8; }
+      .gw-demo .gw-controls { margin-top: 16px; display: flex; gap: 12px; align-items: center; }
+      .gw-demo .astar-controls { display: flex; gap: 8px; }
+      .gw-demo .arrow-grid {
+        display: grid;
+        grid-template-columns: 40px 40px 40px;
+        grid-template-rows: 40px 40px;
+        gap: 5px;
+      }
+      .gw-demo .gw-panel-arrow-grid {
+        display: grid;
+        grid-template-columns: 44px 44px 44px;
+        grid-template-rows: 44px 44px;
+        gap: 6px;
+        margin-top: 16px;
+      }
+      .gw-demo button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        font-weight: 500;
+        border-radius: 5px;
+      }
+      .gw-demo button:disabled { opacity: 0.4; cursor: default; }
+      .gw-demo .btn-primary {
+        background: #1473e6;
+        color: white;
+        padding: 9px 20px;
+        font-size: 13px;
+      }
+      .gw-demo .btn-primary:hover:not(:disabled) { background: #0d66d0; }
+      .gw-demo .btn-secondary {
+        background: #e4e6eb;
+        color: #1a1a1a;
+        padding: 9px 16px;
+        font-size: 13px;
+      }
+      .gw-demo .btn-secondary:hover:not(:disabled) { background: #d4d6db; }
+      .gw-demo .arrow-btn {
+        background: #9256d9;
+        color: white;
+        font-size: 17px;
+        font-weight: 700;
+      }
+      .gw-demo .arrow-btn:hover:not(:disabled) { background: #7a40bf; }
+      .gw-demo .stats {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+        font-family: "SF Mono", Menlo, monospace;
+        text-align: center;
+      }
+      .gw-demo .log {
+        margin-top: 4px;
+        font-size: 11px;
+        color: #888;
+        font-family: "SF Mono", Menlo, monospace;
+        text-align: center;
+        min-height: 16px;
+      }
+      .gw-demo .log .slip { color: #c05a00; font-weight: 600; }
+      .gw-demo .log .reward-pos { color: #1a7a40; font-weight: 600; }
+      .gw-demo .log .reward-neg { color: #b31a1a; font-weight: 600; }
+      .gw-demo .hide { display: none; }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- ─── 1. Title ─── -->
+        <section class="title-slide" data-background-gradient="linear-gradient(135deg, #1473E6 0%, #9256D9 100%)">
+          <h1 style="margin-bottom: 0.3em;">
+            Markov Decision Process
+          </h1>
+          <h3 style="margin-top: 0; opacity: 0.85;">
+            Making sequential decisions under uncertainty
+          </h3>
+          <p class="meta">June 4, 2026</p>
+        </section>
+
+        <!-- ─── 2. Deterministic vs. Stochastic ─── -->
+        <section data-background-color="#f5f6f8" class="content-section gw-section">
+          <h2><span class="gw-title-toggle active" id="gw-title-det" data-mode="astar">Deterministic</span> <span class="gw-title-vs">vs.</span> <span class="gw-title-toggle" id="gw-title-sto" data-mode="mdp">Stochastic</span></h2>
+          <div class="gw-demo">
+            <div class="gw-main-row">
+              <!-- Left: grid -->
+              <div class="gw-left">
+                <div class="formula astar hide" id="gw-formula">f(n) = g(n) + h(n)</div>
+                <canvas id="gw-grid"></canvas>
+                <div class="gw-controls">
+                  <div class="astar-controls" id="gw-astar-controls">
+                    <button class="btn-primary" id="gw-run">Run A*</button>
+                    <button class="btn-secondary" id="gw-step">Step</button>
+                    <button class="btn-secondary" id="gw-reset-astar">Reset</button>
+                  </div>
+                  <div class="arrow-grid hide" id="gw-arrow-grid">
+                    <button class="arrow-btn" id="gw-up"    style="grid-column:2;grid-row:1">↑</button>
+                    <button class="arrow-btn" id="gw-left"  style="grid-column:1;grid-row:2">←</button>
+                    <button class="arrow-btn" id="gw-down"  style="grid-column:2;grid-row:2">↓</button>
+                    <button class="arrow-btn" id="gw-right" style="grid-column:3;grid-row:2">→</button>
+                  </div>
+                  <button class="btn-secondary hide" id="gw-reset-mdp">Reset</button>
+                </div>
+                <div class="stats hide" id="gw-stats"></div>
+                <div class="log hide" id="gw-log">&nbsp;</div>
+              </div>
+              <!-- Right: description panel -->
+              <div class="gw-desc-panel" id="gw-desc-panel"></div>
+            </div>
+          </div>
+          <aside class="notes">
+            Deterministic: The outcome of an action is guaranteed. If the agent chooses to move right, it always moves right — no surprises. The environment is fully predictable, so we can plan an optimal path by reasoning about exact costs g(n) and heuristic estimates h(n). A* always finds the shortest path in a deterministic environment.
+
+            Stochastic: The outcome of an action is uncertain and governed by probabilities. If the agent chooses to move right, it succeeds 80% of the time — but 10% of the time it slips perpendicular upward, and 10% downward. Because of this uncertainty, a fixed path plan can fail. We need a policy — a rule for every state — that works well on average across all possible outcomes. This is the setting that Markov Decision Processes are designed for.
+          </aside>
+        </section>
+
+        <!-- ─── 3. Learning Outcomes ─── -->
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>Learning Outcomes</h2>
+          <div class="content-body">
+            <p class="lo-intro muted">
+              By the end of this lecture you will be able to&hellip;
+            </p>
+            <ol class="lo-outcomes">
+              <li class="fragment">
+                <span class="accent">Define</span> a Markov Decision Process (MDP) using its formal mathematical components.
+              </li>
+              <li class="fragment">
+                <span class="accent">Explain</span> the theoretical guarantees of the Bellman Equation and Banach's Theorem.
+              </li>
+              <li class="fragment">
+                <span class="accent">Trace</span> the steps of the Policy Iteration algorithm to compute an optimal policy.
+              </li>
+              <li class="fragment">
+                <span class="accent">Critique</span> the ethical implications of reward shaping in real-world AI systems.
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- ─── 4. Definitions ─── -->
+        <section>
+          <section data-background-color="#f5f6f8" class="content-section def-interactive-slide">
+            <h2>Definitions</h2>
+            <div class="content-body def-body">
+              <div class="def-chips">
+                <div class="def-chip fragment" data-def-stage="1" id="def-chip-s">
+                  <span class="def-math">\( S \)</span>
+                  <span class="def-chip-label">States</span>
+                </div>
+                <div class="def-chip fragment" data-def-stage="2" id="def-chip-a">
+                  <span class="def-math">\( A(s) \)</span>
+                  <span class="def-chip-label">Actions</span>
+                </div>
+                <div class="def-chip fragment" data-def-stage="3" id="def-chip-p">
+                  <span class="def-math">\( P(s' \mid s, a) \)</span>
+                  <span class="def-chip-label">Transition model</span>
+                </div>
+                <div class="def-chip fragment" data-def-stage="4" id="def-chip-r">
+                  <span class="def-math">\( R(s) \)</span>
+                  <span class="def-chip-label">Rewards</span>
+                </div>
+                <div class="def-chip fragment" data-def-stage="5" id="def-chip-u">
+                  <span class="def-math">\( U(s) \)</span>
+                  <span class="def-chip-label">Utility</span>
+                </div>
+              </div>
+              <div class="def-main">
+                <div class="def-visual def-demo">
+                  <canvas id="def-grid"></canvas>
+                </div>
+                <div class="def-side">
+                  <div class="def-arrow-grid" id="def-arrow-grid">
+                    <button class="arrow-btn" style="grid-column:2;grid-row:1" tabindex="-1">↑</button>
+                    <button class="arrow-btn" style="grid-column:1;grid-row:2" tabindex="-1">←</button>
+                    <button class="arrow-btn" style="grid-column:2;grid-row:2" tabindex="-1">↓</button>
+                    <button class="arrow-btn" style="grid-column:3;grid-row:2" tabindex="-1">→</button>
+                  </div>
+                  <div class="def-transition-wrap" id="def-transition-wrap">
+                    <canvas id="def-transition-canvas" width="280" height="280"></canvas>
+                  </div>
+                  <div class="def-utility-caption" id="def-utility-caption"></div>
+                </div>
+              </div>
+              <p class="def-intro fragment" data-def-stage="6">
+                A sequential decision problem for a
+                <span class="accent">fully observable</span>,
+                <span class="accent">stochastic</span> environment with a
+                <span class="accent">Markovian transition model</span> and
+                <span class="accent">additive rewards</span>
+                is called a <span class="term">Markov Decision Process</span>.
+              </p>
+            </div>
+          </section>
+          <section data-background-color="#f5f6f8" class="content-section backup-slide">
+            <h2>Definitions</h2>
+            <div class="content-body">
+              <p class="def-intro">
+                A sequential decision problem for a
+                <span class="accent">fully observable</span>,
+                <span class="accent">stochastic</span> environment with a
+                <span class="accent">Markovian transition model</span> and
+                <span class="accent">additive rewards</span>
+                is called a <span class="term">Markov Decision Process</span>.
+              </p>
+              <table class="def-table">
+                <tbody>
+                  <tr>
+                    <td class="def-math">\( S \)</td>
+                    <td class="def-desc">The 11 navigable squares on our grid. Where the agent is at time \( t \).</td>
+                  </tr>
+                  <tr>
+                    <td class="def-math">\( A(s) \)</td>
+                    <td class="def-desc">Up, Down, Left, Right — the set of legal moves from state \( s \).</td>
+                  </tr>
+                  <tr>
+                    <td class="def-math">\( P(s' \mid s, a) \)</td>
+                    <td class="def-desc">The physics of the slippery floor — probability of landing in \( s' \) when taking action \( a \) from \( s \).</td>
+                  </tr>
+                  <tr>
+                    <td class="def-math">\( R(s) \)</td>
+                    <td class="def-desc">The feedback the agent receives at each state. e.g. \( {+1} \) at the goal, \( {-1} \) at the trap, \( {-0.04} \) at every other step.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <!-- ─── 4.5. What does a solution look like? ─── -->
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>What does a solution look like?</h2>
+          <div class="content-body">
+            <div class="fragment content-block">
+              <div class="cb-desc">
+                <strong>A policy — a rule for every state.</strong>
+              </div>
+              <div class="cb-math">
+                \( \pi : S \to A, \qquad \pi(s) = a \)
+              </div>
+              <div class="cb-desc content-block">
+                For every state the agent might visit, the policy prescribes an action.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── 4.7. How do we measure the quality of a policy? ─── -->
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>How do we measure the quality of a policy?</h2>
+          <div class="content-body">
+            <div class="fragment content-block">
+              <div class="reward-label">Additive reward</div>
+              <div class="cb-math">
+                \( U = R(s_0) + R(s_1) + R(s_2) + \cdots = \displaystyle\sum_{t=0}^{\infty} R(s_t) \)
+              </div>
+              <div class="cb-desc content-block">
+                Every future reward counts equally.
+              </div>
+            </div>
+
+            <div class="fragment content-block">
+              <div class="reward-label">Discounted reward</div>
+              <div class="cb-math">
+                \( U = R(s_0) + \gamma R(s_1) + \gamma^2 R(s_2) + \cdots = \displaystyle\sum_{t=0}^{\infty} \gamma^t R(s_t) \)
+              </div>
+              <div class="cb-desc content-block">
+                A reward \( t \) steps away is worth \( \gamma^t \) of its face value. A reward now is better than the same reward later.
+                &ensp;<span class="accent">\( \gamma \in [0,1] \)</span> is the discount factor.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── 5. Expected Utility & Optimal Policy ─── -->
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>Expected Total Utility</h2>
+          <div class="content-body">
+            <div class="content-block">
+              <div class="cb-desc">
+                The utility of following policy \( \pi \) from state \( s \) is the expected sum of discounted rewards:
+              </div>
+              <div class="cb-math content-block">
+                \( U^\pi(s) \;=\; \mathbb{E}\!\left[\, \sum_{t=0}^{\infty} \gamma^t\, R(s_t) \;\Big|\; \pi,\; s_0 = s \,\right] \)
+              </div>
+            </div>
+
+            <div class="fragment content-block">
+              <div class="cb-desc">
+                The <strong>optimal policy</strong> is the one that maximises this from every state:
+              </div>
+              <div class="cb-math content-block">
+                \( \pi^{*} \;=\; \arg\max_{\pi}\; U^\pi(s) \)
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── 6. The Bellman Equation ─── -->
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>The Bellman Equation</h2>
+          <div class="content-body">
+            <div class="cb-desc">
+              The utility of a state equals its immediate reward plus the discounted utility of the next state.
+            </div>
+
+            <div class="cb-math content-block">
+              \( U^\pi(s) = R(s) + \gamma\, \mathbb{E}\!\left[ U^\pi(s') \mid s,\, \pi(s) \right] \)
+            </div>
+
+            <div class="fragment content-block">
+              <table class="def-table">
+                <tbody>
+                  <tr>
+                    <td class="def-math">\( R(s) \)</td>
+                    <td class="def-desc">reward received now</td>
+                  </tr>
+                  <tr>
+                    <td class="def-math">\( \gamma \)</td>
+                    <td class="def-desc">discount factor</td>
+                  </tr>
+                  <tr>
+                    <td class="def-math">\( P(s' \mid s,\, \pi(s)) \)</td>
+                    <td class="def-desc">probability of reaching \( s' \)</td>
+                  </tr>
+                  <tr>
+                    <td class="def-math">\( U^\pi(s') \)</td>
+                    <td class="def-desc">utility of the next state</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── 7. How do we solve the Bellman Equation? ─── -->
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>How do we solve this recursive equation?</h2>
+          <div class="content-body">
+            <div class="cb-desc">
+              \( U^\pi(s) \) appears on both sides — we can't solve it directly. </br>Two algorithms find the solution:
+            </div>
+
+            <div class="fragment content-block">
+              <div class="reward-label">Value Iteration</div>
+              <div class="cb-desc">
+                Start with arbitrary utilities. Repeatedly apply the Bellman update until values converge.
+              </div>
+            </div>
+
+            <div class="fragment content-block">
+              <div class="reward-label">Policy Iteration</div>
+              <div class="cb-desc">
+                Start with an arbitrary policy. Alternate between evaluating the current policy and improving it — until the policy no longer changes.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section data-background-color="#f5f6f8" class="pi-section">
+          <h2>Policy Iteration</h2>
+          <div class="pi-demo">
+            <div class="main-row">
+              <canvas id="pi-grid"></canvas>
+              <div class="detail-panel" id="pi-detail-panel"></div>
+            </div>
+            <div class="pi-controls">
+              <button class="btn-primary" id="pi-next-btn">Next →</button>
+              <button class="btn-secondary" id="pi-reset-btn">Reset</button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="dist/plugin/notes.js"></script>
+    <script src="dist/plugin/math.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        controls: true,
+        progress: true,
+        center: true,
+        transition: 'fade',
+        width: 1600,
+        height: 900,
+        margin: 0.04,
+        minScale: 0.2,
+        maxScale: 2.0,
+        plugins: [RevealNotes, RevealMath.KaTeX],
+      });
+
+      document.querySelector('.reveal').addEventListener('click', function(e) {
+        if (e.target.closest('button, a, input, .controls, .pi-demo, .gw-demo')) return;
+        Reveal.next();
+      });
+    </script>
+
+    <script>
+    (function () {
+      let piInitialized = false;
+
+      function piInit() {
+        if (piInitialized) return;
+        piInitialized = true;
+
+        // ── Grid constants ──────────────────────────────────────────────────
+        const COLS = 4, ROWS = 3;
+        const CELL = 120;
+        const ML = 40, MB = 32;
+        const CW = ML + COLS * CELL;  // 520
+        const CH = ROWS * CELL + MB;  // 392
+
+        const canvas = document.getElementById("pi-grid");
+        canvas.width  = CW;
+        canvas.height = CH;
+        const ctx = canvas.getContext("2d");
+
+        function isWall(x, y)     { return x === 1 && y === 1; }
+        function isGoal(x, y)     { return x === 3 && y === 0; }
+        function isTrap(x, y)     { return x === 3 && y === 1; }
+        function isTerminal(x, y) { return isGoal(x, y) || isTrap(x, y); }
+        function inBounds(x, y)   { return x >= 0 && x < COLS && y >= 0 && y < ROWS; }
+
+        function rnLabel(x, y) { return `(${x + 1},${ROWS - y})`; }
+
+        const DIRS = {
+          right: { dx:  1, dy:  0 },
+          left:  { dx: -1, dy:  0 },
+          up:    { dx:  0, dy: -1 },
+          down:  { dx:  0, dy:  1 },
+        };
+        const PERP = {
+          right: ["up",   "down" ],
+          left:  ["up",   "down" ],
+          up:    ["left", "right"],
+          down:  ["left", "right"],
+        };
+        const DIR_KEYS  = ["right", "left", "up", "down"];
+        const DIR_ARROW = { right: "→", left: "←", up: "↑", down: "↓" };
+
+        function tryMove(x, y, dir) {
+          const { dx, dy } = DIRS[dir];
+          const nx = x + dx, ny = y + dy;
+          if (!inBounds(nx, ny) || isWall(nx, ny)) return { x, y };
+          return { x: nx, y: ny };
+        }
+
+        function transitions(x, y, action) {
+          const acc = new Map();
+          const add = (nx, ny, p) => {
+            const k = `${nx},${ny}`;
+            acc.set(k, (acc.get(k) || 0) + p);
+          };
+          const m = tryMove(x, y, action);
+          add(m.x, m.y, 0.8);
+          for (const pd of PERP[action]) {
+            const s = tryMove(x, y, pd);
+            add(s.x, s.y, 0.1);
+          }
+          return [...acc.entries()].map(([k, prob]) => {
+            const [nx, ny] = k.split(",").map(Number);
+            return { x: nx, y: ny, prob };
+          });
+        }
+
+        function stateReward(x, y) {
+          if (isGoal(x, y)) return  1;
+          if (isTrap(x, y)) return -1;
+          return -0.04;
+        }
+
+        const NAV_STATES = [];
+        for (let y = 0; y < ROWS; y++)
+          for (let x = 0; x < COLS; x++)
+            if (!isWall(x, y) && !isTerminal(x, y))
+              NAV_STATES.push({ x, y });
+
+        // ── Algorithm state ────────────────────────────────────────────────
+        let policy           = {};
+        let utilities        = {};
+        let stage            = 0;
+        let piIteration      = 0;
+        let converged        = false;
+        let showUtilities    = false;
+        let showArrows       = false;
+        let lastPolicyChanges = [];
+        let highlightSet     = new Set();
+        let highlightTimer   = null;
+        let revealedEvalCells = new Set();  // cells revealed in stage 2
+        let revealedImprCells = new Set();  // cells revealed in stage 4
+
+        function key(x, y) { return `${x},${y}`; }
+        function getU(x, y) { return utilities[key(x, y)] ?? 0; }
+
+        function fmt3(n) {
+          const s = n.toFixed(3);
+          return s === "-0.000" ? "0.000" : s;
+        }
+        function fmtR(r) {
+          return r.toFixed(2);
+        }
+
+        function rnSortedNavStates() {
+          return [...NAV_STATES].sort((a, b) => {
+            const rA = ROWS - a.y, rB = ROWS - b.y;
+            if (rA !== rB) return rA - rB;
+            return a.x - b.x;
+          });
+        }
+
+        // ── Reset ─────────────────────────────────────────────────────────
+        function piReset() {
+          policy    = {};
+          utilities = {};
+          for (const { x, y } of NAV_STATES) {
+            policy[key(x, y)]    = "right";
+            utilities[key(x, y)] = 0;
+          }
+          utilities[key(3, 0)] =  1;
+          utilities[key(3, 1)] = -1;
+          stage             = 0;
+          piIteration       = 0;
+          converged         = false;
+          showUtilities     = false;
+          showArrows        = false;
+          lastPolicyChanges = [];
+          highlightSet.clear();
+          revealedEvalCells.clear();
+          revealedImprCells.clear();
+          if (highlightTimer) { clearTimeout(highlightTimer); highlightTimer = null; }
+          document.getElementById("pi-next-btn").disabled = false;
+          renderStage();
+        }
+
+        // ── Policy iteration helpers ───────────────────────────────────────
+        function policyEvaluation() {
+          const GAMMA   = 1.0;
+          const EPSILON = 0.001;
+          let iters = 0;
+          for (;;) {
+            let delta = 0;
+            const next = {};
+            for (const { x, y } of NAV_STATES) {
+              const a   = policy[key(x, y)];
+              const trs = transitions(x, y, a);
+              let sum = 0;
+              for (const t of trs) sum += t.prob * getU(t.x, t.y);
+              const newVal = stateReward(x, y) + GAMMA * sum;
+              delta = Math.max(delta, Math.abs(newVal - getU(x, y)));
+              next[key(x, y)] = newVal;
+            }
+            for (const k in next) utilities[k] = next[k];
+            iters++;
+            if (delta < EPSILON || iters > 20000) break;
+          }
+        }
+
+        function policyImprovement() {
+          const changes = [];
+          for (const { x, y } of NAV_STATES) {
+            let bestAction = null, bestVal = -Infinity;
+            for (const action of DIR_KEYS) {
+              const trs = transitions(x, y, action);
+              let val = 0;
+              for (const t of trs) val += t.prob * getU(t.x, t.y);
+              if (val > bestVal) { bestVal = val; bestAction = action; }
+            }
+            if (bestAction !== policy[key(x, y)]) {
+              changes.push({ x, y, from: policy[key(x, y)], to: bestAction });
+              policy[key(x, y)] = bestAction;
+            }
+          }
+          return changes;
+        }
+
+        function buildArith(x, y, pol) {
+          const action = pol[key(x, y)];
+          const R      = stateReward(x, y);
+          const perp   = PERP[action];
+
+          const mainDest = tryMove(x, y, action);
+          const p1Dest   = tryMove(x, y, perp[0]);
+          const p2Dest   = tryMove(x, y, perp[1]);
+
+          const mainU = getU(mainDest.x, mainDest.y);
+          const p1U   = getU(p1Dest.x,  p1Dest.y);
+          const p2U   = getU(p2Dest.x,  p2Dest.y);
+
+          const rStr = fmtR(R);
+
+          const formulaLine = `U${rnLabel(x,y)} = ${rStr} + \u03b3[0.8\u00b7U${rnLabel(mainDest.x,mainDest.y)} + 0.1\u00b7U${rnLabel(p1Dest.x,p1Dest.y)} + 0.1\u00b7U${rnLabel(p2Dest.x,p2Dest.y)}]`;
+          const numericLine = `     = ${rStr} + 0.8·${fmt3(mainU)} + 0.1·${fmt3(p1U)} + 0.1·${fmt3(p2U)}`;
+          const resultLine  = `     = ${fmt3(getU(x, y))}`;
+
+          return { formulaLine, numericLine, resultLine, action };
+        }
+
+        // ── Argmax helpers ────────────────────────────────────────────────
+        function actionExpectedU(x, y, action) {
+          const trs = transitions(x, y, action);
+          let sum = 0;
+          for (const t of trs) sum += t.prob * getU(t.x, t.y);
+          return sum;
+        }
+
+        function buildArgmaxLines(x, y) {
+          const ARGMAX_KEYS = ['up', 'down', 'left', 'right'];
+          let best = -Infinity, bestA = null;
+          const vals = {};
+          for (const a of ARGMAX_KEYS) {
+            vals[a] = actionExpectedU(x, y, a);
+            if (vals[a] > best) { best = vals[a]; bestA = a; }
+          }
+          let html = `<div class="cell-label">π'${rnLabel(x, y)}: argmax_a Σ P(s'|s,a)·U(s')</div>`;
+          for (const a of ARGMAX_KEYS) {
+            const isBest = (a === bestA);
+            const style = isBest ? 'font-weight:700;color:#1a7a40;' : 'color:#888;';
+            html += `<div class="arith" style="${style}">${DIR_ARROW[a]}: ${fmt3(vals[a])}${isBest ? ' ✓' : ''}</div>`;
+          }
+          return html;
+        }
+
+        // Expanded version: shows full arithmetic per action for one cell
+        function buildArgmaxExpanded(x, y) {
+          const ARGMAX_KEYS = ['up', 'down', 'left', 'right'];
+          let best = -Infinity, bestA = null;
+          for (const a of ARGMAX_KEYS) {
+            const v = actionExpectedU(x, y, a);
+            if (v > best) { best = v; bestA = a; }
+          }
+          let html = `<div class="cell-label" style="margin-bottom:6px;">π'${rnLabel(x,y)} = argmax_a Σ P(s'|s,a)·U(s')</div>`;
+          for (const a of ARGMAX_KEYS) {
+            const isBest = (a === bestA);
+            const baseStyle = isBest ? 'color:#1a7a40;font-weight:700;' : 'color:#888;';
+            const mainDest = tryMove(x, y, a);
+            const perp     = PERP[a];
+            const p1Dest   = tryMove(x, y, perp[0]);
+            const p2Dest   = tryMove(x, y, perp[1]);
+            const mainU    = getU(mainDest.x, mainDest.y);
+            const p1U      = getU(p1Dest.x,  p1Dest.y);
+            const p2U      = getU(p2Dest.x,  p2Dest.y);
+            const total    = actionExpectedU(x, y, a);
+            const tick     = isBest ? ' ✓' : '';
+            html += `<div class="arith" style="${baseStyle}margin-bottom:2px;">${DIR_ARROW[a]}: \u03b3[0.8\u00b7U${rnLabel(mainDest.x,mainDest.y)} + 0.1\u00b7U${rnLabel(p1Dest.x,p1Dest.y)} + 0.1\u00b7U${rnLabel(p2Dest.x,p2Dest.y)}]</div>`;
+            html += `<div class="arith" style="${baseStyle}margin-bottom:6px;">&nbsp;&nbsp;&nbsp;= 0.8·${fmt3(mainU)} + 0.1·${fmt3(p1U)} + 0.1·${fmt3(p2U)} = ${fmt3(total)}${tick}</div>`;
+          }
+          return html;
+        }
+
+        function esc(s) {
+          return s
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        }
+
+        // ── Advance ──────────────────────────────────────────────────────
+        function advance() {
+          if (converged) return;
+          if (stage === 4) {
+            revealedImprCells.clear();
+            stage = 2;
+            piIteration++;
+          } else {
+            if (stage === 2) revealedEvalCells.clear();
+            stage++;
+          }
+          renderStage();
+        }
+
+        // ── Render stage ─────────────────────────────────────────────────
+        function renderStage() {
+          const panel = document.getElementById("pi-detail-panel");
+
+          switch (stage) {
+            case 0: {
+              showArrows    = false;
+              showUtilities = false;
+              draw();
+              panel.innerHTML = '';
+              break;
+            }
+
+            case 1: {
+              showArrows    = true;
+              showUtilities = false;
+              draw();
+              panel.innerHTML =
+                `<div class="section-label">Step 1: Initial Policy \u03c0\u2080</div>` +
+                `<div style="margin-top:6px;">Assign an arbitrary policy. Here every state maps to \u2192 (go right).</div>`;
+              break;
+            }
+
+            case 2: {
+              showArrows    = true;
+              showUtilities = false;
+              highlightSet.clear();
+              if (highlightTimer) { clearTimeout(highlightTimer); highlightTimer = null; }
+              draw();
+              const sorted2  = rnSortedNavStates();
+              const iter2sfx = piIteration > 0 ? ` (iter ${piIteration + 1})` : '';
+              let html2  = `<div class="section-label">Step 2${esc(iter2sfx)}: Policy Evaluation</div>`;
+              html2 += `<div class="bellman-eq">U(s) = R(s) + \u03b3\u00b7\u03a3 P(s\u2019|s,\u03c0(s))\u00b7U(s\u2019)</div>`;
+              for (const { x, y } of sorted2) {
+                if (revealedEvalCells.has(key(x, y))) {
+                  const { formulaLine } = buildArith(x, y, policy);
+                  html2 += `<div class="arith" style="margin-bottom:4px;">${esc(formulaLine)}</div>`;
+                } else {
+                  html2 += `<div class="arith" style="margin-bottom:4px;color:#ccc;">U${esc(rnLabel(x,y))} = \u2026</div>`;
+                }
+              }
+              html2 += `<button id="pi-show-all-btn" class="btn-secondary" style="margin-top:10px;">Show All</button>`;
+              panel.innerHTML = html2;
+              const showAllBtn = document.getElementById("pi-show-all-btn");
+              if (showAllBtn) {
+                showAllBtn.onclick = function() {
+                  for (const { x, y } of sorted2) revealedEvalCells.add(key(x, y));
+                  renderStage();
+                };
+              }
+              break;
+            }
+
+            case 3: {
+              policyEvaluation();
+              showUtilities = true;
+              draw();
+              const sorted3  = rnSortedNavStates();
+              const iter3sfx = piIteration > 0 ? ` (iter ${piIteration + 1})` : '';
+              let html3  = `<div class="section-label">Step 3${esc(iter3sfx)}: Solved Utilities U^\u03c0${piIteration}</div>`;
+              for (const { x, y } of sorted3) {
+                html3 += `<div class="arith">U${rnLabel(x,y)} = ${fmt3(getU(x,y))}</div>`;
+              }
+              panel.innerHTML = html3;
+              break;
+            }
+
+            case 4: {
+              lastPolicyChanges = policyImprovement();
+              highlightSet.clear();
+              for (const { x, y } of lastPolicyChanges) highlightSet.add(key(x, y));
+              if (highlightTimer) clearTimeout(highlightTimer);
+              if (lastPolicyChanges.length > 0) {
+                highlightTimer = setTimeout(() => { highlightSet.clear(); draw(); }, 600);
+              }
+              draw();
+              converged = lastPolicyChanges.length === 0;
+              const iter4sfx = piIteration > 0 ? ` (iter ${piIteration + 1})` : '';
+              const sorted4  = rnSortedNavStates();
+              let html4  = `<div class="section-label">Step 4${esc(iter4sfx)}: Policy Improvement</div>`;
+              if (revealedImprCells.size === 0) {
+                html4 += `<div style="color:#aaa;font-size:0.85em;margin-bottom:8px;">Click a cell on the grid to reveal its policy improvement calculation.</div>`;
+              }
+              for (const { x, y } of sorted4) {
+                if (revealedImprCells.has(key(x, y))) {
+                  html4 += `<div class="cell-detail">${buildArgmaxExpanded(x, y)}</div>`;
+                }
+              }
+              if (converged) {
+                html4 += `<div class="status-msg converged">Policy unchanged \u2014 converged \u2713</div>`;
+                document.getElementById("pi-next-btn").disabled = true;
+              } else {
+                html4 += `<div class="status-msg">${lastPolicyChanges.length} arrow(s) changed \u2192 \u03c0${piIteration + 1}</div>`;
+              }
+              panel.innerHTML = html4;
+              break;
+            }
+          }
+        }
+
+        // ── Drawing ───────────────────────────────────────────────────────
+        function cellX(x) { return ML + x * CELL; }
+        function cellY(y) { return y * CELL; }
+
+        function draw() {
+          ctx.clearRect(0, 0, CW, CH);
+          ctx.fillStyle = "#f5f6f8";
+          ctx.fillRect(0, 0, CW, CH);
+          for (let y = 0; y < ROWS; y++)
+            for (let x = 0; x < COLS; x++)
+              drawCell(x, y);
+          drawAxisLabels();
+        }
+
+        function drawCell(x, y) {
+          const cx = cellX(x), cy = cellY(y);
+
+          if (isWall(x, y)) {
+            ctx.fillStyle = "#9e9e9e";
+            ctx.fillRect(cx, cy, CELL, CELL);
+            ctx.fillStyle = "#8a8a8a";
+            ctx.fillRect(cx + 4, cy + 4, CELL - 8, CELL - 8);
+            ctx.fillStyle = "#fff";
+            ctx.font = "bold 28px -apple-system, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("WALL", cx + CELL / 2, cy + CELL / 2);
+            return;
+          }
+
+          if (highlightSet.has(key(x, y))) {
+            ctx.fillStyle = "#fff9c4";
+          } else if (isGoal(x, y)) {
+            ctx.fillStyle = "#d4f4e2";
+          } else if (isTrap(x, y)) {
+            ctx.fillStyle = "#fde8e8";
+          } else {
+            ctx.fillStyle = "#ffffff";
+          }
+          ctx.fillRect(cx, cy, CELL, CELL);
+
+          ctx.strokeStyle = "#c8cad0";
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(cx + 0.75, cy + 0.75, CELL - 1.5, CELL - 1.5);
+
+          if (!isGoal(x, y) && !isTrap(x, y) &&
+              ((stage === 2 && revealedEvalCells.has(key(x, y))) ||
+               (stage === 4 && revealedImprCells.has(key(x, y))))) {
+            ctx.strokeStyle = "#1473e6";
+            ctx.lineWidth = 3;
+            ctx.strokeRect(cx + 1.5, cy + 1.5, CELL - 3, CELL - 3);
+          }
+
+          const midX = cx + CELL / 2;
+          const midY = cy + CELL / 2;
+
+          if (isGoal(x, y)) {
+            ctx.fillStyle = "#1a7a40";
+            ctx.font = "bold 28px -apple-system, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("+1", midX, midY);
+          } else if (isTrap(x, y)) {
+            ctx.fillStyle = "#b31a1a";
+            ctx.font = "bold 28px -apple-system, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("\u22121", midX, midY);
+          } else {
+            if (showArrows) {
+              const action = policy[key(x, y)];
+              if (action) drawArrow(midX, midY, action);
+            }
+
+            if (showUtilities) {
+              ctx.fillStyle = "#999";
+              ctx.font = "22px 'SF Mono', Menlo, monospace";
+              ctx.textAlign = "center";
+              ctx.textBaseline = "alphabetic";
+              ctx.fillText(fmt3(getU(x, y)), midX, cy + CELL - 10);
+            }
+
+            if (x === 0 && y === 2) {
+              ctx.fillStyle = "#aaa";
+              ctx.font = "bold 22px -apple-system, sans-serif";
+              ctx.textAlign = "left";
+              ctx.textBaseline = "top";
+              ctx.fillText("START", cx + 6, cy + 6);
+            }
+          }
+        }
+
+        function drawArrow(cx, cy, action) {
+          const { dx, dy } = DIRS[action];
+          const px = -dy, py = dx;
+
+          const tailX  = cx - dx * 28, tailY  = cy - dy * 28;
+          const stemX  = cx + dx * 6,  stemY  = cy + dy * 6;
+          const tipX   = cx + dx * 36, tipY   = cy + dy * 36;
+          const base1X = stemX + px * 16, base1Y = stemY + py * 16;
+          const base2X = stemX - px * 16, base2Y = stemY - py * 16;
+
+          ctx.strokeStyle = "#1473e6";
+          ctx.lineWidth   = 3.5;
+          ctx.lineCap     = "round";
+          ctx.beginPath();
+          ctx.moveTo(tailX, tailY);
+          ctx.lineTo(stemX, stemY);
+          ctx.stroke();
+
+          ctx.fillStyle = "#1473e6";
+          ctx.beginPath();
+          ctx.moveTo(tipX, tipY);
+          ctx.lineTo(base1X, base1Y);
+          ctx.lineTo(base2X, base2Y);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        function drawAxisLabels() {
+          ctx.fillStyle = "#888";
+          ctx.font = "28px -apple-system, sans-serif";
+          for (let x = 0; x < COLS; x++) {
+            ctx.textAlign    = "center";
+            ctx.textBaseline = "top";
+            ctx.fillText(x + 1, cellX(x) + CELL / 2, ROWS * CELL + 10);
+          }
+          for (let y = 0; y < ROWS; y++) {
+            ctx.textAlign    = "right";
+            ctx.textBaseline = "middle";
+            ctx.fillText(ROWS - y, ML - 10, cellY(y) + CELL / 2);
+          }
+        }
+
+        // ── Event wiring ──────────────────────────────────────────────────
+        document.getElementById("pi-next-btn").onclick  = advance;
+        document.getElementById("pi-reset-btn").onclick = piReset;
+
+        canvas.addEventListener('click', function(e) {
+          const rect = canvas.getBoundingClientRect();
+          const scaleX = canvas.width  / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const cx = (e.clientX - rect.left) * scaleX;
+          const cy = (e.clientY - rect.top)  * scaleY;
+          const gx = Math.floor((cx - ML) / CELL);
+          const gy = Math.floor(cy / CELL);
+          if (gx < 0 || gx >= COLS || gy < 0 || gy >= ROWS) return;
+          if (isWall(gx, gy) || isTerminal(gx, gy)) return;
+          if (stage === 2) {
+            revealedEvalCells.add(key(gx, gy));
+            renderStage();
+          } else if (stage === 4) {
+            revealedImprCells.add(key(gx, gy));
+            renderStage();
+          }
+        });
+
+        canvas.addEventListener('mousemove', function(e) {
+          if (stage !== 2 && stage !== 4) { canvas.style.cursor = 'default'; return; }
+          const rect = canvas.getBoundingClientRect();
+          const scaleX = canvas.width  / rect.width;
+          const scaleY = canvas.height / rect.height;
+          const cx = (e.clientX - rect.left) * scaleX;
+          const cy = (e.clientY - rect.top)  * scaleY;
+          const gx = Math.floor((cx - ML) / CELL);
+          const gy = Math.floor(cy / CELL);
+          if (gx >= 0 && gx < COLS && gy >= 0 && gy < ROWS && !isWall(gx, gy) && !isTerminal(gx, gy)) {
+            canvas.style.cursor = 'pointer';
+          } else {
+            canvas.style.cursor = 'default';
+          }
+        });
+
+        piReset();
+      }
+
+      Reveal.on('slidechanged', function (event) {
+        if (event.currentSlide.querySelector('.pi-demo')) {
+          piInit();
+        }
+      });
+      Reveal.on('ready', function (event) {
+        if (event.currentSlide.querySelector('.pi-demo')) {
+          piInit();
+        }
+      });
+      // Fallback: run immediately in case ready already fired
+      piInit();
+    })();
+    </script>
+
+    <script>
+    (function () {
+      let gwInitialized = false;
+
+      function gwInit() {
+        if (gwInitialized) return;
+        gwInitialized = true;
+
+        // ── Grid constants ──────────────────────────────────────────────────────
+        const COLS = 4, ROWS = 3;
+        const CELL = 150;
+        const ML = 46, MB = 38;
+        const CW = ML + COLS * CELL;
+        const CH = ROWS * CELL + MB;
+
+        const canvas = document.getElementById("gw-grid");
+        canvas.width  = CW;
+        canvas.height = CH;
+        const ctx = canvas.getContext("2d");
+
+        const WALL     = { x: 1, y: 1 };
+        const START    = { x: 0, y: 2 };
+        const GOAL_POS = { x: 3, y: 0 };
+        const TRAP_POS = { x: 3, y: 1 };
+
+        function isWall(x, y) { return x === WALL.x && y === WALL.y; }
+        function isGoal(x, y) { return x === GOAL_POS.x && y === GOAL_POS.y; }
+        function isTrap(x, y) { return x === TRAP_POS.x && y === TRAP_POS.y; }
+        function inBounds(x, y) { return x >= 0 && x < COLS && y >= 0 && y < ROWS; }
+
+        // ── A* state ────────────────────────────────────────────────────────────
+        let openList, closedList, path, running, timer;
+        let astarAgent = { x: START.x, y: START.y, dir: 'right' };
+
+        function makeNode(x, y, parent) {
+          const g = parent ? parent.g + 1 : 0;
+          const h = Math.abs(x - GOAL_POS.x) + Math.abs(y - GOAL_POS.y);
+          return { x, y, g, h, f: g + h, parent };
+        }
+
+        function resetAstar() {
+          openList = []; closedList = []; path = [];
+          astarAgent = { x: START.x, y: START.y, dir: 'right' };
+          stopAstar();
+          openList.push(makeNode(START.x, START.y, null));
+          draw(); updateStats();
+          document.getElementById("gw-log").innerHTML = "&nbsp;";
+        }
+
+        function stepAstar() {
+          if (path.length || !openList.length) { stopAstar(); return; }
+          openList.sort((a, b) => a.f - b.f || a.h - b.h);
+          const cur = openList.shift();
+          closedList.push(cur);
+          if (isGoal(cur.x, cur.y)) {
+            let n = cur; while (n) { path.unshift(n); n = n.parent; }
+            stopAstar(); draw(); updateStats(); return;
+          }
+          const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+          for (const [dx, dy] of dirs) {
+            const nx = cur.x + dx, ny = cur.y + dy;
+            if (!inBounds(nx, ny) || isWall(nx, ny)) continue;
+            if (isTrap(nx, ny)) continue;
+            if (closedList.some(n => n.x === nx && n.y === ny)) continue;
+            const tg = cur.g + 1;
+            const ex = openList.find(n => n.x === nx && n.y === ny);
+            if (!ex) openList.push(makeNode(nx, ny, cur));
+            else if (tg < ex.g) { ex.g = tg; ex.f = tg + ex.h; ex.parent = cur; }
+          }
+          draw(); updateStats();
+        }
+
+        function stopAstar() {
+          running = false;
+          if (timer) { clearInterval(timer); timer = null; }
+          const btn = document.getElementById("gw-run");
+          btn.textContent = "Run A*"; btn.disabled = false;
+        }
+
+        function runAstar() {
+          if (running) return;
+          running = true;
+          document.getElementById("gw-run").textContent = "Running\u2026";
+          document.getElementById("gw-run").disabled = true;
+          timer = setInterval(() => { stepAstar(); if (!running) clearInterval(timer); }, 120);
+        }
+
+        // ── MDP state ────────────────────────────────────────────────────────────
+        const DELTA = { up:[0,-1], down:[0,1], left:[-1,0], right:[1,0] };
+        const PERP  = { up:["left","right"], down:["left","right"],
+                        left:["up","down"],  right:["up","down"] };
+        const ARROW = { up:"\u2191", down:"\u2193", left:"\u2190", right:"\u2192" };
+
+        let pac, mdpStatus, mdpScore, mdpSteps;
+
+        function resetMdp() {
+          pac = { x: START.x, y: START.y, dir: "right" };
+          mdpStatus = "alive"; mdpScore = 0; mdpSteps = 0;
+          draw(); updateStats();
+          document.getElementById("gw-log").innerHTML = "&nbsp;";
+        }
+
+        function tryMove(pos, dir) {
+          const [dx, dy] = DELTA[dir];
+          const nx = pos.x + dx, ny = pos.y + dy;
+          if (!inBounds(nx, ny) || isWall(nx, ny)) return pos;
+          return { x: nx, y: ny };
+        }
+
+        function applyAction(intended) {
+          if (mode === 'astar') {
+            const next = tryMove({ x: astarAgent.x, y: astarAgent.y }, intended);
+            astarAgent = { x: next.x, y: next.y, dir: intended };
+            const logEl = document.getElementById("gw-log");
+            let line = `intended ${ARROW[intended]} \u2192 actual ${ARROW[intended]}`;
+            if (isGoal(astarAgent.x, astarAgent.y)) line += ' &nbsp;<span class="reward-pos">+1 reached! \uD83C\uDFAF</span>';
+            if (isTrap(astarAgent.x, astarAgent.y)) line += ' &nbsp;<span class="reward-neg">\u22121 trap \uD83D\uDC80</span>';
+            logEl.innerHTML = line;
+            draw(); updateStats();
+            return;
+          }
+          if (mdpStatus !== "alive") return;
+          const r = Math.random();
+          const actual = r < 0.8 ? intended : r < 0.9 ? PERP[intended][0] : PERP[intended][1];
+          const next = tryMove(pac, actual);
+          pac = { x: next.x, y: next.y, dir: actual };
+          mdpSteps++;
+
+          if (isGoal(pac.x, pac.y)) {
+            mdpScore += 1; mdpStatus = "reached +1!";
+          } else if (isTrap(pac.x, pac.y)) {
+            mdpScore -= 1; mdpStatus = "fell into \u22121";
+          } else {
+            mdpScore -= 0.04;
+          }
+
+          const slipped = actual !== intended;
+          const logEl = document.getElementById("gw-log");
+          let line = `intended ${ARROW[intended]} \u2192 `;
+          if (slipped) line += `<span class="slip">actual ${ARROW[actual]} (slip!)</span>`;
+          else line += `actual ${ARROW[actual]}`;
+          if (mdpStatus === "reached +1!")       line += ` &nbsp;<span class="reward-pos">+1 terminal</span>`;
+          if (mdpStatus === "fell into \u22121") line += ` &nbsp;<span class="reward-neg">\u22121 terminal</span>`;
+          logEl.innerHTML = line;
+
+          draw(); updateStats();
+          drawTransitionDiagram(intended);
+        }
+
+        // ── Drawing ──────────────────────────────────────────────────────────────
+        let mode = "astar";
+
+        function cellX(x) { return ML + x * CELL; }
+        function cellY(y) { return y * CELL; }
+
+        function draw() {
+          ctx.clearRect(0, 0, CW, CH);
+          ctx.fillStyle = "#f5f6f8";
+          ctx.fillRect(0, 0, CW, CH);
+
+          for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+              drawCell(x, y);
+            }
+          }
+
+          if (mode === "astar") {
+            closedList.forEach(n => paintAstar(n, "rgba(146,86,217,0.18)", "#7a40bf"));
+            openList.forEach(n  => paintAstar(n, "rgba(20,115,230,0.18)", "#0d66d0"));
+            path.forEach(n => {
+              if (isGoal(n.x, n.y)) return;
+              ctx.fillStyle = "rgba(20,115,230,0.65)";
+              ctx.fillRect(cellX(n.x)+24, cellY(n.y)+24, CELL-48, CELL-48);
+            });
+            drawStartLabel();
+            drawGoalLabel();
+            drawTrapLabel();
+            if (!isGoal(astarAgent.x, astarAgent.y) && !isTrap(astarAgent.x, astarAgent.y)) {
+              drawGhost(ctx, cellX(astarAgent.x) + CELL / 2, cellY(astarAgent.y) + CELL / 2, "#1473e6", CELL);
+            }
+          } else {
+            drawStartLabel();
+            drawGoalLabel();
+            drawTrapLabel();
+            if (!isGoal(pac.x, pac.y) && !isTrap(pac.x, pac.y)) {
+              drawGhost(ctx, cellX(pac.x) + CELL / 2, cellY(pac.y) + CELL / 2, "#9256d9", CELL);
+            }
+          }
+
+          drawAxisLabels();
+        }
+
+        function drawCell(x, y) {
+          const cx = cellX(x), cy = cellY(y);
+          if (isWall(x, y)) {
+            ctx.fillStyle = "#9e9e9e";
+            ctx.fillRect(cx, cy, CELL, CELL);
+            ctx.fillStyle = "#8a8a8a";
+            ctx.fillRect(cx + 4, cy + 4, CELL - 8, CELL - 8);
+            ctx.fillStyle = "#fff";
+            ctx.font = "bold 28px -apple-system, sans-serif";
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            ctx.fillText("WALL", cx + CELL / 2, cy + CELL / 2);
+            return;
+          } else if (isGoal(x, y)) {
+            ctx.fillStyle = "#d4f4e2";
+            ctx.fillRect(cx, cy, CELL, CELL);
+          } else if (isTrap(x, y)) {
+            ctx.fillStyle = "#fde8e8";
+            ctx.fillRect(cx, cy, CELL, CELL);
+          } else {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(cx, cy, CELL, CELL);
+          }
+          ctx.strokeStyle = "#c8cad0";
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(cx + 0.75, cy + 0.75, CELL - 1.5, CELL - 1.5);
+        }
+
+        function drawStartLabel() {
+          const cx = cellX(START.x), cy = cellY(START.y);
+          ctx.fillStyle = "#aaa";
+          ctx.font = "bold 22px -apple-system, sans-serif";
+          ctx.textAlign = "left"; ctx.textBaseline = "top";
+          ctx.fillText("START", cx + 6, cy + 6);
+        }
+
+        function drawGoalLabel() {
+          const cx = cellX(GOAL_POS.x), cy = cellY(GOAL_POS.y);
+          ctx.fillStyle = "#1a7a40";
+          ctx.font = "bold 28px -apple-system, sans-serif";
+          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillText("+1", cx + CELL / 2, cy + CELL / 2);
+        }
+
+        function drawTrapLabel() {
+          const cx = cellX(TRAP_POS.x), cy = cellY(TRAP_POS.y);
+          ctx.fillStyle = "#b31a1a";
+          ctx.font = "bold 28px -apple-system, sans-serif";
+          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillText("\u22121", cx + CELL / 2, cy + CELL / 2);
+        }
+
+        function drawAxisLabels() {
+          ctx.fillStyle = "#888";
+          ctx.font = "28px -apple-system, sans-serif";
+          for (let x = 0; x < COLS; x++) {
+            ctx.textAlign = "center"; ctx.textBaseline = "top";
+            ctx.fillText(x + 1, cellX(x) + CELL / 2, ROWS * CELL + 10);
+          }
+          for (let y = 0; y < ROWS; y++) {
+            ctx.textAlign = "right"; ctx.textBaseline = "middle";
+            ctx.fillText(ROWS - y, ML - 10, cellY(y) + CELL / 2);
+          }
+        }
+
+        function paintAstar(n, fill, textColor) {
+          if (isGoal(n.x, n.y) || isTrap(n.x, n.y) || isWall(n.x, n.y) ||
+              (n.x === START.x && n.y === START.y)) return;
+          ctx.fillStyle = fill;
+          ctx.fillRect(cellX(n.x) + 1, cellY(n.y) + 1, CELL - 2, CELL - 2);
+          ctx.fillStyle = textColor;
+          ctx.textBaseline = "alphabetic";
+          ctx.font = "bold 10px -apple-system, sans-serif";
+          ctx.textAlign = "left";
+          ctx.fillText("g" + n.g, cellX(n.x) + 6, cellY(n.y) + 16);
+          ctx.textAlign = "right";
+          ctx.fillText("h" + n.h, cellX(n.x) + CELL - 6, cellY(n.y) + 16);
+          ctx.textAlign = "center";
+          ctx.font = "bold 15px -apple-system, sans-serif";
+          ctx.fillText("f" + n.f, cellX(n.x) + CELL / 2, cellY(n.y) + CELL - 10);
+        }
+
+        function drawGhost(context, cx, cy, color, cellSize) {
+          const r = cellSize * 0.28;
+          // Body: semicircle top + rectangular bottom with wavy bottom edge
+          context.fillStyle = color;
+          context.beginPath();
+          // Top semicircle
+          context.arc(cx, cy - r * 0.1, r, Math.PI, 0, false);
+          // Right side down
+          context.lineTo(cx + r, cy + r * 0.9);
+          // Wavy bottom: 3 bumps
+          const bumpW = (r * 2) / 3;
+          context.quadraticCurveTo(cx + r - bumpW * 0.5, cy + r * 1.25, cx + r - bumpW, cy + r * 0.9);
+          context.quadraticCurveTo(cx - bumpW * 0.5 + r * 0.0, cy + r * 0.55, cx, cy + r * 0.9);
+          context.quadraticCurveTo(cx - r + bumpW * 0.5, cy + r * 1.25, cx - r + bumpW, cy + r * 0.9);
+          context.quadraticCurveTo(cx - r + bumpW * 0.0, cy + r * 0.55, cx - r, cy + r * 0.9);
+          // Left side up
+          context.lineTo(cx - r, cy - r * 0.1);
+          context.closePath();
+          context.fill();
+
+          // Eyes (white circles with dark pupils)
+          const eyeR = r * 0.22;
+          const eyeOff = r * 0.32;
+          const eyeY = cy - r * 0.1;
+          // Left eye
+          context.fillStyle = "#fff";
+          context.beginPath(); context.arc(cx - eyeOff, eyeY, eyeR, 0, Math.PI * 2); context.fill();
+          context.fillStyle = "#222";
+          context.beginPath(); context.arc(cx - eyeOff + eyeR * 0.3, eyeY, eyeR * 0.5, 0, Math.PI * 2); context.fill();
+          // Right eye
+          context.fillStyle = "#fff";
+          context.beginPath(); context.arc(cx + eyeOff, eyeY, eyeR, 0, Math.PI * 2); context.fill();
+          context.fillStyle = "#222";
+          context.beginPath(); context.arc(cx + eyeOff + eyeR * 0.3, eyeY, eyeR * 0.5, 0, Math.PI * 2); context.fill();
+        }
+
+        // ── Stats ─────────────────────────────────────────────────────────────────
+        function updateStats() {
+          const el = document.getElementById("gw-stats");
+          if (mode === "mdp") {
+            el.textContent = `score: ${mdpScore.toFixed(2)} \u00b7 steps: ${mdpSteps}`;
+          } else {
+            el.textContent = "";
+          }
+        }
+
+        // ── Mode switching ────────────────────────────────────────────────────────
+        function drawTransitionDiagram(action) {
+          const tc = document.getElementById("gw-transition-canvas");
+          if (!tc) return;
+          const S = tc.width, cx = S / 2, cy = S / 2, cell = S * 0.15;
+          const tctx = tc.getContext("2d");
+          tctx.clearRect(0, 0, S, S);
+          tctx.fillStyle = "#f5f6f8";
+          tctx.fillRect(0, 0, S, S);
+
+          // Draw center cell
+          tctx.fillStyle = "#ffffff";
+          tctx.strokeStyle = "#c8cad0";
+          tctx.lineWidth = 2;
+          tctx.fillRect(cx - cell, cy - cell, cell * 2, cell * 2);
+          tctx.strokeRect(cx - cell, cy - cell, cell * 2, cell * 2);
+
+          // Draw ghost inside cell
+          drawGhost(tctx, cx, cy, "#9256d9", cell * 2.5);
+
+          const DMAP = { right:[1,0], left:[-1,0], up:[0,-1], down:[0,1] };
+          const PERP_MAP = { right:['up','down'], left:['up','down'], up:['left','right'], down:['left','right'] };
+
+          function drawArrow(fromX, fromY, toX, toY, color, prob, alpha) {
+            tctx.globalAlpha = alpha;
+            const dx = toX - fromX, dy = toY - fromY;
+            const len = Math.sqrt(dx*dx + dy*dy);
+            const ux = dx/len, uy = dy/len;
+            const arrowLen = len * 0.62;
+            tctx.strokeStyle = color; tctx.lineWidth = 4; tctx.lineCap = "round";
+            tctx.beginPath();
+            tctx.moveTo(fromX + ux * cell, fromY + uy * cell);
+            tctx.lineTo(fromX + ux * arrowLen, fromY + uy * arrowLen);
+            tctx.stroke();
+            // arrowhead
+            const hx = fromX + ux * arrowLen, hy = fromY + uy * arrowLen;
+            const px = -uy, py = ux;
+            tctx.fillStyle = color;
+            tctx.beginPath();
+            tctx.moveTo(hx + ux * 12, hy + uy * 12);
+            tctx.lineTo(hx + px * 8, hy + py * 8);
+            tctx.lineTo(hx - px * 8, hy - py * 8);
+            tctx.closePath(); tctx.fill();
+            // label
+            tctx.globalAlpha = 1;
+            tctx.fillStyle = color;
+            tctx.font = `bold ${S * 0.09}px -apple-system, sans-serif`;
+            tctx.textAlign = "center"; tctx.textBaseline = "middle";
+            const lx = fromX + ux * (len * 0.88), ly = fromY + uy * (len * 0.88);
+            tctx.fillText(prob, lx, ly);
+            tctx.globalAlpha = 1;
+          }
+
+          const [mdx, mdy] = DMAP[action];
+          const reach = S * 0.44;
+          drawArrow(cx, cy, cx + mdx * reach, cy + mdy * reach, "#9256d9", "0.8", 1.0);
+          const perps = PERP_MAP[action];
+          for (const p of perps) {
+            const [pdx, pdy] = DMAP[p];
+            drawArrow(cx, cy, cx + pdx * reach, cy + pdy * reach, "#888", "0.1", 0.75);
+          }
+        }
+
+        function setMode(m) {
+          mode = m;
+          document.querySelectorAll(".gw-title-toggle").forEach(t =>
+            t.classList.toggle("active", t.dataset.mode === m)
+          );
+          const descEl = document.getElementById("gw-desc-panel");
+          if (m === "astar") {
+            document.getElementById("gw-astar-controls").classList.remove("hide");
+            document.getElementById("gw-reset-mdp").classList.add("hide");
+            descEl.className = "gw-desc-panel astar";
+            descEl.innerHTML = `
+              <div class="gw-desc-label">Deterministic</div>
+              <div class="gw-desc-title">The outcome of an action is guaranteed.</div>
+              <canvas id="gw-det-ghost-canvas" width="320" height="320" style="display:block;margin:auto;"></canvas>
+              <div class="gw-panel-arrow-grid">
+                <button class="arrow-btn" id="gw-panel-up"    style="grid-column:2;grid-row:1">↑</button>
+                <button class="arrow-btn" id="gw-panel-left"  style="grid-column:1;grid-row:2">←</button>
+                <button class="arrow-btn" id="gw-panel-down"  style="grid-column:2;grid-row:2">↓</button>
+                <button class="arrow-btn" id="gw-panel-right" style="grid-column:3;grid-row:2">→</button>
+              </div>`;
+            ['up','down','left','right'].forEach(d => {
+              const btn = document.getElementById('gw-panel-' + d);
+              if (btn) btn.addEventListener('click', () => applyAction(d));
+            });
+            document.getElementById("gw-arrow-grid").classList.add("hide");
+            const dgc = document.getElementById("gw-det-ghost-canvas");
+            if (dgc) {
+              const dctx = dgc.getContext("2d");
+              dctx.clearRect(0, 0, dgc.width, dgc.height);
+              dctx.fillStyle = "#f5f6f8";
+              dctx.fillRect(0, 0, dgc.width, dgc.height);
+              drawGhost(dctx, dgc.width/2, dgc.height/2 + 10, "#1473e6", 200);
+            }
+            resetAstar();
+          } else {
+            document.getElementById("gw-astar-controls").classList.add("hide");
+            document.getElementById("gw-reset-mdp").classList.remove("hide");
+            descEl.className = "gw-desc-panel mdp";
+            descEl.innerHTML = `
+              <div class="gw-desc-label">Stochastic</div>
+              <div class="gw-desc-title">The outcome of an action is uncertain.</div>
+              <canvas id="gw-transition-canvas" width="320" height="320" style="display:block;margin-top:12px;"></canvas>
+              <div class="gw-panel-arrow-grid">
+                <button class="arrow-btn" id="gw-panel-up"    style="grid-column:2;grid-row:1">↑</button>
+                <button class="arrow-btn" id="gw-panel-left"  style="grid-column:1;grid-row:2">←</button>
+                <button class="arrow-btn" id="gw-panel-down"  style="grid-column:2;grid-row:2">↓</button>
+                <button class="arrow-btn" id="gw-panel-right" style="grid-column:3;grid-row:2">→</button>
+              </div>`;
+            ['up','down','left','right'].forEach(d => {
+              const btn = document.getElementById('gw-panel-' + d);
+              if (btn) btn.addEventListener('click', () => applyAction(d));
+            });
+            document.getElementById("gw-arrow-grid").classList.add("hide");
+            resetMdp();
+            drawTransitionDiagram("up");
+          }
+        }
+
+        // ── Event wiring ──────────────────────────────────────────────────────────
+        document.querySelectorAll(".gw-title-toggle").forEach(t => {
+          t.addEventListener("click", (e) => { e.stopPropagation(); e.preventDefault(); setMode(t.dataset.mode); });
+        });
+        document.getElementById("gw-run").onclick = runAstar;
+        document.getElementById("gw-step").onclick = () => { if (!running && mode === "astar") stepAstar(); };
+        document.getElementById("gw-reset-astar").onclick = resetAstar;
+        ["up","down","left","right"].forEach(d => {
+          document.getElementById("gw-" + d).onclick = () => applyAction(d);
+        });
+        document.getElementById("gw-reset-mdp").onclick = resetMdp;
+
+        // ── Init ──────────────────────────────────────────────────────────────────
+        setMode("astar");
+      }
+
+      Reveal.on('slidechanged', function (event) {
+        if (event.currentSlide.querySelector('.gw-demo')) {
+          gwInit();
+        }
+      });
+      Reveal.on('ready', function (event) {
+        if (event.currentSlide.querySelector('.gw-demo')) {
+          gwInit();
+        }
+      });
+      // Fallback: run immediately in case ready already fired
+      gwInit();
+    })();
+    </script>
+
+    <script>
+    (function () {
+      let defInitialized = false;
+      let defCtx = null;
+      let defCW = 0;
+      let defCH = 0;
+      let defCELL = 0;
+      let defML = 0;
+
+      const COLS = 4;
+      const ROWS = 3;
+      const WALL = { x: 1, y: 1 };
+      const START = { x: 0, y: 2 };
+      const GOAL = { x: 3, y: 0 };
+      const TRAP = { x: 3, y: 1 };
+
+      function isWall(x, y) { return x === WALL.x && y === WALL.y; }
+      function isGoal(x, y) { return x === GOAL.x && y === GOAL.y; }
+      function isTrap(x, y) { return x === TRAP.x && y === TRAP.y; }
+      function isTerminal(x, y) { return isGoal(x, y) || isTrap(x, y); }
+
+      function defCellX(x) { return defML + x * defCELL; }
+      function defCellY(y) { return y * defCELL; }
+
+      function drawDefGhost(context, cx, cy, color, cellSize) {
+        const r = cellSize * 0.28;
+        context.fillStyle = color;
+        context.beginPath();
+        context.arc(cx, cy - r * 0.1, r, Math.PI, 0, false);
+        context.lineTo(cx + r, cy + r * 0.9);
+        const bumpW = (r * 2) / 3;
+        context.quadraticCurveTo(cx + r - bumpW * 0.5, cy + r * 1.25, cx + r - bumpW, cy + r * 0.9);
+        context.quadraticCurveTo(cx - bumpW * 0.5, cy + r * 0.55, cx, cy + r * 0.9);
+        context.quadraticCurveTo(cx - r + bumpW * 0.5, cy + r * 1.25, cx - r + bumpW, cy + r * 0.9);
+        context.quadraticCurveTo(cx - r, cy + r * 0.55, cx - r, cy + r * 0.9);
+        context.lineTo(cx - r, cy - r * 0.1);
+        context.closePath();
+        context.fill();
+
+        const eyeR = r * 0.22;
+        const eyeOff = r * 0.32;
+        const eyeY = cy - r * 0.1;
+        context.fillStyle = "#fff";
+        context.beginPath(); context.arc(cx - eyeOff, eyeY, eyeR, 0, Math.PI * 2); context.fill();
+        context.fillStyle = "#222";
+        context.beginPath(); context.arc(cx - eyeOff + eyeR * 0.3, eyeY, eyeR * 0.5, 0, Math.PI * 2); context.fill();
+        context.fillStyle = "#fff";
+        context.beginPath(); context.arc(cx + eyeOff, eyeY, eyeR, 0, Math.PI * 2); context.fill();
+        context.fillStyle = "#222";
+        context.beginPath(); context.arc(cx + eyeOff + eyeR * 0.3, eyeY, eyeR * 0.5, 0, Math.PI * 2); context.fill();
+      }
+
+      function drawDefTransitionDiagram(action) {
+        const tc = document.getElementById("def-transition-canvas");
+        if (!tc) return;
+        const S = tc.width;
+        const cx = S / 2;
+        const cy = S / 2;
+        const cell = S * 0.15;
+        const tctx = tc.getContext("2d");
+        tctx.clearRect(0, 0, S, S);
+        tctx.fillStyle = "#f5f6f8";
+        tctx.fillRect(0, 0, S, S);
+
+        tctx.fillStyle = "#ffffff";
+        tctx.strokeStyle = "#c8cad0";
+        tctx.lineWidth = 2;
+        tctx.fillRect(cx - cell, cy - cell, cell * 2, cell * 2);
+        tctx.strokeRect(cx - cell, cy - cell, cell * 2, cell * 2);
+        drawDefGhost(tctx, cx, cy, "#9256d9", cell * 2.5);
+
+        const DMAP = { right: [1, 0], left: [-1, 0], up: [0, -1], down: [0, 1] };
+        const PERP_MAP = {
+          right: ["up", "down"],
+          left: ["up", "down"],
+          up: ["left", "right"],
+          down: ["left", "right"],
+        };
+
+        function drawArrow(fromX, fromY, toX, toY, color, prob, alpha) {
+          tctx.globalAlpha = alpha;
+          const dx = toX - fromX;
+          const dy = toY - fromY;
+          const len = Math.sqrt(dx * dx + dy * dy);
+          const ux = dx / len;
+          const uy = dy / len;
+          const arrowLen = len * 0.62;
+          tctx.strokeStyle = color;
+          tctx.lineWidth = 4;
+          tctx.lineCap = "round";
+          tctx.beginPath();
+          tctx.moveTo(fromX + ux * cell, fromY + uy * cell);
+          tctx.lineTo(fromX + ux * arrowLen, fromY + uy * arrowLen);
+          tctx.stroke();
+          const hx = fromX + ux * arrowLen;
+          const hy = fromY + uy * arrowLen;
+          const px = -uy;
+          const py = ux;
+          tctx.fillStyle = color;
+          tctx.beginPath();
+          tctx.moveTo(hx + ux * 12, hy + uy * 12);
+          tctx.lineTo(hx + px * 8, hy + py * 8);
+          tctx.lineTo(hx - px * 8, hy - py * 8);
+          tctx.closePath();
+          tctx.fill();
+          tctx.globalAlpha = 1;
+          tctx.fillStyle = color;
+          tctx.font = `bold ${S * 0.09}px -apple-system, sans-serif`;
+          tctx.textAlign = "center";
+          tctx.textBaseline = "middle";
+          const lx = fromX + ux * (len * 0.88);
+          const ly = fromY + uy * (len * 0.88);
+          tctx.fillText(prob, lx, ly);
+        }
+
+        const [mdx, mdy] = DMAP[action];
+        const reach = S * 0.44;
+        drawArrow(cx, cy, cx + mdx * reach, cy + mdy * reach, "#9256d9", "0.8", 1.0);
+        for (const p of PERP_MAP[action]) {
+          const [pdx, pdy] = DMAP[p];
+          drawArrow(cx, cy, cx + pdx * reach, cy + pdy * reach, "#888", "0.1", 0.75);
+        }
+      }
+
+      var defSamplePath = [
+        {x:0, y:2}, {x:0, y:1}, {x:0, y:0}, {x:1, y:0}, {x:2, y:0}, {x:3, y:0}
+      ];
+      var defPathSet = new Set();
+
+      function drawDefGrid(stage) {
+        if (!defCtx) return;
+        defCtx.clearRect(0, 0, defCW, defCH);
+        defCtx.fillStyle = "#f5f6f8";
+        defCtx.fillRect(0, 0, defCW, defCH);
+
+        defPathSet.clear();
+        if (stage >= 5) {
+          for (var pi = 0; pi < defSamplePath.length; pi++) {
+            defPathSet.add(defSamplePath[pi].x + "," + defSamplePath[pi].y);
+          }
+        }
+
+        for (let y = 0; y < ROWS; y++) {
+          for (let x = 0; x < COLS; x++) {
+            const cx = defCellX(x);
+            const cy = defCellY(y);
+
+            if (isWall(x, y)) {
+              defCtx.fillStyle = "#9e9e9e";
+              defCtx.fillRect(cx, cy, defCELL, defCELL);
+              defCtx.fillStyle = "#8a8a8a";
+              defCtx.fillRect(cx + 4, cy + 4, defCELL - 8, defCELL - 8);
+              defCtx.fillStyle = "#fff";
+              defCtx.font = "bold 22px -apple-system, sans-serif";
+              defCtx.textAlign = "center";
+              defCtx.textBaseline = "middle";
+              defCtx.fillText("WALL", cx + defCELL / 2, cy + defCELL / 2);
+              continue;
+            }
+
+            var onPathCell = stage >= 5 && defPathSet.has(x + "," + y);
+            if (stage >= 1) {
+              defCtx.fillStyle = isGoal(x, y) ? "#d4f4e2" : isTrap(x, y) ? "#fde8e8" : onPathCell ? "#dbe8fd" : "#e8f0fe";
+            } else {
+              defCtx.fillStyle = isGoal(x, y) ? "#d4f4e2" : isTrap(x, y) ? "#fde8e8" : "#ffffff";
+            }
+            defCtx.fillRect(cx, cy, defCELL, defCELL);
+
+            defCtx.strokeStyle = onPathCell ? "#1473e6" : stage >= 1 ? "#1473e6" : "#c8cad0";
+            defCtx.lineWidth = onPathCell ? 3 : stage >= 1 ? 2.5 : 1.5;
+            defCtx.strokeRect(cx + 0.75, cy + 0.75, defCELL - 1.5, defCELL - 1.5);
+
+            const midX = cx + defCELL / 2;
+            const midY = cy + defCELL / 2;
+
+            if (stage >= 4) {
+              var onPath = stage >= 5 && defPathSet.has(x + "," + y);
+              defCtx.fillStyle = isGoal(x, y) ? "#1a7a40" : isTrap(x, y) ? "#b31a1a" : onPath ? "#0d66d0" : "#666";
+              defCtx.font = (isTerminal(x, y) ? "bold 24" : "20") + "px 'SF Mono', Menlo, monospace";
+              defCtx.textAlign = "center";
+              defCtx.textBaseline = "middle";
+              var reward = isGoal(x, y) ? "+1" : isTrap(x, y) ? "\u22121" : "\u22120.04";
+              defCtx.fillText(reward, midX, midY);
+            } else if (isGoal(x, y)) {
+              defCtx.fillStyle = "#1a7a40";
+              defCtx.font = "bold 24px -apple-system, sans-serif";
+              defCtx.textAlign = "center";
+              defCtx.textBaseline = "middle";
+              defCtx.fillText("+1", midX, midY);
+            } else if (isTrap(x, y)) {
+              defCtx.fillStyle = "#b31a1a";
+              defCtx.font = "bold 24px -apple-system, sans-serif";
+              defCtx.textAlign = "center";
+              defCtx.textBaseline = "middle";
+              defCtx.fillText("\u22121", midX, midY);
+            }
+
+            if (x === START.x && y === START.y) {
+              defCtx.fillStyle = "#aaa";
+              defCtx.font = "bold 18px -apple-system, sans-serif";
+              defCtx.textAlign = "left";
+              defCtx.textBaseline = "top";
+              defCtx.fillText("START", cx + 5, cy + 5);
+              if (stage < 4) {
+                drawDefGhost(defCtx, midX, midY, "#9256d9", defCELL);
+              }
+            }
+          }
+        }
+
+        if (stage >= 5) {
+          defCtx.strokeStyle = "#1473e6";
+          defCtx.lineWidth = 3;
+          defCtx.lineCap = "round";
+          defCtx.setLineDash([6, 4]);
+          for (var si = 0; si < defSamplePath.length - 1; si++) {
+            var from = defSamplePath[si];
+            var to = defSamplePath[si + 1];
+            var fx = defCellX(from.x) + defCELL / 2;
+            var fy = defCellY(from.y) + defCELL / 2;
+            var tx = defCellX(to.x) + defCELL / 2;
+            var ty = defCellY(to.y) + defCELL / 2;
+            defCtx.beginPath();
+            defCtx.moveTo(fx, fy);
+            defCtx.lineTo(tx, ty);
+            defCtx.stroke();
+          }
+          defCtx.setLineDash([]);
+
+          for (var sj = 0; sj < defSamplePath.length; sj++) {
+            var sp = defSamplePath[sj];
+            var scx = defCellX(sp.x) + defCELL / 2;
+            var scy = defCellY(sp.y) + defCELL / 2;
+            defCtx.fillStyle = isGoal(sp.x, sp.y) ? "#1a7a40" : "#1473e6";
+            defCtx.beginPath();
+            defCtx.arc(scx, scy - defCELL * 0.32, 5, 0, Math.PI * 2);
+            defCtx.fill();
+          }
+        }
+
+        defCtx.fillStyle = "#888";
+        defCtx.font = "22px -apple-system, sans-serif";
+        for (var ax = 0; ax < COLS; ax++) {
+          defCtx.textAlign = "center";
+          defCtx.textBaseline = "top";
+          defCtx.fillText(ax + 1, defCellX(ax) + defCELL / 2, ROWS * defCELL + 7);
+        }
+        for (var ay = 0; ay < ROWS; ay++) {
+          defCtx.textAlign = "right";
+          defCtx.textBaseline = "middle";
+          defCtx.fillText(ROWS - ay, defML - 9, defCellY(ay) + defCELL / 2);
+        }
+      }
+
+      function getDefStage(slide) {
+        let stage = 0;
+        slide.querySelectorAll(".fragment[data-def-stage]").forEach(function (frag) {
+          if (frag.classList.contains("visible")) {
+            stage = Math.max(stage, parseInt(frag.dataset.defStage, 10));
+          }
+        });
+        return stage;
+      }
+
+      function defUpdate(slide) {
+        if (!slide || !slide.classList.contains("def-interactive-slide")) return;
+        defInit();
+        var stage = getDefStage(slide);
+        drawDefGrid(stage);
+
+        var chipIds = ["def-chip-s", "def-chip-a", "def-chip-p", "def-chip-r", "def-chip-u"];
+        var stageForChip = [1, 2, 3, 4, 5];
+        for (var ci = 0; ci < chipIds.length; ci++) {
+          var chip = document.getElementById(chipIds[ci]);
+          if (chip) chip.classList.toggle("active", stage === stageForChip[ci]);
+        }
+
+        var arrowGrid = document.getElementById("def-arrow-grid");
+        var transitionWrap = document.getElementById("def-transition-wrap");
+        if (arrowGrid) {
+          arrowGrid.classList.toggle("visible", stage >= 2);
+          arrowGrid.classList.toggle("highlight", stage >= 2);
+        }
+        if (transitionWrap) {
+          transitionWrap.classList.toggle("visible", stage >= 3);
+        }
+        if (stage >= 3) {
+          drawDefTransitionDiagram("up");
+        }
+
+        var utilCaption = document.getElementById("def-utility-caption");
+        if (utilCaption) {
+          utilCaption.classList.toggle("visible", stage >= 5);
+          if (stage >= 5) {
+            var steps = defSamplePath.length - 1;
+            var nonTermSteps = steps - 1;
+            var total = (nonTermSteps * -0.04) + 1;
+            utilCaption.innerHTML =
+              "U = \u2211 R(s\u209C)" +
+              "<div class='def-utility-result'>" +
+              nonTermSteps + " \u00d7 (\u22120.04) + 1 = " + total.toFixed(2) +
+              "</div>";
+          } else {
+            utilCaption.innerHTML = "";
+          }
+        }
+      }
+
+      function defInit() {
+        if (defInitialized) return;
+        const canvas = document.getElementById("def-grid");
+        if (!canvas) return;
+        defInitialized = true;
+
+        defCELL = 120;
+        defML = 40;
+        var MB = 30;
+        defCW = defML + COLS * defCELL;
+        defCH = ROWS * defCELL + MB;
+        canvas.width = defCW;
+        canvas.height = defCH;
+        defCtx = canvas.getContext("2d");
+
+        drawDefGrid(0);
+      }
+
+      function handleDefSlide() {
+        try {
+          var slide = Reveal.getCurrentSlide();
+          if (slide && slide.classList.contains("def-interactive-slide")) {
+            defUpdate(slide);
+          }
+        } catch (err) {
+          console.warn("defSlide handler error:", err);
+        }
+      }
+
+      Reveal.on("fragmentshown", handleDefSlide);
+      Reveal.on("fragmenthidden", handleDefSlide);
+      Reveal.on("slidechanged", handleDefSlide);
+      Reveal.on("ready", handleDefSlide);
+    })();
+    </script>
+  </body>
+</html>

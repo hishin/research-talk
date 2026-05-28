@@ -1,0 +1,3886 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Beyond the Timeline — Valentina Shin</title>
+
+		<meta
+			name="description"
+			content="A framework for easily creating beautiful presentations using HTML"
+		/>
+		<meta name="author" content="Hakim El Hattab" />
+
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="stylesheet" href="dist/reset.css" />
+		<link rel="stylesheet" href="dist/reveal.css" />
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--slide-navy: #1e3354;
+				--slide-slate: #2d3748;
+				--slide-muted: #5c6778;
+				--slide-faint: #8a939f;
+				--slide-accent: #4a6fa5;
+				--slide-teal: #2fb4b4;
+				--slide-border: #d4d9e0;
+				--slide-surface: #f5f7fa;
+				--slide-bg: #ffffff;
+				--slide-pad-x: 28px;
+				--slide-pad-y: 16px;
+				--slide-gap: 1em;
+				--font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				--text-slide: 1.05em;
+				--text-heading: 1.2em;
+				--text-body: 0.8em;
+				--text-body-lg: 0.9em;
+				--text-small: 0.68em;
+				--text-caption: 0.36em;
+				--text-label: 0.52em;
+				--text-pillar-title: 1.3em;
+				--text-pillar-body: 0.95em;
+				--r-background: #ffffff;
+				--r-background-color: #ffffff;
+			}
+
+			html,
+			body,
+			.reveal-viewport,
+			.reveal {
+				background: var(--slide-bg) !important;
+				background-color: var(--slide-bg) !important;
+			}
+
+			.reveal .slide-background,
+			.reveal .slide-background-content {
+				background-color: var(--slide-bg) !important;
+			}
+
+			.reveal .slides > section,
+			.reveal .slides > section > section {
+				background: transparent !important;
+				background-color: transparent !important;
+			}
+
+			.reveal {
+				font-family: var(--font-sans);
+				color: var(--slide-muted);
+			}
+
+			.reveal h1,
+			.reveal h2,
+			.reveal h3 {
+				font-family: var(--font-sans);
+				text-transform: none;
+				letter-spacing: -0.01em;
+			}
+
+			.reveal .slides section strong {
+				color: var(--slide-navy);
+				font-weight: 700;
+			}
+
+			.reveal .slides section em {
+				font-style: italic;
+				color: inherit;
+			}
+
+			.reveal .slides section mark {
+				background: rgba(255, 224, 0, 0.38);
+				padding: 0.05em 0.15em;
+				border-radius: 2px;
+				color: inherit;
+			}
+
+			.reveal .slides section a {
+				color: var(--slide-accent);
+			}
+
+			/* Full-bleed slides: fill the canvas top-to-bottom (disable reveal centering shrink) */
+			.reveal .slides > section.title-slide,
+			.reveal .slides > section.content-slide,
+			.reveal .slides > section.media-slide,
+			.reveal .slides > section.stacked-slide,
+			.reveal .slides > section.timeline-slide,
+			.reveal .slides > section > section.content-slide,
+			.reveal .slides > section > section.media-slide,
+			.reveal .slides > section > section.stacked-slide {
+				top: 0 !important;
+				height: 100%;
+				box-sizing: border-box;
+				overflow: hidden;
+				min-height: 0;
+			}
+
+			.reveal .slides > section.title-slide.present,
+			.reveal .slides > section.content-slide.present,
+			.reveal .slides > section.media-slide.present,
+			.reveal .slides > section.stacked-slide.present,
+			.reveal .slides > section.timeline-slide.present,
+			.reveal .slides > section > section.content-slide.present,
+			.reveal .slides > section > section.media-slide.present,
+			.reveal .slides > section > section.stacked-slide.present {
+				display: flex !important;
+			}
+
+			.reveal .slides section.title-slide {
+				background-color: transparent;
+				font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				text-align: center;
+				height: 100%;
+				display: flex !important;
+				flex-direction: column;
+				padding: var(--slide-pad-y) var(--slide-pad-x);
+				box-sizing: border-box;
+			}
+
+			.reveal .slides section.title-slide .title-slide-content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				min-height: 0;
+				gap: 0;
+			}
+
+			.reveal .slides section.title-slide .title-heading {
+				font-family: inherit;
+				font-size: 2.35em;
+				font-weight: 700;
+				color: #1e3354;
+				text-transform: none;
+				letter-spacing: -0.02em;
+				line-height: 1.15;
+				margin: 0 0 1.35em;
+				text-shadow: none;
+			}
+
+			.reveal .slides section.title-slide .title-author {
+				font-size: 0.95em;
+				font-weight: 700;
+				color: #5c6778;
+				margin: 0 0 0.35em;
+				line-height: 1.3;
+			}
+
+			.reveal .slides section.title-slide .title-affiliation {
+				font-size: 0.82em;
+				font-weight: 700;
+				color: #5c6778;
+				margin: 0 0 1.1em;
+				line-height: 1.3;
+			}
+
+			.reveal .slides section.title-slide .title-date {
+				font-size: 0.72em;
+				font-weight: 400;
+				color: #8a939f;
+				margin: 0 0 1.4em;
+				line-height: 1.3;
+			}
+
+			.reveal .slides section.title-slide .title-rule {
+				width: 38%;
+				max-width: 14em;
+				border: none;
+				border-top: 1px solid #d4d9e0;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide {
+				font-family: var(--font-sans);
+				text-align: left;
+				height: 100%;
+				display: flex !important;
+				flex-direction: column;
+				padding: var(--slide-pad-y) var(--slide-pad-x);
+				box-sizing: border-box;
+				font-size: var(--text-slide);
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide .slide-heading,
+			.reveal .slides section.media-slide .slide-heading,
+			.reveal .slides section.timeline-slide .slide-heading {
+				font-family: inherit;
+				font-size: var(--text-heading);
+				font-weight: 700;
+				color: var(--slide-navy);
+				text-transform: none;
+				letter-spacing: -0.02em;
+				line-height: 1.2;
+				width: 100%;
+				margin: 0 0 0.3em;
+				text-align: left;
+				text-shadow: none;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-subtitle,
+			.reveal .slides section.media-slide .slide-subtitle,
+			.reveal .slides section.timeline-slide .slide-subtitle {
+				font-size: 0.6em;
+				font-weight: 400;
+				color: var(--slide-muted);
+				line-height: 1.35;
+				width: 100%;
+				margin: -0.15em 0 0.45em;
+				text-align: left;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-body {
+				flex: 1 1 auto;
+				display: flex;
+				flex-direction: column;
+				min-height: 0;
+				max-height: 100%;
+				width: 100%;
+				max-width: none;
+				margin: 0;
+				padding-top: 0.45em;
+				font-size: var(--text-body);
+				line-height: 1.48;
+				color: var(--slide-muted);
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide .slide-body--dense {
+				padding-top: 0.2em;
+				font-size: calc(var(--text-body) * 0.96);
+				line-height: 1.42;
+			}
+
+			.reveal .slides section.content-slide .slide-body--center {
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				padding-top: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-body--split-media {
+				flex-direction: row;
+				align-items: stretch;
+				gap: 1.5em;
+				padding-top: 0;
+			}
+
+			.reveal .slides section.content-slide .split-media-panel {
+				flex: 0 0 36%;
+				min-width: 0;
+				min-height: 0;
+				height: auto;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: flex-start;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide .split-media-panel img {
+				width: 100%;
+				height: 100%;
+				max-height: 100%;
+				object-fit: contain;
+				object-position: top center;
+				margin: 0;
+				border-radius: 4px;
+				flex: 1;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide .split-media-caption,
+			.reveal .slides section.media-slide .media-citation {
+				margin: 0.35em 0 0;
+				font-size: var(--text-caption);
+				color: var(--slide-faint);
+				text-align: center;
+				flex-shrink: 0;
+				line-height: 1.3;
+				overflow-wrap: break-word;
+				word-break: break-all;
+				min-width: 0;
+				width: 100%;
+			}
+
+			.reveal .slides section.content-slide .split-media-caption a,
+			.reveal .slides section.media-slide .media-citation a {
+				color: #8a939f;
+				text-decoration: none;
+			}
+
+			.reveal .slides section.content-slide .split-media-caption a:hover,
+			.reveal .slides section.media-slide .media-citation a:hover {
+				color: #4a6fa5;
+				text-decoration: underline;
+			}
+
+			.reveal .slides section.content-slide .split-media-panel--video {
+				flex: 0 0 58%;
+			}
+
+			.reveal .slides section.content-slide .split-media-panel video {
+				width: 100%;
+				max-height: 100%;
+				flex: 1;
+				min-height: 0;
+				object-fit: contain;
+				margin: 0;
+				border-radius: 4px;
+				background: #000;
+				display: block;
+			}
+
+			.reveal .slides section.content-slide .split-text-panel {
+				flex: 1;
+				min-width: 0;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				gap: 1.1em;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide .split-text-panel .snapstream-summary {
+				font-size: 0.92em;
+				line-height: 1.45;
+				color: #2d3748;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .split-text-panel .split-media-citation {
+				font-size: 0.42em;
+				color: #8a939f;
+				line-height: 1.45;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .split-text-panel .split-media-citation a {
+				color: #4a6fa5;
+			}
+
+		.reveal .slides section.content-slide .problem-list {
+			flex: 1;
+			min-width: 0;
+			min-height: 0;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			font-size: 0.88em;
+			line-height: 1.45;
+			overflow: hidden;
+		}
+
+			.reveal .slides section.content-slide .problem-list li {
+				margin: 0 0 0.85em;
+				padding-left: 0;
+				position: relative;
+			}
+
+			.reveal .slides section.content-slide .problem-list li::before {
+				content: none;
+			}
+
+			.reveal .slides section.content-slide .problem-list li:last-child {
+				margin-bottom: 0;
+			}
+
+		.reveal .slides section.content-slide .problem-list li.fragment:not(.visible) {
+			opacity: 0;
+		}
+
+		.reveal .slides section.content-slide .problem-list li.fragment.visible {
+			opacity: 1;
+		}
+
+			.reveal .slides section.content-slide.theme-pillar-slide .slide-body {
+				justify-content: center;
+				align-items: center;
+				padding-top: 0;
+				font-size: var(--text-body-lg);
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide .theme-pillar {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				max-width: 88%;
+				text-align: center;
+				gap: 0.55em;
+				margin: 0;
+			}
+
+			/* Must beat .slide-body p { font-size: inherit } */
+			.reveal .slides section.content-slide.theme-pillar-slide .slide-body p.theme-pillar-label {
+				font-size: var(--text-pillar-title);
+				font-weight: 700;
+				color: var(--slide-navy);
+				margin: 0;
+				line-height: 1.15;
+				letter-spacing: -0.02em;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide .slide-body p.theme-pillar-desc {
+				font-size: var(--text-pillar-body);
+				line-height: 1.42;
+				color: var(--slide-muted);
+				margin: 0;
+				max-width: 40em;
+			}
+
+			.reveal .slides section.content-slide .research-questions {
+				max-width: 88%;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .research-questions-panel .research-questions {
+				max-width: none;
+				text-align: left;
+			}
+
+			.reveal .slides section.content-slide .research-question {
+				font-size: 1.1em;
+				line-height: 1.45;
+				color: #1e3354;
+				margin: 0 0 0.95em;
+			}
+
+			.reveal .slides section.content-slide .research-question:last-child {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .intent-label {
+				font-size: var(--text-label);
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				color: var(--slide-faint);
+				margin: 0 0 0.25em;
+			}
+
+			.reveal .slides section.content-slide .intent-text {
+				font-size: var(--text-body-lg);
+				line-height: 1.45;
+				color: var(--slide-slate);
+				margin: 0 0 1em;
+			}
+
+			.reveal .slides section.content-slide .intent-operations .intent-text {
+				color: #5c6778;
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .intent-comparison {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding-top: 0;
+				width: 100%;
+			}
+
+		.reveal .slides section.content-slide .intent-comparison-layout {
+			display: grid;
+			grid-template-columns: 65fr 35fr;
+			align-items: center;
+			gap: 0 1.75em;
+			width: 100%;
+			max-width: 98%;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.reveal .slides section.content-slide .intent-comparison .intent-text {
+			max-width: 52em;
+			margin-left: auto;
+			margin-right: auto;
+			line-height: 1.42;
+		}
+
+			.reveal .slides section.content-slide .intent-comparison-main {
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				transform: translateY(0.65em);
+				transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.reveal .slides section.content-slide.intent-shift-up .intent-comparison-main {
+				transform: translateY(0);
+			}
+
+			.reveal .slides section.content-slide .intent-comparison-gulf {
+				min-height: 7.5em;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.reveal .slides section.content-slide .intent-comparison .intent-operations {
+				border-top: 1px solid transparent;
+				padding-top: 0;
+				margin-top: 0;
+				max-height: 0;
+				opacity: 0 !important;
+				visibility: hidden;
+				overflow: hidden;
+				width: 100%;
+				transition:
+					max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+					opacity 0.45s ease,
+					padding-top 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+					margin-top 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+					border-color 0.4s ease;
+			}
+
+			.reveal .slides section.content-slide .intent-comparison .intent-operations.visible {
+				max-height: 10em;
+				opacity: 1 !important;
+				visibility: visible;
+				padding-top: 1em;
+				margin-top: 0.15em;
+				border-top-color: #d4d9e0;
+			}
+
+			.reveal .slides section.content-slide .intent-comparison .gulf-callout {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+				gap: 0.35em;
+				opacity: 0 !important;
+				visibility: hidden;
+				transform: translateX(0.35em);
+				transition:
+					opacity 0.5s ease,
+					visibility 0.5s ease,
+					transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.reveal .slides section.content-slide .intent-comparison .gulf-callout.visible {
+				opacity: 1 !important;
+				visibility: visible;
+				transform: translateX(0);
+			}
+
+			.reveal .slides section.content-slide .intent-comparison-main .intent-text {
+				margin-bottom: 0.85em;
+			}
+
+			.reveal .slides section.content-slide .intent-comparison-main .intent-operations .intent-text {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .intent-text--compact {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .gulf-callout p {
+				margin: 0;
+			}
+
+		.reveal .slides section.content-slide .intent-comparison .gulf-title {
+			font-size: 0.9em;
+			font-weight: 700;
+			color: #1e3354;
+			line-height: 1.2;
+			white-space: nowrap;
+		}
+
+		.reveal .slides section.content-slide .intent-comparison .gulf-cite {
+			font-size: 0.8em;
+			color: #8a939f;
+			margin: 0.25em 0 0;
+			white-space: nowrap;
+		}
+
+			.reveal .slides section.content-slide .intent-breakdown .intent-label {
+				font-size: 0.55em;
+				letter-spacing: 0.1em;
+				color: #4a6fa5;
+				font-weight: 700;
+				margin-bottom: 0.3em;
+			}
+
+			.reveal .slides section.content-slide .intent-breakdown .intent-item {
+				font-size: 0.9em;
+				color: #2d3748;
+				margin: 0 0 0.4em;
+			}
+
+			.reveal .slides section.content-slide .intent-breakdown .intent-group {
+				margin-bottom: 1.4em;
+			}
+
+			.reveal .slides section.content-slide .intent-breakdown .intent-group:last-child {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .intent-breakdown .intent-block {
+				padding-left: 0.8em;
+				border-left: 3px solid #4a6fa5;
+			}
+
+			.reveal .slides section.content-slide .intent-breakdown .intent-block .intent-item:last-child {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .intent-breakdown {
+				margin-left: 1em;
+			}
+
+			.reveal .slides section.content-slide .slide-body--breakdown {
+				padding-top: 0;
+				justify-content: flex-start;
+			}
+
+			.reveal .slides section.content-slide .slide-body--animate-intent {
+				padding-top: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-body--breakdown .intent-label {
+				font-size: 0.45em;
+				margin-bottom: 0.2em;
+			}
+
+			.reveal .slides section.content-slide .slide-body--breakdown .intent-text {
+				font-size: 0.85em;
+				line-height: 1.4;
+				color: #5c6778;
+				margin-bottom: 1.2em;
+			}
+
+			.reveal .slides section.content-slide .slide-body--energy-map {
+				padding-top: 0;
+				justify-content: flex-start;
+				overflow: hidden;
+				gap: 0.2em;
+				font-size: calc(var(--text-body) * 0.94);
+				line-height: 1.38;
+			}
+
+			.reveal .slides section.content-slide .slide-body--energy-map .intent-label {
+				font-size: calc(var(--text-label) * 0.92);
+				margin-bottom: 0.1em;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-body--energy-map .intent-text {
+				font-size: calc(var(--text-body-lg) * 0.88);
+				line-height: 1.32;
+				color: var(--slide-muted);
+				margin-bottom: 0.35em;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .energy-input {
+				width: 38%;
+				margin: 0 auto 0.45em;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .energy-input img {
+				width: 100%;
+				max-height: min(12vh, 5em);
+				height: auto;
+				object-fit: contain;
+				display: block;
+				margin: 0;
+				border-radius: 3px;
+			}
+
+			.reveal .slides section.content-slide .energy-input-caption {
+				font-size: 0.4em;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				color: #8a939f;
+				margin: 0.35em 0 0;
+			}
+
+			.reveal .slides section.content-slide .energy-section-label {
+				font-size: 0.42em;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: #4a6fa5;
+				font-weight: 700;
+				margin: 0 0 0.25em;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal {
+				padding: 0.35em 0.7em;
+				margin: 0 0 0.55em;
+				border-left: 3px solid #b8c5d4;
+				background-color: #f5f7fa;
+				border-radius: 0 3px 3px 0;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal-placeholder {
+				font-size: 0.65em;
+				color: #8a939f;
+				font-style: italic;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .visual-attrs-grid {
+				display: grid;
+				grid-template-columns: repeat(5, minmax(0, 1fr));
+				gap: 1em;
+				width: 100%;
+				margin-top: 1em;
+			}
+
+			.reveal .slides section.content-slide .visual-attr-cell {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				text-align: center;
+				padding: 0.8em 0.4em;
+				border-radius: 6px;
+				background: #f5f7fa;
+				border: 1px solid #d4d9e0;
+			}
+
+			.reveal .slides section.content-slide .visual-attr-cell .attr-icon {
+				font-size: 2em;
+				margin-bottom: 0.3em;
+				color: #1e3354;
+			}
+
+			.reveal .slides section.content-slide .visual-attr-cell .attr-label {
+				font-size: 0.7em;
+				font-weight: 700;
+				color: #1e3354;
+				margin: 0;
+			}
+
+			@keyframes visual-attr-fade-in {
+				from { opacity: 0; transform: translateY(10px); }
+				to   { opacity: 1; transform: translateY(0); }
+			}
+
+			.reveal .slides section.content-slide .visual-attr-cell--stagger.visible {
+				opacity: 0;
+				animation: visual-attr-fade-in 0.35s ease forwards;
+				animation-delay: var(--stagger-delay, 0s);
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout {
+				display: flex;
+				flex-direction: row;
+				align-items: stretch;
+				gap: 1.5em;
+				flex: 1;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout .physics-visual {
+				flex: 0 0 50%;
+				min-width: 0;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout .physics-visual img {
+				width: 100%;
+				height: auto;
+				max-height: 100%;
+				object-fit: contain;
+				border-radius: 4px;
+				border: 1px solid #d4d9e0;
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout .physics-visual .physics-label {
+				font-size: 0.6em;
+				font-weight: 600;
+				color: #2d3748;
+				margin: 0.5em 0 0;
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout .physics-specs {
+				flex: 1;
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				gap: 0;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-heading {
+				font-size: 0.75em;
+				font-weight: 700;
+				color: #1e3354;
+				margin: 0 0 0.6em;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-row {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: 0.8em;
+				margin-bottom: 0.6em;
+				padding: 0.4em 0.6em;
+				border-radius: 4px;
+				background: #f5f7fa;
+				border: 1px solid #d4d9e0;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-attr-name {
+				font-size: 0.6em;
+				font-weight: 700;
+				color: #2d3748;
+				min-width: 4.5em;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-attr-value {
+				font-size: 0.55em;
+				font-weight: 600;
+				color: #4a6fa5;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-attr-icon {
+				font-size: 1.2em;
+				color: #1e3354;
+			}
+
+			.reveal .slides section.content-slide .energy-grid {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+				gap: 0.35em;
+				width: 100%;
+				flex: 1 1 auto;
+				min-height: 0;
+				align-content: start;
+			}
+
+			.reveal .slides section.content-slide .energy-cell {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				text-align: center;
+				min-width: 0;
+			}
+
+			.reveal .slides section.content-slide .energy-cell img {
+				width: 100%;
+				max-height: min(10vh, 3.6em);
+				height: auto;
+				object-fit: contain;
+				margin: 0 auto 0.15em;
+				display: block;
+				border-radius: 3px;
+				border: 1px solid var(--slide-border);
+			}
+
+			.reveal .slides section.content-slide .energy-cell .energy-bullet {
+				font-size: calc(var(--text-small) * 0.92);
+				color: var(--slide-slate);
+				line-height: 1.2;
+				margin: 0 0 0.1em;
+				font-weight: 600;
+			}
+
+			.reveal .slides section.content-slide .energy-cell .energy-term {
+				font-size: calc(var(--text-caption) * 1.15);
+				color: #4a6fa5;
+				font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
+				font-style: italic;
+				margin: 0;
+				line-height: 1.15;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal--standalone {
+				flex: 0 1 auto;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				min-height: 0;
+				padding: 1.2em 1.4em;
+				margin: 0.2em 0 0;
+				background-color: #f5f7fa;
+				border: 1px dashed #b8c5d4;
+				border-radius: 6px;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal--standalone .energy-temporal-placeholder {
+				font-size: 0.9em;
+				margin: 0 0 0.4em;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal-detail {
+				font-size: 0.55em;
+				color: #5c6778;
+				font-style: normal;
+				margin: 0;
+				line-height: 1.5;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .energy-equation {
+				margin: 0.3em 0 0;
+				padding: 0.45em 0.75em;
+				flex-shrink: 0;
+				border-radius: 4px;
+				background-color: #f5f7fa;
+				border-left: 4px solid #4a6fa5;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .energy-equation .energy-equation-label {
+				font-size: 0.45em;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				color: #4a6fa5;
+				font-weight: 700;
+				margin: 0 0 0.45em;
+			}
+
+			.reveal .slides section.content-slide .energy-equation .energy-equation-formula {
+				font-size: 0.7em;
+				color: #1e3354;
+				font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
+				font-style: italic;
+				margin: 0;
+				line-height: 1.45;
+			}
+
+			.reveal .slides section.content-slide .slide-body p {
+				font-size: inherit;
+				line-height: inherit;
+				color: inherit;
+				margin: 0 0 0.85em;
+			}
+
+			.reveal .slides section.content-slide .slide-body p:last-child {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-body strong {
+				color: #1e3354;
+				font-weight: 700;
+			}
+
+			.reveal .slides section.timeline-slide {
+				font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				padding: var(--slide-pad-y) var(--slide-pad-x);
+				box-sizing: border-box;
+			}
+
+			.reveal .slides section.timeline-slide .storyboard-timeline {
+				width: 100%;
+				max-width: none;
+				margin: 0;
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				padding-top: 0;
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-item {
+				display: flex;
+				align-items: baseline;
+				gap: 0.7em;
+				margin-bottom: 0.65em;
+				font-size: 0.78em;
+				line-height: 1.5;
+				color: #5c6778;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-item:last-child {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-year {
+				font-weight: 700;
+				color: #1e3354;
+				flex-shrink: 0;
+				min-width: 2.8em;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-body {
+				margin: 0;
+				font-size: inherit;
+				line-height: inherit;
+				color: inherit;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-body strong {
+				color: #1e3354;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-quote {
+				margin: 0.15em 0 0;
+				padding-left: 0.85em;
+				border-left: 2px solid #b8c5d4;
+				color: #5c6778;
+				font-style: italic;
+			}
+
+			.reveal .slides section.timeline-slide .timeline-quote cite {
+				display: block;
+				margin-top: 0.25em;
+				font-style: normal;
+				font-weight: 600;
+				color: #1e3354;
+				font-size: 0.92em;
+			}
+
+			.reveal .slides section.stacked-slide {
+				font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				height: 100%;
+				display: flex !important;
+				flex-direction: column;
+				padding: var(--slide-pad-y) var(--slide-pad-x);
+				box-sizing: border-box;
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-layout {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 16px;
+				width: 100%;
+				min-height: 0;
+				margin: 0;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-top {
+				flex: 1;
+				width: 100%;
+				min-height: 0;
+				overflow: hidden;
+				border-radius: 4px;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-top img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+				margin: 0;
+				display: block;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-bottom {
+				flex: 1;
+				width: 100%;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-bottom--text {
+				justify-content: flex-start;
+				padding: 0 0.5em;
+			}
+
+		.reveal .slides section.stacked-slide .stacked-bottom--text .slide-body {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 100%;
+			max-width: none;
+			margin: 0;
+			padding: 0;
+			font-size: 0.82em;
+			line-height: 1.65;
+			text-align: left;
+		}
+
+			.reveal .slides section.stacked-slide .stacked-bottom img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center top;
+				margin: 0;
+				display: block;
+				border-radius: 4px;
+			}
+
+			.reveal .slides section.stacked-slide .slide-heading {
+				font-family: inherit;
+				font-size: 1.2em;
+				font-weight: 700;
+				color: #1e3354;
+				text-transform: none;
+				letter-spacing: -0.02em;
+				line-height: 1.2;
+				margin: 0 0 0.5em;
+				text-align: left;
+				text-shadow: none;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				font-size: 0.72em;
+				line-height: 1.4;
+				color: #5c6778;
+				display: flex;
+				flex-direction: column;
+				gap: 0.55em;
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-list li {
+				margin: 0;
+				padding: 0;
+				display: block;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-list .split-number {
+				font-weight: 700;
+				color: #1e3354;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-list .split-text strong {
+				color: #1e3354;
+				font-weight: 700;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-columns {
+				display: flex;
+				gap: 1em;
+				width: 100%;
+				flex: 1;
+				min-height: 0;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-columns .stacked-col {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.35em;
+				min-height: 0;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-columns .stacked-col-label {
+				font-size: 0.65em;
+				font-weight: 700;
+				color: #1e3354;
+				letter-spacing: -0.01em;
+				margin: 0;
+				text-align: center;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-columns .stacked-col img {
+				flex: 1;
+				width: 100%;
+				min-height: 0;
+				object-fit: cover;
+				border-radius: 4px;
+				margin: 0;
+				display: block;
+			}
+
+			.reveal .slides section.media-slide {
+				font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+				height: 100%;
+				display: flex !important;
+				flex-direction: column;
+				padding: var(--slide-pad-y) var(--slide-pad-x);
+				box-sizing: border-box;
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.media-slide > .slide-heading + .media-split,
+			.reveal .slides section.media-slide > .slide-heading + .media-frame,
+			.reveal .slides section.media-slide > .slide-heading + .media-stack {
+				flex: 1;
+				min-height: 0;
+			}
+
+			.reveal .slides section.media-slide .slide-heading {
+				font-family: inherit;
+				font-size: 1.25em;
+				font-weight: 700;
+				color: #1e3354;
+				text-transform: none;
+				letter-spacing: -0.02em;
+				line-height: 1.2;
+				width: 100%;
+				margin: 0 0 0.35em;
+				text-align: left;
+				text-shadow: none;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .media-frame {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: 0;
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.media-slide .media-frame video {
+				width: 100%;
+				max-width: 100%;
+				max-height: 100%;
+				margin: 0;
+				display: block;
+				object-fit: contain;
+			}
+
+			.reveal .slides section.media-slide .media-frame iframe {
+				width: 100%;
+				max-width: 100%;
+				max-height: 100%;
+				margin: 0;
+				display: block;
+				aspect-ratio: 16 / 9;
+				height: auto;
+			}
+
+			.reveal .slides section.media-slide .media-caption {
+				margin: 0.5em 0 0;
+				font-size: 0.5em;
+				color: #8a939f;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .media-split {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 24px;
+				min-height: 0;
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.media-slide .media-split img {
+				flex: 1;
+				width: 0;
+				max-height: 100%;
+				object-fit: contain;
+				margin: 0;
+			}
+
+			.reveal .slides section.media-slide .media-stack {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 0.4em;
+				min-height: 0;
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.media-slide .media-stack img {
+				flex: 1;
+				width: auto;
+				max-width: 100%;
+				max-height: 100%;
+				object-fit: contain;
+				margin: 0;
+				min-height: 0;
+			}
+
+			.reveal .slides section.media-slide .media-stack p {
+				margin: 0;
+				font-size: 0.55em;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .correspondence-stack {
+				position: relative;
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-height: 0;
+				width: 100%;
+			}
+
+			.reveal .slides section.media-slide .correspondence-stack .correspondence-img {
+				max-width: 100%;
+				max-height: 100%;
+				object-fit: contain;
+				margin: 0;
+			}
+
+			.reveal .slides section.media-slide .correspondence-stack .correspondence-img.fragment {
+				position: absolute;
+				inset: 0;
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+				margin: auto;
+			}
+
+			.reveal .slides section.media-slide.media-slide--video-fill .media-frame {
+				position: relative;
+			}
+
+			.reveal .slides section.media-slide.media-slide--video-fill video {
+				width: 100%;
+				height: 100%;
+				max-height: 100%;
+			}
+
+			.reveal .slides section.media-slide.media-slide--video-fill{
+				max-height: 90%;
+			}
+
+			.reveal .slides section.media-slide.media-slide--video-fill > .slide-subtitle {
+				margin-bottom: 0.15em;
+			}
+
+			.reveal .slides section.media-slide.media-slide--video-fill > .slide-subtitle + .media-frame {
+				justify-content: flex-start;
+			}
+
+			.reveal .slides section.media-slide .media-attribution {
+				position: absolute;
+				bottom: 0;
+				margin: 0;
+				font-size: 0.45em;
+				color: #8a939f;
+			}
+
+			.reveal .slides section.media-slide .media-attribution--left {
+				left: 0;
+			}
+
+			.reveal .slides section.media-slide .media-attribution--right {
+				right: 0;
+				font-size: 0.4em;
+			}
+
+			/* Shared layout utilities */
+			.reveal .slides section.content-slide .slide-lead {
+				font-size: 0.75em;
+				color: var(--slide-muted);
+				margin: 0 0 0.65em;
+				text-align: center;
+				line-height: 1.45;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .slide-body--figure {
+				padding-top: 0;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.reveal .slides section.content-slide .slide-figure {
+				flex: 1;
+				min-height: 0;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.reveal .slides section.content-slide .slide-figure img {
+				max-height: 100%;
+				max-width: 100%;
+				width: auto;
+				height: auto;
+				object-fit: contain;
+				display: block;
+				margin: 0;
+				border-radius: 4px;
+			}
+
+			.reveal .slides section.content-slide .pipeline-row {
+				flex: 1;
+				min-height: 0;
+				display: flex;
+				flex-direction: row;
+				align-items: stretch;
+				justify-content: center;
+				gap: var(--slide-gap);
+				padding-top: 0;
+				width: 100%;
+			}
+
+			.reveal .slides section.content-slide .pipeline-stage {
+				flex: 1;
+				min-width: 0;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.reveal .slides section.content-slide .pipeline-stage--wide {
+				flex: 1.35;
+			}
+
+			.reveal .slides section.content-slide .pipeline-stage-label {
+				font-size: 0.6em;
+				font-weight: 600;
+				color: var(--slide-slate);
+				margin: 0 0 0.35em;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .pipeline-stage img {
+				flex: 1;
+				min-height: 0;
+				max-width: 100%;
+				width: auto;
+				object-fit: contain;
+				display: block;
+				border-radius: 4px;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .pipeline-stage img.pipeline-gif {
+				clip-path: inset(0 0 12px 0);
+			}
+
+			.reveal .slides section.content-slide .pipeline-note {
+				font-size: 0.5em;
+				color: var(--slide-accent);
+				margin: 0.35em 0 0;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .quote-slide {
+				max-width: 90%;
+				text-align: center;
+				cursor: pointer;
+			}
+
+			.reveal .slides section.content-slide .quote-slide-text {
+				font-size: 0.85em;
+				line-height: 1.6;
+				font-style: italic;
+				color: var(--slide-slate);
+				margin: 0 0 1em;
+			}
+
+			.reveal .slides section.content-slide .quote-slide-attribution {
+				font-size: 0.7em;
+				color: var(--slide-muted);
+				margin: 0.6em 0 0;
+				transition: opacity 0.3s;
+			}
+
+			.reveal .slides section.content-slide .quote-slide-source {
+				margin: 0.5em 0 0;
+				transition: opacity 0.3s;
+			}
+
+			.reveal .slides section.content-slide .quote-slide-source a {
+				opacity: 0.5;
+				font-size: 0.45em;
+				text-decoration: none;
+				color: var(--slide-muted);
+			}
+
+			.reveal .slides section.content-slide#lasseter-slide .slide-body {
+				justify-content: flex-start;
+				align-items: stretch;
+				text-align: left;
+			}
+
+			.reveal .slides section.content-slide#lasseter-slide .quote-slide {
+				max-width: 100%;
+				text-align: left;
+				cursor: default;
+			}
+
+			.reveal .slides section.content-slide#lasseter-slide .quote-slide-text,
+			.reveal .slides section.content-slide#lasseter-slide .quote-slide-attribution,
+			.reveal .slides section.content-slide#lasseter-slide .quote-slide-source {
+				text-align: left;
+			}
+
+			.reveal .slides section.content-slide#lasseter-slide .quote-slide-attribution {
+				font-size: 0.5em;
+				font-style: normal;
+				margin-top: 0.5em;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .slide-heading {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .slide-body.slide-body--center {
+				justify-content: center;
+				padding-top: 0.15em;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .slide-body--split-media {
+				max-width: 100%;
+				justify-content: center;
+				align-items: stretch;
+				flex: 1 1 auto;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .split-media-panel {
+				justify-content: center;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .split-media-panel--news {
+				flex: 0 0 42%;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .split-media-panel--video {
+				flex: 0 0 54%;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .split-media-panel img,
+			.reveal .slides section.content-slide#agentic-slide .split-media-panel--video video {
+				flex: 0 1 auto;
+				width: 100%;
+				max-width: 100%;
+				max-height: min(52vh, 20em);
+				height: auto;
+				margin-left: auto;
+				margin-right: auto;
+				object-fit: contain;
+				object-position: center center;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .agentic-source {
+				margin: 0.35em 0 0;
+				font-size: 0.38em;
+				color: var(--slide-faint);
+				text-align: center;
+				line-height: 1.35;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .agentic-source a {
+				color: #8a939f;
+				text-decoration: none;
+			}
+
+			.reveal .slides section.content-slide#agentic-slide .agentic-source a:hover {
+				color: #4a6fa5;
+				text-decoration: underline;
+			}
+
+			.reveal .slides section.content-slide#agentic-murch-slide .slide-body {
+				justify-content: flex-start;
+				align-items: stretch;
+				text-align: left;
+			}
+
+			.reveal .slides section.content-slide .agentic-murch-body {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: flex-start;
+				gap: 0.3em;
+				width: 100%;
+				max-width: 100%;
+				min-height: 0;
+				flex: 1 1 auto;
+			}
+
+			.reveal .slides section.content-slide#agentic-murch-slide .agentic-quote {
+				font-size: 0.82em;
+				font-style: italic;
+				color: var(--slide-slate);
+				margin: 0;
+				max-width: 100%;
+				text-align: left;
+				line-height: 1.42;
+				flex-shrink: 1;
+			}
+
+			.reveal .slides section.content-slide#agentic-murch-slide .agentic-quote-cite {
+				font-size: 0.58em;
+				color: var(--slide-muted);
+				margin: 0.15em 0 0;
+				text-align: left;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .agentic-murch-body img {
+				align-self: center;
+				max-height: min(38vh, 16em);
+				max-width: min(72%, 28em);
+				object-fit: contain;
+				object-position: center center;
+				display: block;
+				border-radius: 6px;
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+				margin: 0.2em auto 0;
+				flex-shrink: 1;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide .agentic-quote {
+				font-size: 0.62em;
+				font-style: italic;
+				color: var(--slide-slate);
+				margin: 0;
+				max-width: 92%;
+				text-align: center;
+				line-height: 1.55;
+			}
+
+			.reveal .slides section.content-slide .agentic-quote-cite {
+				font-size: 0.5em;
+				color: var(--slide-muted);
+				margin: 0.35em 0 0;
+			}
+
+			.reveal .slides section.content-slide .source-cards {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: stretch;
+				gap: 0.85em;
+				padding: 0.2em 0;
+				flex: 1;
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide .source-card-wrap {
+				flex: 1 1 260px;
+				max-width: 420px;
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.3em;
+			}
+
+			.reveal .slides section.content-slide .source-card {
+				flex: 1;
+				min-height: 0;
+				border: 1px solid var(--slide-border);
+				border-radius: 8px;
+				overflow: hidden;
+				background: #fff;
+				box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
+				font-family: Georgia, 'Times New Roman', serif;
+				padding: 0.75em 0.85em;
+			}
+
+			.reveal .slides section.content-slide .source-card-title {
+				margin: 0 0 0.15em;
+				font-size: 0.55em;
+				font-weight: 700;
+				text-align: center;
+				color: var(--slide-navy);
+				line-height: 1.3;
+			}
+
+			.reveal .slides section.content-slide .source-card-title--italic {
+				font-style: italic;
+			}
+
+			.reveal .slides section.content-slide .source-card-author {
+				margin: 0 0 0.35em;
+				font-size: 0.45em;
+				text-align: center;
+				color: var(--slide-muted);
+			}
+
+			.reveal .slides section.content-slide .source-card-affiliation {
+				margin: 0 0 0.35em;
+				font-size: 0.38em;
+				text-align: center;
+				opacity: 0.6;
+				color: var(--slide-muted);
+			}
+
+			.reveal .slides section.content-slide .source-card hr {
+				border: none;
+				border-top: 1px solid var(--slide-border);
+				margin: 0 0 0.35em;
+			}
+
+			.reveal .slides section.content-slide .source-card-excerpt {
+				margin: 0;
+				font-size: 0.48em;
+				line-height: 1.5;
+				text-align: justify;
+				color: var(--slide-slate);
+			}
+
+			.reveal .slides section.content-slide .source-card-excerpt mark {
+				background: rgba(255, 224, 0, 0.4);
+				padding: 0.05em 0.15em;
+				border-radius: 2px;
+				color: inherit;
+			}
+
+			.reveal .slides section.content-slide .source-card-link {
+				margin: 0;
+				font-size: 0.35em;
+				opacity: 0.5;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .source-card-link a {
+				color: var(--slide-muted);
+				text-decoration: underline;
+			}
+
+			/* Paper-abstract cards (aligned with mit/index.html slide24b & slide5) */
+			.reveal .slides section.content-slide#creative-process-sources-slide {
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .slide-heading {
+				max-width: 100%;
+				overflow-wrap: break-word;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .slide-body.source-cards {
+				flex: 1 1 auto;
+				flex-direction: row;
+				flex-wrap: nowrap;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				max-width: 100%;
+				min-width: 0;
+				box-sizing: border-box;
+				overflow: hidden;
+				gap: 0.55em;
+				padding: 0;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-wrap {
+				flex: 1 1 0;
+				width: 0;
+				min-width: 0;
+				max-width: calc(50% - 0.28em);
+				height: auto;
+				align-self: center;
+				gap: 0.32em;
+				box-sizing: border-box;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card {
+				flex: 0 0 auto;
+				height: auto;
+				width: 100%;
+				max-width: 100%;
+				min-width: 0;
+				box-sizing: border-box;
+				padding: 0.68em 0.58em 0.64em;
+				border: 1px solid #d4d4d4;
+				border-radius: 2px;
+				background: #fff;
+				box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.08);
+				font-family: Georgia, 'Times New Roman', Times, serif;
+				color: #222;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-title,
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-author,
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-affiliation,
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-abstract-label,
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-excerpt,
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-link {
+				max-width: 100%;
+				min-width: 0;
+				overflow-wrap: break-word;
+				word-wrap: break-word;
+				hyphens: auto;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-title {
+				margin: 0 0 0.24em;
+				font-size: 0.46em;
+				font-weight: 700;
+				line-height: 1.32;
+				text-align: center;
+				color: #111;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-title--italic {
+				font-style: italic;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-author {
+				margin: 0 0 0.14em;
+				font-size: 0.4em;
+				font-weight: 400;
+				text-align: center;
+				color: #333;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card:not(:has(.source-card-affiliation)) .source-card-author {
+				margin-bottom: 0.45em;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-affiliation {
+				margin: 0 0 0.45em;
+				font-size: 0.36em;
+				font-style: normal;
+				text-align: center;
+				opacity: 0.62;
+				color: #333;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card hr {
+				border: none;
+				border-top: 1px solid #d4d4d4;
+				margin: 0 0 0.4em;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-abstract-label {
+				margin: 0 0 0.24em;
+				font-size: 0.38em;
+				font-weight: 700;
+				text-align: center;
+				letter-spacing: 0.04em;
+				color: #111;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-excerpt {
+				margin: 0;
+				font-size: 0.44em;
+				line-height: 1.48;
+				text-align: justify;
+				color: #222;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-excerpt mark {
+				background: rgba(255, 224, 0, 0.4);
+				padding: 0.05em 0.15em;
+				border-radius: 2px;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-link {
+				margin: 0;
+				font-family: var(--font-sans);
+				font-size: 0.32em;
+				font-style: normal;
+				opacity: 0.5;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-link a {
+				color: inherit;
+				text-decoration: underline;
+			}
+
+			.reveal .slides section.content-slide .workflow-slide-body {
+				gap: 0.28em;
+				padding-top: 0.1em;
+				align-items: center;
+				min-height: 0;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide {
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .slide-heading {
+				margin-bottom: 0.35em;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-slide-body {
+				justify-content: flex-start;
+				padding-top: 0.3em;
+				gap: 0.4em;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-slide-body > .fragment:not(.visible) {
+				display: none !important;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-subtitle {
+				font-size: 0.82em;
+				margin: 0;
+				flex-shrink: 0;
+				text-align: left;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-semantic-caption {
+				font-size: 0.82em;
+				margin: 0;
+				text-align: left;
+				flex-shrink: 0;
+			}
+
+			/* Stacked boards: row 1 layout is independent of row 2 reveal */
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-combined {
+				display: flex;
+				flex-direction: column;
+				row-gap: 0.45em;
+				align-items: stretch;
+				width: 100%;
+				max-width: 100%;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board {
+				display: grid;
+				grid-template-columns: 6.5em minmax(0, 1fr) 1em minmax(0, 1fr) 1em minmax(0, 1fr) 1em minmax(0, 1fr);
+				column-gap: 0.5em;
+				align-items: start;
+				width: 100%;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--artifacts.fragment:not(.visible) {
+				display: none !important;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage,
+			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card {
+				justify-self: center;
+				width: auto;
+				max-width: none;
+				gap: 0.35em;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifacts-label {
+				text-align: right;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				gap: 0.45em;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage img {
+				width: min(10vh, 4.5em);
+				height: min(10vh, 4.5em);
+				object-fit: contain;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card-inner {
+				width: min(10vh, 4.5em);
+				height: min(10vh, 4.5em);
+				max-width: none;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card-label,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage-name {
+				font-size: calc(var(--text-small) / 1.2);
+				line-height: 1.3;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-row-label {
+				font-size: var(--text-label);
+				line-height: 1.35;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card-label,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage-name,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-row-label {
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-arrow {
+				font-size: 1em;
+				align-self: start;
+				height: min(10vh, 4.5em);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.reveal .slides section.content-slide .workflow-subtitle {
+				font-size: 0.6em;
+				color: var(--slide-muted);
+				margin: 0 0 0.35em;
+				text-align: center;
+				transition: opacity 0.3s;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .workflow-board {
+				display: grid;
+				grid-template-columns: minmax(4.5em, auto) minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+				align-items: center;
+				gap: 0.35em 0.45em;
+				width: 100%;
+				max-width: 100%;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .workflow-board--artifacts {
+				margin-top: 0.15em;
+			}
+
+			.reveal .slides section.content-slide .workflow-row-label {
+				font-size: 0.32em;
+				color: var(--slide-accent);
+				font-weight: 700;
+				margin: 0;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				text-align: right;
+				line-height: 1.3;
+			}
+
+			.reveal .slides section.content-slide .workflow-row-label--secondary {
+				color: var(--slide-navy);
+				margin-top: 0.35em;
+				opacity: 0;
+				transition: opacity 0.4s;
+			}
+
+			.reveal .slides section.content-slide .workflow-row-label--secondary.is-visible {
+				opacity: 1;
+			}
+
+			.reveal .slides section.content-slide .workflow-stage {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.2em;
+				min-width: 0;
+			}
+
+			.reveal .slides section.content-slide .workflow-stage img {
+				height: min(13vh, 5.5em);
+				width: 100%;
+				object-fit: contain;
+				border-radius: 4px;
+				border: 1px solid var(--slide-border);
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .workflow-stage-name {
+				font-size: 0.35em;
+				color: var(--slide-navy);
+				font-weight: 600;
+				margin: 0;
+				text-align: center;
+				line-height: 1.25;
+			}
+
+			.reveal .slides section.content-slide .workflow-arrow {
+				font-size: 0.85em;
+				color: #7fbfcf;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .workflow-arrow--spacer {
+				visibility: hidden;
+			}
+
+			.reveal .slides section.content-slide .flip-card {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.12em;
+				cursor: pointer;
+				min-width: 0;
+			}
+
+			.reveal .slides section.content-slide .flip-card-inner {
+				height: min(13vh, 5.5em);
+				aspect-ratio: 1;
+				position: relative;
+				transition: transform 0.5s;
+				transform-style: preserve-3d;
+				width: 100%;
+				max-width: 6.5em;
+			}
+
+			.reveal .slides section.content-slide .flip-card-face {
+				position: absolute;
+				inset: 0;
+				padding: 0.3em;
+				background: var(--slide-bg);
+				border-radius: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-shadow: 0 2px 10px rgba(74, 111, 165, 0.12);
+				border: 1px solid var(--slide-border);
+				box-sizing: border-box;
+				backface-visibility: hidden;
+			}
+
+			.reveal .slides section.content-slide .flip-card-back {
+				background: #fff;
+				transform: rotateY(180deg);
+				padding: 0.2em;
+			}
+
+			.reveal .slides section.content-slide .flip-card-back img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				border: none;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .flip-card-label {
+				font-size: 0.35em;
+				color: var(--slide-navy);
+				font-weight: 700;
+				margin: 0;
+				text-align: center;
+				line-height: 1.2;
+			}
+
+			.reveal .slides section.content-slide .takeaways-body {
+				gap: 0;
+				padding-top: 0.15em;
+			}
+
+			.reveal .slides section.content-slide .takeaways-block {
+				flex: 1;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide .takeaways-block .slide-heading {
+				font-size: 1.05em;
+				margin-bottom: 0.45em;
+			}
+
+			.reveal .slides section.content-slide .slide-heading--accent {
+				color: var(--slide-accent);
+			}
+
+			.reveal .slides section.content-slide .takeaways-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				font-size: 0.6em;
+				line-height: 1.45;
+				color: var(--slide-muted);
+				display: flex;
+				flex-direction: column;
+				gap: 0.4em;
+			}
+
+			.reveal .slides section.content-slide .takeaways-list .list-num {
+				font-weight: 700;
+				color: var(--slide-navy);
+			}
+
+			.reveal .slides section.content-slide .takeaways-list a {
+				color: var(--slide-muted);
+				text-decoration: underline;
+				text-decoration-color: #b8c5d4;
+			}
+
+			.reveal .slides section.content-slide .takeaways-divider {
+				border: none;
+				border-top: 1px solid var(--slide-border);
+				margin: 0.4em 0;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide .thanks-body {
+				justify-content: center;
+				gap: 0.5em;
+				padding-top: 0;
+			}
+
+			.reveal .slides section.content-slide .thanks-body .slide-heading {
+				text-align: center;
+				margin-bottom: 0.15em;
+			}
+
+			.reveal .slides section.content-slide .thanks-groups {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5em;
+				font-size: 0.58em;
+				line-height: 1.5;
+				color: var(--slide-muted);
+				max-width: 92%;
+				width: 100%;
+			}
+
+			.reveal .slides section.content-slide .thanks-project {
+				margin: 0 0 0.12em;
+				font-weight: 700;
+				color: var(--slide-accent);
+				font-size: 0.85em;
+			}
+
+			.reveal .slides section.content-slide .thanks-project span {
+				font-weight: 400;
+				color: var(--slide-faint);
+			}
+
+			.reveal .slides section.content-slide .thanks-authors {
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide .thanks-authors strong {
+				color: var(--slide-navy);
+			}
+
+			.reveal .slides section.media-slide .videorigami-showcase {
+				flex: 1;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				justify-content: flex-start;
+				width: 100%;
+			}
+
+			.reveal .slides section.media-slide .videorigami-title {
+				font-family: Georgia, 'Times New Roman', serif;
+				font-size: 1.1em;
+				font-weight: 700;
+				color: var(--slide-teal);
+				text-transform: none;
+				letter-spacing: -0.01em;
+				margin: 0 0 0.35em;
+				text-shadow: none;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .videorigami-showcase .slide-subtitle {
+				margin-bottom: 0.15em;
+			}
+
+			.reveal .slides section.media-slide .videorigami-visual {
+				flex: 1;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: stretch;
+				width: 100%;
+			}
+
+			.reveal .slides section.media-slide .videorigami-panels {
+				display: flex;
+				align-items: flex-end;
+				justify-content: center;
+				gap: 0;
+				width: 100%;
+				max-width: 94%;
+				margin: 0 auto;
+				flex: 0 1 auto;
+				min-height: 0;
+				max-height: 72%;
+			}
+
+			.reveal .slides section.media-slide .videorigami-panels img {
+				flex: 1;
+				width: 0;
+				min-height: 0;
+				height: 100%;
+				object-fit: contain;
+				object-position: bottom center;
+				margin: 0;
+				display: block;
+			}
+
+			.reveal .slides section.media-slide .videorigami-labels {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				width: 100%;
+				max-width: 94%;
+				margin: 0.05em auto 0;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .videorigami-labels p {
+				font-size: 0.5em;
+				color: var(--slide-navy);
+				font-weight: 600;
+				margin: 0;
+				text-align: center;
+			}
+
+			.reveal .slides section.media-slide .videorigami-citation {
+				position: absolute;
+				bottom: var(--slide-pad-y);
+				right: var(--slide-pad-x);
+				font-size: 0.38em;
+				color: var(--slide-muted);
+				margin: 0;
+				text-align: right;
+				line-height: 1.4;
+				max-width: 42%;
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout {
+				padding-top: 0;
+			}
+
+			.reveal .slides section.content-slide .physics-example-layout .spec-heading {
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .slide-body.visual-attrs-body {
+				padding-top: 0;
+				justify-content: flex-start;
+			}
+
+			.reveal .slides section.content-slide .visual-attrs-grid {
+				flex: 1;
+				min-height: 0;
+				align-content: center;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-row.fragment:not(.visible) {
+				visibility: hidden;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-row.fragment.visible {
+				visibility: visible;
+			}
+
+			.reveal .slides section.content-slide .physics-specs .spec-heading.fragment:not(.visible) {
+				visibility: hidden;
+			}
+
+		</style>
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="dist/plugin/highlight/monokai.css" />
+	</head>
+
+	<body>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section class="title-slide" data-background-color="#ffffff">
+					<div class="title-slide-content">
+						<h1 class="title-heading">Beyond the Timeline</h1>
+						<p class="title-author">Valentina Shin</p>
+						<p class="title-affiliation">Adobe Research</p>
+						<p class="title-date">June 4th, 2026</p>
+						<hr class="title-rule" />
+					</div>
+					<aside class="notes">
+						Hi everyone, I'm Valentina Shin. Today I'm going to talk about going beyond the timeline — rethinking how we author and structure video.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<div class="media-frame">
+						<video
+							id="intro-video"
+							controls
+							preload="auto"
+						>
+							<source src="media/leAh00n3hno.mp4#t=477" type="video/mp4" />
+						</video>
+					</div>
+					<aside class="notes">
+						Play the clip full screen if your setup allows. It is trimmed to a short beat; let it land, then advance. If the file fails, summarize verbally: generative models are changing how moving images get made, which motivates the rest of the talk.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<div class="media-stack">
+						<img
+							src="media/threelittlepigstitle.jpeg"
+							alt="Walt Disney's Silly Symphony – Three Little Pigs title card"
+						/>
+						<p><small><em>Three Little Pigs</em>, 1933. Animated short film produced by Walt Disney.</small></p>
+					</div>
+					<aside class="notes">
+						"Who knows this movie?" [Pause for audience]
+						Three Little Pigs, 1933 Disney. What is less well known is how this animated short was a breakthrough in animation technology. This film marked a major leap in production technique. It was the first cartoon to be fully storyboarded beat for beat — a technique credited to story man Webb Smith.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<div class="media-split">
+						<img
+							src="media/three-little-pigs-story-sketch.jpg"
+							alt="Three Little Pigs story sketch — scenes I–III"
+						/>
+						<img
+							src="media/storyboard-meeting.jpg"
+							alt="Walt Disney story meeting at the studio"
+						/>
+					</div>
+					<aside class="notes">
+						Here you can see the actual story sketches from the production — Scene I, II, III all planned out on paper. And on the right, this is what a story meeting looked like at the Disney studio. The whole team gathered around a board, discussing the structure of the film before a single frame was animated. The first story to be storyboarded. It was the first time an animated cartoon was fully planned out beat for beat.
+					</aside>
+				</section>
+
+				<section class="content-slide timeline-slide">
+					<h2 class="slide-heading">Storyboarding becomes industry standard</h2>
+					<div class="storyboard-timeline slide-body">
+						<div class="timeline-item fragment">
+							<div class="timeline-year">1933</div>
+							<p class="timeline-body">
+								Walt Disney established the studio&rsquo;s first dedicated <strong>Story Department</strong>.
+							</p>
+						</div>
+						<div class="timeline-item fragment">
+							<div class="timeline-year">1938</div>
+							<p class="timeline-body">
+								Every major American animation studio had a dedicated story department.
+							</p>
+						</div>
+						<div class="timeline-item fragment">
+							<div class="timeline-year">1939</div>
+							<p class="timeline-body">
+								William Cameron Menzies used storyboards to plan every single shot of
+								<strong><em>Gone with the Wind</em></strong>.
+							</p>
+						</div>
+						<div class="timeline-item fragment">
+							<div class="timeline-year">1969</div>
+							<p class="timeline-body">
+								<em>&ldquo;Once the screenplay is finished, I&rsquo;d just as soon not make the film at
+								all. I have a strongly visual mind. I visualize a picture right down to the final
+								cuts.&rdquo;</em>
+								<br /><strong>— Alfred Hitchcock</strong>, interview with Roger Ebert
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						"So what happened after Three Little Pigs?"
+						[CLICK] In 1933, Walt Disney established the studio's first dedicated Story Department.
+						[CLICK] By 1938, every major American animation studio had a dedicated story department. It spread incredibly fast.
+						[CLICK] And it wasn't just animation. In 1939, William Cameron Menzies used storyboards to plan every single shot of Gone with the Wind.
+						[CLICK] And then you have Hitchcock, who took it even further. In a 1969 interview with Roger Ebert he said: "Once the screenplay is finished, I'd just as soon not make the film at all. I have a strongly visual mind. I visualize a picture right down to the final cuts."
+						So why was storyboarding so important? Three reasons:
+						One — it allowed you to look at the entire structure of a film at once.
+						Two — it acts as an intermediate artifact you can iterate on cheaply.
+						Three — it expresses the most important semantics: the shot angle, the beat, the emotion, the character.
+					</aside>
+				</section>
+
+				<section class="stacked-slide" data-transition="fade">
+					<div class="stacked-layout">
+						<div class="stacked-top">
+							<img
+								src="media/walt-pinocchio-storyboard.jpg"
+								alt="Walt Disney reviewing Pinocchio storyboard"
+							/>
+						</div>
+						<div class="stacked-bottom">
+							<h2 class="slide-heading">A storyboard&hellip;</h2>
+							<ul class="stacked-list">
+								<li class="fragment">organizes story into <strong>semantic units</strong></li>
+								<li class="fragment">creates a <strong>shared reference</strong></li>
+								<li class="fragment">enables easy <strong>iteration</strong></li>
+							</ul>
+						</div>
+					</div>
+					<aside class="notes">
+						So, why was Webb Smith's bulletin board so revolutionary? It did three things: First, it allowed creators to think in semantic units — "the wolf blows the house down" — rather than individual frames. Second, it created a shared reference point for the whole studio to communicate. And third, because of the thumbtacks, it became a flexible substrate for rapid iteration.
+					</aside>
+				</section>
+
+				<section class="stacked-slide" data-transition="fade">
+					<div class="stacked-layout">
+						<div class="stacked-top">
+							<img
+								src="media/walt-pinocchio-storyboard.jpg"
+								alt="Walt Disney reviewing Pinocchio storyboard"
+							/>
+						</div>
+						<div class="stacked-bottom">
+							<img
+								src="media/premiere-pro.webp"
+								alt="Adobe Premiere Pro timeline interface"
+							/>
+						</div>
+					</div>
+					<aside class="notes">
+						But a funny thing happened when we transitioned to digital video authoring. We lost the story board. Today, our most powerful timeline editors force us to manipulate timecodes and keyframes.
+					</aside>
+				</section>
+
+				<section class="stacked-slide">
+					<div class="stacked-layout">
+						<div class="stacked-top">
+							<img
+								src="media/premiere-pro.webp"
+								alt="Adobe Premiere Pro timeline interface"
+							/>
+						</div>
+						<div class="stacked-bottom stacked-bottom--text">
+							<div class="slide-body">
+								<p>
+								My research focused on building <br><strong>effective interfaces for audiovisual media</strong> by supporting <strong>semantics</strong>, <strong>common ground</strong>, and <strong>iteration</strong>.
+								</p>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						So my research has focused on desining effective interfaces for audiovisual media by brining back the power of story boarding, that is by supporting semantics, shared references, and iteration. Today I'll talk about each of these aspects in turn.
+					</aside>
+				</section>
+
+				<section class="content-slide theme-pillar-slide">
+					<div class="slide-body slide-body--center">
+						<div class="theme-pillar">
+							<p class="theme-pillar-label">Support Semantic Authoring</p>
+							<p class="theme-pillar-desc">by translating high-level intent into algorithms or operations.</p>
+						</div>
+					</div>
+					<aside class="notes">
+						I'll start with supporting semantic authoring. We can do this by translating high-level user intent into algorithms or operatons. Let me explain with an example.
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--video-fill">
+					<div class="media-frame">
+					<video
+						id="lyric-video"
+						controls
+						preload="auto"
+					>
+						<source src="media/F5TMU6916U8.mp4#t=173,186" type="video/mp4" />
+					</video>
+						<p class="media-attribution media-attribution--left">
+							Taylor Swift &mdash; <em>Long Live</em>
+						</p>
+						<p class="media-attribution media-attribution--right">
+							No copyright infringement intended.
+						</p>
+					</div>
+					<aside class="notes">
+						Lyric videos is a type of music video that displays the song lyrics together with video imagery. Many artists release lyric videos for their songs. Such as Taylor Swift. For music fans, a common way to make lyric videos is to convert an existing music video by adding text to it. 
+				</section>
+
+				<section
+					class="content-slide"
+					id="intent-comparison-slide"
+					data-auto-animate
+					data-auto-animate-duration="0.65"
+					data-auto-animate-easing="ease-in-out"
+				>
+					<div class="slide-body intent-comparison">
+						<div class="intent-comparison-layout">
+							<div class="intent-comparison-main">
+								<p data-id="intent-label" class="intent-label">User&rsquo;s Intent</p>
+								<p data-id="intent-text" class="intent-text">
+									Show the lyrics on the screen naturally within the scene.
+								</p>
+								<div class="fragment intent-operations" data-fragment-index="1">
+									<p class="intent-label">Operations</p>
+									<p class="intent-text">
+										Adjust text segments, bounding boxes, timestamps, color, and keyframes.
+									</p>
+								</div>
+							</div>
+							<div class="intent-comparison-gulf">
+								<div class="fragment gulf-callout" data-fragment-index="2">
+									<svg width="28" height="110" viewBox="0 0 36 140" style="overflow: visible; flex-shrink: 0;">
+										<defs>
+											<marker id="gulf-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+												<path d="M0,0 L8,4 L0,8 Z" fill="#4a6fa5"/>
+											</marker>
+										</defs>
+										<path d="M18,8 C50,40 50,100 18,132" fill="none" stroke="#4a6fa5" stroke-width="2" marker-end="url(#gulf-arrow)"/>
+									</svg>
+									<div>
+										<p class="gulf-title">Gulf of Execution</p>
+										<p class="gulf-cite">(Don Norman, 1986)</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						This is how a creator thinks about a lyric video — a single, high-level intention. But to actually produce it, they must translate that into dozens of low-level operations: segmenting text, positioning bounding boxes, aligning timestamps, picking colors, and setting keyframes. This is an example of what Don Norman called the Gulf of Execution.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center" style="justify-content: center; gap: 1.2em;">
+						<p class="paper-citation-title" style="font-size: 1.15em; font-weight: 700; color: var(--slide-navy); line-height: 1.3; max-width: 80%; text-align: center; margin: 0 auto;">
+							Automated Conversion of Music Videos <br>into Lyric Videos
+						</p>
+						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
+							<strong>Jiaju Ma</strong><sup>1</sup>,
+							Anyi Rao<sup>1</sup>,
+							Li-Yi Wei<sup>2</sup>,
+							Rubaiat Habib Kazi<sup>2</sup>,
+							Hijung Valentina Shin<sup>2</sup>, and
+							Maneesh Agrawala<sup>1,3</sup>
+						</p>
+						<p class="paper-citation-affiliations" style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: -0.6em 0 0;">
+							<sup>1</sup>Stanford University &ensp; <sup>2</sup>Adobe Research &ensp; <sup>3</sup>Roblox
+						</p>
+						<p class="paper-citation-venue" style="font-size: 0.58em; font-style: italic; color: var(--slide-accent); text-align: center; margin: 0.4em 0 0;">
+							ACM Symposium on User Interface Software and Technology (UIST 2023)
+						</p>
+					</div>
+					<aside class="notes">
+						This work is from Jiaju Ma, Anyi Rao, and collaborators at Stanford University and Adobe Research, published at UIST 2023. It tackles exactly the Gulf of Execution we just described — automating the low-level operations so creators can stay at the level of intent.
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="0.65" data-auto-animate-easing="ease-in-out" class="content-slide">
+				<div class="slide-body slide-body--energy-map">
+						<p data-id="intent-label" class="intent-label">User&rsquo;s Intent</p>
+						<p data-id="intent-text" class="intent-text">
+							Show the lyrics on the screen naturally within the scene.
+						</p>
+
+						<p class="energy-section-label">Temporally &mdash; show readable segments</p>
+						<div class="energy-temporal energy-temporal--standalone">
+							<p class="energy-temporal-placeholder">[ Stage&nbsp;1 preprocessing visual &mdash; placeholder ]</p>
+							<p class="energy-temporal-detail">
+								AutoLyrixAlign &rarr; group by temporal proximity &rarr; break long lines
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						The temporal half of the intent is readable segments: lyrics should land in sync with the song, in chunks people can actually read. In the UIST pipeline that is a first-stage text treatment. We align words to audio with AutoLyrixAlign, group words into phrases when gaps stay within a beat so phrasing follows the music, guideline one, then break overlong phrases into lines near a median length for readability, guideline two. When the final figure is in place, use it to point at those two guidelines in one glance.
+					</aside>
+				</section>
+
+				<section data-auto-animate data-auto-animate-duration="0.65" data-auto-animate-easing="ease-in-out" class="content-slide">
+					<div class="slide-body slide-body--energy-map">
+						<p data-id="intent-label" class="intent-label">User&rsquo;s Intent</p>
+						<p data-id="intent-text" class="intent-text">
+							Show the lyrics on the screen naturally within the scene.
+						</p>
+
+						<p class="energy-section-label">Spatially &mdash; computed from these input frames</p>
+						<div class="energy-input">
+							<img src="media/input-scenes.png" alt="Input video frames spanned by the lyric phrase" />
+						</div>
+
+						<div class="energy-grid">
+							<div class="fragment energy-cell" data-fragment-index="1">
+								<img src="media/average-fg-mask.png" alt="Average foreground mask" />
+								<p class="energy-bullet">Not occluding important subject</p>
+								<p class="energy-term">E<sub>fgd</sub> = s&#772;<sub>fgd</sub> &otimes; k</p>
+							</div>
+							<div class="fragment energy-cell" data-fragment-index="2">
+								<img src="media/average-focus-mask.png" alt="Average focus mask with center of mass" />
+								<p class="energy-bullet">Close to natural attention</p>
+								<p class="energy-term">E<sub>fcs</sub> = &#8214;p<sub>center</sub> &minus; p&#8214;&sup2;</p>
+							</div>
+							<div class="fragment energy-cell" data-fragment-index="3">
+								<img src="media/color-diff-map.png" alt="Background color difference map" />
+								<p class="energy-bullet">Contrast with background</p>
+								<p class="energy-term">E<sub>cnt</sub> = c(p)</p>
+							</div>
+							<div class="fragment energy-cell" data-fragment-index="4">
+								<img src="media/previous-position.png" alt="Previous lyric phrase position" />
+								<p class="energy-bullet">Consistent across phrases</p>
+								<p class="energy-term">E<sub>prv</sub> = &#8214;p<sub>prev</sub> &minus; p&#8214;&sup2;</p>
+							</div>
+						</div>
+
+						<div class="fragment energy-equation" data-fragment-index="5">
+							<p class="energy-equation-label">Find optimal placement by minimizing total energy</p>
+							<p class="energy-equation-formula">
+								p<sub>min</sub> = arg&nbsp;min<sub>p</sub>&nbsp;( w<sub>fgd</sub>&middot;E<sub>fgd</sub> + w<sub>fcs</sub>&middot;E<sub>fcs</sub> + w<sub>cnt</sub>&middot;E<sub>cnt</sub> + w<sub>prv</sub>&middot;E<sub>prv</sub> )
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Now the spatial half: “naturally within the scene.” In the paper we operationalize that with four energies over the frames each lyric phrase spans: avoid covering the main subject, stay near where viewers already look, keep contrast with the background, and stay close to where the previous phrase sat. Each term is computed from the same stack of frames, then combined with weights and minimized. That is the semantic bridge: one sentence of intent becomes a weighted objective the solver can run.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<div class="media-frame">
+					<iframe
+						id="snapstream-vimeo"
+						src="https://player.vimeo.com/video/858468154?title=0&byline=0&portrait=0&api=1#t=217"
+						width="960" height="540"
+						frameborder="0"
+						allow="autoplay; fullscreen"
+						allowfullscreen
+					></iframe>
+					</div>
+					<p class="media-caption">
+						Results generated from our pipeline
+					</p>
+					<aside class="notes">
+						Here is output from the full pipeline: same design guidelines for readability and unified focus of attention, applied end to end. In the user study, viewers rated these outputs well on reading ease and on keeping attention with the song and picture; use that if someone asks how we know it works.
+					</aside>
+				</section>
+
+				<section class="content-slide theme-pillar-slide">
+					<div class="slide-body slide-body--center">
+						<div class="theme-pillar">
+							<p class="theme-pillar-label">Establish Common Ground</p>
+							<p class="theme-pillar-desc">between humans, and between humans and AI through shared references.</p>
+						</div>
+					</div>
+					<aside class="notes">
+						That closes the lyric-video thread. Next theme is shared references: building common ground between people, and between people and models, so coordination does not depend on everyone staring at the same raw pixels.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<h2 class="slide-heading">People communicate by establishing common ground</h2>
+					<div class="media-split">
+						<img
+							src="media/storyboard-meeting.jpg"
+							alt="Walt Disney story meeting at the studio"
+						/>
+						<img
+							src="media/common-ground.png"
+							alt="Diagram illustrating common ground in communication"
+						/>
+					</div>
+					<aside class="notes">
+						When people coordinate, they rely on common ground: mutual knowledge that each side knows the other knows. A storyboard in a room full of artists is a classic example; everyone can point at the same panel. Live streaming revives that need at scale: thousands of viewers reacting to the same moving image in real time.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<div class="media-stack">
+						<img
+							src="media/live-stream-chat.webp"
+							alt="Live stream chat interface with viewers engaging in real time"
+						/>
+						<p class="media-citation">
+							<small>
+								<a href="https://www.mirrorfly.com/blog/live-stream-chat/" target="_blank" rel="noopener noreferrer">
+									mirrorfly.com/blog/live-stream-chat
+								</a>
+							</small>
+						</p>
+					</div>
+					<aside class="notes">
+						Chat is the default channel, but it is almost entirely text in a side column. That is fine for emotes and short reactions; it is a weak match when viewers want to refer to something specific on the video itself.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">The problem with live stream interaction</h2>
+					<div class="slide-body slide-body--split-media">
+						<div class="split-media-panel">
+							<img
+								src="media/twitch-chat.gif"
+								alt="Fast-moving Twitch live stream chat"
+							/>
+							<p class="split-media-caption">
+								<small>
+									<a href="https://sproutsocial.com/insights/twitch-marketing/" target="_blank" rel="noopener noreferrer">
+										sproutsocial.com/insights/twitch-marketing
+									</a>
+								</small>
+							</p>
+						</div>
+						<ul class="problem-list">
+							<li class="fragment">
+								Visual references are awkward in text chat. 
+							</li>
+							<li class="fragment">
+								Latency disrupts the communication.
+							</li>
+							<li class="fragment">
+								Streamers must split attention between performing and reading chat.
+							</li>
+						</ul>
+					</div>
+					<aside class="notes">
+						Three friction points we heard in prior work and in our own studies: plain text makes deictic references clumsy; network delay breaks conversational rhythm; and performing while monitoring a firehose of chat is cognitively expensive. These set up why we need a richer shared reference than scrolling text alone.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center" style="justify-content: flex-start; align-items: center; padding-top: 0.8em; gap: 0.8em;">
+						<p class="paper-citation-title" style="font-size: 1.05em; font-weight: 700; color: var(--slide-navy); line-height: 1.3; max-width: 90%; text-align: center; margin: 0 auto;">
+							Snapstream: Snapshot-Based Interaction in Live Streaming for Visual Art
+						</p>
+						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
+							Saelyne Yang<sup>1</sup>,
+							Changyoon Lee<sup>1</sup>,
+							<strong>Hijung Valentina Shin</strong><sup>2</sup>, and
+							Juho Kim<sup>1</sup>
+						</p>
+						<p class="paper-citation-affiliations" style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: -0.6em 0 0;">
+							<sup>1</sup>KAIST &ensp; <sup>2</sup>Adobe Research
+						</p>
+						<p class="paper-citation-venue" style="font-size: 0.58em; font-style: italic; color: var(--slide-accent); text-align: center; margin: 0;">
+							ACM CHI Conference on Human Factors in Computing Systems (CHI 2020)
+						</p>
+						<div style="width: 100%; max-width: 44%; margin: 0.2em auto 0;">
+							<video id="snapstream-video" controls preload="metadata" style="width: 100%; border-radius: 6px; cursor: pointer;">
+								<source src="media/Snapstream - final.mp4" type="video/mp4" />
+							</video>
+							
+						</div>
+						<p style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: 0.4em 0 0;">
+							Viewers can capture snapshots and share as conversational anchors.
+						</p>
+						<script>
+							(function () {
+								var vid = document.getElementById('snapstream-video');
+								if (vid) {
+									vid.addEventListener('play', function () {
+										var el = vid;
+										if (el.requestFullscreen) el.requestFullscreen();
+										else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+										else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+									});
+								}
+							})();
+						</script>
+					</div>
+					<aside class="notes">
+						Snapstream, from our CHI twenty twenty paper, gives viewers a frozen frame they can mark up and send back as a conversational anchor. It restores a literal shared image between streamer and viewers, which works beautifully for smaller, art-focused streams.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">What about visual input from viewers?</h2>
+					<div class="slide-body slide-body--center" style="gap: 0.6em; align-items: center; justify-content: center;">
+						<img
+							src="media/blog_img2.png"
+							alt="Examples of viewer visual inputs in live streaming"
+							style="max-width: 80%; max-height: 40vh; object-fit: contain; border-radius: 4px;"
+						/>
+						<p style="font-size: 0.5em; color: var(--slide-muted); text-align: center; margin: 0;">
+							<a href="https://johnr0.github.io/publications/VisPoll_CHI2021/" target="_blank" rel="noopener noreferrer">
+								johnr0.github.io/publications/VisPoll_CHI2021
+							</a>
+						</p>
+						<p class="research-question fragment" style="margin-top: 0.4em; text-align: left;">How can we support flexible and scalable viewer visual input?</p>
+					</div>
+					<aside class="notes">
+						With Snapstream, the shared reference was literal: one image everyone could inspect. At massive scale, literal pixels collapse into noise. The VisPoll work argues the common ground should shift from the bitmap to the structure of the input.
+
+						On the second fragment: the research question becomes how to support visual input from viewers that stays flexible for streamers yet scales to large audiences.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center" style="justify-content: center; gap: 1.2em;">
+						<p class="paper-citation-title" style="font-size: 1.05em; font-weight: 700; color: var(--slide-navy); line-height: 1.3; max-width: 100%; text-align: center; margin: 0 auto;">
+							Beyond Show of Hands: <br>Engaging Viewers via Expressive and Scalable Visual Communication in Live Streaming
+						</p>
+						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
+							John Joon Young Chung<sup>1</sup>,
+							<strong>Hijung Valentina Shin</strong><sup>2</sup>,
+							Haijun Xia<sup>3</sup>,
+							Li-Yi Wei<sup>2</sup>, and
+							Rubaiat Habib Kazi<sup>2</sup>
+						</p>
+						<p class="paper-citation-affiliations" style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: -0.6em 0 0;">
+							<sup>1</sup>University of Michigan &ensp; <sup>2</sup>Adobe Research &ensp; <sup>3</sup>UC San Diego
+						</p>
+						<p class="paper-citation-venue" style="font-size: 0.58em; font-style: italic; color: var(--slide-accent); text-align: center; margin: 0.4em 0 0;">
+							ACM CHI Conference on Human Factors in Computing Systems (CHI 2021)
+						</p>
+					</div>
+					<aside class="notes">
+						This is the Beyond Show of Hands paper, published at CHI 2021 with John Joon Young Chung and collaborators. It introduces VisPoll, a framework for scalable visual input from live stream viewers through structured attribute constraints.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">Visual attributes as common ground</h2>
+					<div class="slide-body slide-body--center visual-attrs-body">
+						<p class="slide-lead fragment" data-fragment-index="1" style="text-align: left;">
+							Viewer visual inputs can be decomposed into <strong>visual attributes</strong> &mdash; shared dimensions that streamers and viewers use to make sense.
+						</p>
+						<div class="visual-attrs-grid">
+							<div class="fragment visual-attr-cell visual-attr-cell--stagger" data-fragment-index="2" style="--stagger-delay: 0s;">
+								<div class="attr-icon">&#9678;</div>
+								<p class="attr-label">Position</p>
+							</div>
+							<div class="fragment visual-attr-cell visual-attr-cell--stagger" data-fragment-index="2" style="--stagger-delay: 0.3s;">
+								<div class="attr-icon">&#10148;</div>
+								<p class="attr-label">Shape</p>
+							</div>
+							<div class="fragment visual-attr-cell visual-attr-cell--stagger" data-fragment-index="2" style="--stagger-delay: 0.6s;">
+								<div class="attr-icon">&#8635;</div>
+								<p class="attr-label">Rotation</p>
+							</div>
+							<div class="fragment visual-attr-cell visual-attr-cell--stagger" data-fragment-index="2" style="--stagger-delay: 0.9s;">
+								<div class="attr-icon">&#8596;</div>
+								<p class="attr-label">Size</p>
+							</div>
+							<div class="fragment visual-attr-cell visual-attr-cell--stagger" data-fragment-index="2" style="--stagger-delay: 1.2s;">
+								<div class="attr-icon">&#9608;</div>
+								<p class="attr-label">Color</p>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						Our insight was to use visual attributes as common ground. Instead of treating user's visual input as raw pixels, we decompose them into shared visual attributes, which become shared dimensions that streamers and viewers can use to make sense of the hundreds of inputs.
+						
+						For example, inputs can be decomposed into: position, shape, rotation, size, color. Position is where the mark sits; shape is the primitive viewers draw with; rotation and size often encode direction and magnitude; color can encode categories or votes.
+
+						Let me use a concrete example to illustrate this.
+					</aside>
+				</section>
+
+ 				<section class="content-slide">
+					<h2 class="slide-heading">Streamers specify visual attribute constraints</h2>
+					<div class="slide-body physics-example-layout">
+						<div class="physics-visual">
+							<p class="physics-label">Live stream</p>
+							<img
+								src="media/physics-stream.png"
+								alt="Physics streaming example: viewers annotating friction force on a box"
+							/>
+						</div>
+						<div class="physics-specs">
+							<p class="spec-heading fragment" data-fragment-index="1">Attribute constraints</p>
+							<div class="spec-row fragment" data-fragment-index="2">
+								<span class="spec-attr-name">Position</span>
+								<span class="spec-attr-value">No restriction</span>
+							</div>
+							<div class="spec-row fragment" data-fragment-index="3">
+								<span class="spec-attr-name">Shape</span>
+								<span class="spec-attr-icon" style="color: #0098c6;">&#10141;</span>
+							</div>
+							<div class="spec-row fragment" data-fragment-index="4">
+								<span class="spec-attr-name">Rotation</span>
+								<span class="spec-attr-value">No restriction</span>
+							</div>
+							<div class="spec-row fragment" data-fragment-index="5">
+								<span class="spec-attr-name">Size</span>
+								<span class="spec-attr-value">No restriction</span>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						Concrete example from the CHI twenty twenty-one paper: a physics streamer asks how friction applies to a box on a ramp. Step one is specify: the streamer locks the vocabulary of marks.
+
+						On clicks: leave position free so viewers can point anywhere on the scene; lock shape to arrows so everyone draws the same primitive; leave rotation free for direction of force; leave size free for magnitude.
+
+						Constraining shape while leaving other axes free is how you keep answers comparable without crushing expression. The next slide shows aggregate and visualize on the same scenario.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body pipeline-row">
+						<div class="pipeline-stage">
+							<p class="pipeline-stage-label">Viewer input</p>
+							<img
+								class="pipeline-gif"
+								src="media/viewer-input.gif"
+								alt="Viewer input animation showing multiple viewers drawing friction arrows"
+							/>
+						</div>
+						<div class="fragment pipeline-stage" data-fragment-index="1">
+							<p class="pipeline-stage-label">Clustered by rotation &amp; size</p>
+							<img
+								src="media/clusters.png"
+								alt="Viewer inputs clustered by rotation and size attributes"
+							/>
+						</div>
+						<div class="fragment pipeline-stage pipeline-stage--wide" data-fragment-index="2">
+							<p class="pipeline-stage-label">Aggregated visualization</p>
+							<img
+								src="media/aggregated.png"
+								alt="Aggregated arrows showing consensus visualization"
+							/>
+							<p class="pipeline-note">Width of arrow &prop; input count</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Step two after specify: aggregate. Because every submission uses the same attribute space, we can cluster by meaningful dimensions, here rotation and size. Step three: visualize a small number of thick arrows where width reflects support. The streamer sees consensus modes, not ten thousand raw strokes.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">Application scenarios</h2>
+					<div class="slide-body slide-body--figure">
+						<div class="slide-figure">
+							<img
+								src="media/beyond-show-of-hands-examples.png"
+								alt="VisPoll examples: coloring and fill-in tasks with viewer input and visualization"
+							/>
+						</div>
+					</div>
+					<aside class="notes">
+						Examples from Beyond Show of Hands: quick coloring tasks, fill-in-the-blank sketches, and other prompts where the streamer needs a readable crowd signal, not a wall of unrelated doodles. Call out one panel and ask what pedagogical move it supports.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">Application scenarios</h2>
+					<div class="slide-body slide-body--figure">
+						<div class="slide-figure">
+							<img
+								src="media/beyond-show-of-hands-examples-2.png"
+								alt="VisPoll examples: electrolysis and history troop scenarios with viewer input and visualization"
+							/>
+						</div>
+					</div>
+					<aside class="notes">
+						Second plate: science explanations such as electrolysis and history prompts where spatial marks carry meaning. Emphasize that the same attribute machinery supports very different domains because the streamer designs the affordance, not the pixels.
+					</aside>
+				</section>
+
+				<section class="content-slide theme-pillar-slide">
+					<div class="slide-body slide-body--center">
+						<div class="theme-pillar">
+							<p class="theme-pillar-label">Support Iteration</p>
+							<p class="theme-pillar-desc">through structured intermediate artifacts.</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Third pillar: creative work is looping, not shipping in one shot. The VideOrigami line of work, including our CHI twenty twenty-five paper on compositional structures as substrates for human-AI co-creation, asks how interfaces can keep people oriented and in control while models propose edits. I will connect that to intermediate artifacts and to why “one-shot agent” fantasies miss the point.
+					</aside>
+				</section>
+
+				<section class="content-slide" id="agentic-slide">
+					<h2 class="slide-heading">The promise of agentic video editing?</h2>
+					<div class="slide-body slide-body--center slide-body--split-media">
+						<div class="split-media-panel split-media-panel--news">
+							<img
+								src="media/news-agentic-editing.png"
+								alt="Google News search results for Agentic Video Editing"
+							/>
+							<p class="agentic-source">
+								Google News Search &ldquo;Agentic Video Editing&rdquo;
+							</p>
+						</div>
+						<div class="split-media-panel split-media-panel--video">
+							<video controls preload="metadata" playsinline>
+								<source src="media/runway-idea-to-video.mp4" type="video/mp4" />
+							</video>
+							<p class="agentic-source">
+									<a href="https://www.reddit.com/user/RunwayAI/comments/1tjuk71/from_idea_to_finished_video_in_minutes/" target="_blank" rel="noopener noreferrer">RunwayAI on Reddit</a>
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Point to the Google News screenshot: the phrase is everywhere in industry press. Then play Runway’s Agent promo on the right if helpful. Advance to Murch’s thought experiment on the next slide.
+					</aside>
+				</section>
+
+				<section class="content-slide" id="agentic-murch-slide">
+					<h2 class="slide-heading">Walter Murch's thought experiment</h2>
+
+					<div class="slide-body agentic-murch-body">
+						<p class="agentic-quote">
+							&ldquo;What if there were a machine&mdash;a &lsquo;black box&rsquo;&mdash;that could connect directly to a director&rsquo;s brain and translate their intentions instantly into a finished film?&rdquo;
+						</p>
+						<p class="agentic-quote-cite">
+							Walter Murch, <em>In the Blink of an Eye</em>
+						</p>
+						<img
+							src="media/bmi-collage.jpg"
+							alt="Brain-machine interface collage — the ultimate intent-to-output vision"
+						/>
+					</div>
+					<aside class="notes">
+						Murch’s provocation: a perfect brain-to-film black box would skip the very collaboration and discovery many directors want to keep. Use it as a rhetorical bridge to why we still need rich substrates for iteration, not only faster generation.
+					</aside>
+				</section>
+
+				<section class="content-slide" id="creative-process-sources-slide">
+					<h2 class="slide-heading">Creative process is as important as the creative output, perhaps even more.</h2>
+					<div class="slide-body source-cards">
+						<div class="source-card-wrap">
+							<div class="source-card">
+								<p class="source-card-title source-card-title--italic">In the Blink of an Eye</p>
+								<p class="source-card-author">Walter Murch</p>
+								<hr />
+								<p class="source-card-excerpt">The kind of filmmakers who would instead reject the offer are interested foremost in the <mark>collaborative process of filmmaking, and in seeing a detailed vision mysteriously emerge out of that process</mark>, rather than being imposed by a single individual from the beginning.</p>
+							</div>
+							<p class="source-card-link">
+								<a href="https://www.amazon.com/Blink-Eye-Perspective-Film-Editing/dp/1879505622" target="_blank" rel="noopener noreferrer">In the Blink of an Eye</a> &mdash; Silman-James Press
+							</p>
+						</div>
+						<div class="source-card-wrap">
+							<div class="source-card">
+								<p class="source-card-title">Toward Modeling Creative Processes for Algorithmic Painting</p>
+								<p class="source-card-author">Aaron Hertzmann</p>
+								<p class="source-card-affiliation">Adobe Research</p>
+								<hr />
+								<p class="source-card-abstract-label">Abstract</p>
+								<p class="source-card-excerpt">This paper proposes a framework for computational modeling of artistic painting algorithms, inspired by human creative practices. Based on examples from expert artists and from the author&rsquo;s own experience, the paper argues that <mark>creative processes often involve two important components: vague, high-level goals (e.g., &ldquo;make a good painting&rdquo;), and exploratory processes for discovering new ideas.</mark></p>
+							</div>
+							<p class="source-card-link">
+								<a href="https://arxiv.org/pdf/2205.01605" target="_blank" rel="noopener noreferrer">Proc. ICCC, 2022</a>
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Two reinforcements from outside HCI vendor demos. Murch argues many filmmakers care about the collaborative emergence of a film, not only the finished file. Hertzmann’s ICCC piece makes the same point computationally: experts trade in fuzzy goals plus exploratory search. Together they justify why “support iteration” belongs alongside semantics and common ground.
+					</aside>
+				</section>
+
+				<section class="content-slide" id="lasseter-slide">
+					<h2 class="slide-heading">Creative process is iterative</h2>
+					<div class="slide-body">
+						<div class="quote-slide">
+							<p class="quote-slide-text">
+								What&rsquo;s fun about story development at Pixar is it&rsquo;s a journey. You don&rsquo;t just write a script and then that&rsquo;s the movie you make. It&rsquo;s just constant evolution and being open to that and that collaboration with the voice actors and with the artists and animators at Pixar.
+							</p>
+							<p class="quote-slide-attribution">
+								John Lasseter, former Chief Creative Officer, Pixar Animation Studios
+							</p>
+							<p class="quote-slide-source">
+								<a href="https://quotefancy.com/quote/1287486/John-Lasseter-What-s-fun-about-the-story-development-at-Pixar-is-it-s-a-journey-You-don-t" target="_blank" rel="noopener noreferrer">
+									Source: QuoteFancy
+								</a>
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Use this beat to humanize iteration. Lasseter is describing Pixar story development as continual revision, not a single locked script. The same point generalizes beyond film to any creative practice where the value is in the journey, not instant export.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center">
+						<p class="theme-callout">
+							So how do we support iteration?
+						</p>
+					</div>
+					<aside class="notes">
+						So how do we support iteration?
+					</aside>
+				</section>
+
+				<section class="content-slide" id="artifactsFlipSlide">
+					<h2 class="slide-heading">Intermediate artifacts</h2>
+					<div class="slide-body workflow-slide-body">
+						<p id="flipSlideSubtitle" class="fragment workflow-subtitle" data-fragment-index="1">
+							Video editing workflows involve multiple stages and intermediate artifacts.
+						</p>
+						<!-- Two stacked boards share fixed column tracks; row 2 reveals as one fragment -->
+						<div id="flipCardsRow" class="fragment workflow-combined" data-fragment-index="2">
+
+							<!-- ── ROW 1: Workflow Stages ── -->
+							<div class="workflow-board">
+								<p class="workflow-row-label">Workflow<br>Stages</p>
+								<div class="workflow-stage">
+									<img src="media/vo-assets.png" alt="Asset collection stage" />
+									<p class="workflow-stage-name">Asset<br>Collection</p>
+								</div>
+								<span class="workflow-arrow">&rarr;</span>
+								<div class="workflow-stage">
+									<img src="media/vo-narrative.png" alt="Narrative development stage" />
+									<p class="workflow-stage-name">Narrative<br>Development</p>
+								</div>
+								<span class="workflow-arrow">&rarr;</span>
+								<div class="workflow-stage">
+									<img src="media/vo-scene-planning.png" alt="Scene planning stage" />
+									<p class="workflow-stage-name">Scene<br>Planning</p>
+								</div>
+								<span class="workflow-arrow">&rarr;</span>
+								<div class="workflow-stage">
+									<img src="media/vo-timeline.png" alt="Pacing adjustment stage" />
+									<p class="workflow-stage-name">Pacing<br>Adjustment</p>
+								</div>
+							</div>
+
+							<!-- ── ROW 2: Intermediate Artifacts ── -->
+							<div class="workflow-board workflow-board--artifacts fragment" data-fragment-index="3">
+								<div class="workflow-artifacts-label">
+									<p class="workflow-row-label">Intermediate<br>Artifacts</p>
+									<p id="compStructLabel" class="workflow-row-label workflow-row-label--secondary">Compositional<br>Structures</p>
+								</div>
+								<div class="flip-card" data-flip-idx="0">
+								<div class="flip-card-inner">
+									<div class="flip-card-face flip-card-front">
+										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+											<rect x="2" y="2" width="20" height="20" rx="2"/>
+											<circle cx="7" cy="7" r="1.8" fill="#4a6fa5" fill-opacity="0.22" stroke="none"/>
+											<rect x="12" y="5" width="6" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.15" stroke="none"/>
+											<rect x="5" y="13" width="5" height="5" rx="1" fill="#4a6fa5" fill-opacity="0.15" stroke="none"/>
+											<line x1="13" y1="14" x2="19" y2="14"/>
+											<line x1="13" y1="17" x2="17" y2="17"/>
+										</svg>
+									</div>
+									<div class="flip-card-face flip-card-back">
+										<img src="media/set.png" alt="Set structure" />
+									</div>
+								</div>
+								<p class="flip-card-label">Freeform Canvas</p>
+								</div>
+								<span class="workflow-arrow">&rarr;</span>
+								<div class="flip-card" data-flip-idx="1">
+								<div class="flip-card-inner">
+									<div class="flip-card-face flip-card-front">
+										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+											<rect x="3" y="2" width="18" height="20" rx="2"/>
+											<line x1="7" y1="7" x2="17" y2="7"/>
+											<line x1="7" y1="10" x2="17" y2="10"/>
+											<line x1="7" y1="13" x2="15" y2="13"/>
+											<line x1="7" y1="16" x2="13" y2="16"/>
+											<line x1="7" y1="19" x2="11" y2="19"/>
+										</svg>
+									</div>
+									<div class="flip-card-face flip-card-back">
+										<img src="media/linear.png" alt="Linear structure" />
+									</div>
+								</div>
+								<p class="flip-card-label">Linear Text Editor</p>
+								</div>
+								<span class="workflow-arrow">&rarr;</span>
+								<div class="flip-card" data-flip-idx="2">
+								<div class="flip-card-inner">
+									<div class="flip-card-face flip-card-front">
+										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+											<rect x="2" y="2" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.15"/>
+											<rect x="13" y="2" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.15"/>
+											<rect x="2" y="10" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.22"/>
+											<rect x="13" y="10" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.22"/>
+											<rect x="2" y="18" width="9" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.28"/>
+											<rect x="13" y="18" width="9" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.28"/>
+										</svg>
+									</div>
+									<div class="flip-card-face flip-card-back">
+										<img src="media/grid.png" alt="Grid structure" />
+									</div>
+								</div>
+								<p class="flip-card-label">Grid-Based Planner</p>
+								</div>
+								<span class="workflow-arrow">&rarr;</span>
+								<div class="flip-card" data-flip-idx="3">
+								<div class="flip-card-inner">
+									<div class="flip-card-face flip-card-front">
+										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+											<rect x="2" y="13" width="5" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.18"/>
+											<rect x="8" y="13" width="7" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
+											<rect x="16" y="13" width="6" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.18"/>
+											<rect x="2" y="18" width="6" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
+											<rect x="9" y="18" width="5" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.38"/>
+											<rect x="15" y="18" width="7" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
+											<line x1="2" y1="10" x2="22" y2="10"/>
+											<polygon points="11,3 13,8 9,8" fill="#4a6fa5" fill-opacity="0.35" stroke="#4a6fa5" stroke-width="1.3" stroke-linejoin="round"/>
+										</svg>
+									</div>
+									<div class="flip-card-face flip-card-back">
+										<img src="media/temporal-sync.png" alt="Temporal sync structure" />
+									</div>
+								</div>
+								<p class="flip-card-label">Timeline Editor</p>
+								</div>
+							</div>
+						</div>
+						<p class="fragment workflow-subtitle workflow-semantic-caption" data-fragment-index="4">
+							Intermediate artifacts encode semantic structures of its elements.
+						</p>
+					</div>
+					<aside class="notes">
+						One important way is through intermediate artifacts.
+						Let me explain with an example of video editing. We interviewed 9 expert video creators across different genres. Although their workflows varied, they all shared four core stages. They started with a collection of assets, like photos, footage and reference documents, then they developed a storyline; with these the editors planned out each scene by breaking down the story into narrative beats and matching visuals, much like the storyboard we discussed in the beginning. And the scenes were sequenced in the timeline editor to adjust pacing. This was not a single pass linear process, but an iterative process.
+						{click} to reveal intermediate artifacts.
+						And each of these stages involved intermediate artifacts such as a canvas board or a file system with a set of assets
+						a document in a linear text editor, a grid or a table for the storyboard, and the sequences in the timeline editor.
+						What's more interesting is that each of the intermediate artifacts have semantic structures that encode the relationship between its individual elements.
+						So for example a canvas board or a file system of assets could encode a hierarchial relationship between individual assets;
+						The text editor encodes a linear progression of narrative. The grid based storyboard encodes congruence between the narration and the visual scene, and finally the timeline encodes the temporal synchrony between the clips.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center">
+						<p class="theme-callout">
+							Effective interfaces should surface intermediate artifacts that encode semantic structures.
+						</p>
+					</div>
+					<aside class="notes">
+						This is the key design principle: it's not enough to hide the complexity of AI pipelines behind a single chat box. Effective interfaces should make intermediate artifacts visible — and those artifacts should carry the semantic structure of the work. When a creator can see and manipulate a canvas of assets, a narrative document, a scene grid, and a timeline, they're working with representations that encode the meaning and relationships of their material. That structure is what makes AI assistance legible and controllable at each stage.
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--video-fill" style="position:relative;">
+					<h2 class="slide-heading">Agentic Video Editing &ne; <br>Chat Interface</h2>
+					<div class="media-frame" style="overflow:hidden;">
+						<video controls preload="auto" style="width:100%;height:100%;">
+							<source src="media/coconut_agent_trace_3x_withsound.mp4" type="video/mp4" />
+						</video>
+					</div>
+					<aside class="notes">
+						The problem with most applications  agentic video editing applications out there right now is that they hide these intermediate results or only show them in a chat response. They are not structured intermediate artifacts that you can make sense of and interact with.
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<div class="videorigami-showcase">
+						<h2 class="slide-heading">Video Origami</h2>
+						<p class="slide-subtitle">Design approach that leverages structured intermediate artifacts to support human-AI co-creation.</p>
+						<div class="videorigami-visual">
+							<div class="videorigami-panels">
+								<img src="media/vo-canvas-editor.png" alt="VideOrigami Canvas and Editor views" />
+								<img src="media/vo-grid-timeline.png" alt="VideOrigami Grid and Timeline views" />
+							</div>
+							<div class="videorigami-labels">
+								<p>Canvas</p>
+								<p>Editor</p>
+								<p>Storyboard</p>
+								<p>Timeline</p>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						In our recent work VideoOrigami presented at CHI, we propose a design approach that leverages structured intermediate artifacts to support human AI co-creation. And we instantiate this approach in an agent-supported video editing interface which incorporated the 4 intermediate artifacts that are common to video workflows: a canvas, a document editor, a grid or storyboard and a timeline. Let me walk you through an example of a user using VideoOrigami to make an informational video about fortune cookies. 
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--video-fill">
+					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<div class="media-frame">
+						<video id="vo-canvas-asset-summarize-video" controls preload="auto">
+							<source src="media/vo-canvas-asset-summarize.mp4" type="video/mp4" />
+						</video>
+					</div>
+					<aside class="notes">
+						Instead of the agent simply outputting the final timeline from a user prompt, in Video Origami, the user and the agent fluidly collaborate on intermediate artifacts. So here, the user collected some assets on a canvas, several source documents about fortune cookies. She invokes the agent to summarize one of the documents. The agent creates another intermediate artifact, a note with a summary of the article and links it with the orignal asset.
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--video-fill">
+					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<div class="media-frame">
+						<video controls preload="auto">
+							<source src="media/fortunate_cookie_part3.mp4" type="video/mp4" />
+						</video>
+					</div>
+					<aside class="notes">
+						Next, when the user moves into the narrative editor she can collaborate with the AI on the script. As she works on the script, the agent tracks provenance, linking each part of the narrative back to the source assets it draws from. So, AI is helping to synchronize across different intermediate artifacts.
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--video-fill">
+					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<div class="media-frame">
+						<video controls preload="auto">
+							<source src="media/editor-transform-grid.mp4" type="video/mp4" />
+						</video>
+					</div>
+					<aside class="notes">
+						 The narrative editor can be transformed into a grid — the storyboard. The agent suggests how to break the script into initial scenes and pair each one with appropriate visuals. Becuase intermediate artifacts are surfaces as first-class citizens, it is easy to go back and forth between the asset view and the storyboard view.
+					</aside>
+				</section>
+
+				<section class="media-slide" id="cell-correspondence-slide">
+					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<div class="media-frame">
+						<div class="correspondence-stack">
+							<img
+								class="correspondence-img"
+								src="media/video-origami-cell-corresonding.png"
+								alt="Video Origami — scene plan cells corresponding to timeline segments"
+							/>
+							<img
+								class="correspondence-img fragment"
+								data-fragment-index="1"
+								src="media/video-origami-cell-corresonding-2.png"
+								alt="Video Origami — timeline segment highlighted with corresponding scene cell"
+							/>
+							<img
+								class="correspondence-img fragment"
+								data-fragment-index="2"
+								src="media/video-origami-cell-corresonding-3.png"
+								alt="Video Origami — full correspondence between scene plan and timeline"
+							/>
+						</div>
+					</div>
+					<aside class="notes">
+						When the user moves on to work on the timeline, each portion of the timeline corresponds directly to a cell in the scene plan. As the user selects a segment on the timeline, the corresponding cell in the scene plan is highlighted, and vice versa. 
+					</aside>
+				</section>
+
+				<section class="content-slide" id="video-origami-study-quotes-slide">
+					<h2 class="slide-heading">Intermediate artifacts helped users iterate with AI without losing control</h2>
+					<div class="slide-body" style="flex-direction: column; justify-content: center; gap: 1.6em;">
+						<div class="quote-slide" style="text-align: left; max-width: 100%;">
+							<p class="quote-slide-text" style="margin: 0;">&ldquo;I like that I can pick up wherever I want &hellip; instead of always having to prompt first or having to set certain things up for using AI.&rdquo;</p>
+						</div>
+						<div class="quote-slide fragment" style="text-align: left; max-width: 100%;">
+							<p class="quote-slide-text" style="margin: 0;">&ldquo;I liked the fact I always understand what&rsquo;s going on.&rdquo;</p>
+						</div>
+						<div class="quote-slide fragment" style="text-align: left; max-width: 100%;">
+							<p class="quote-slide-text" style="margin: 0;">&ldquo;It has a structural layout which helps me to understand how the video is composed.&rdquo;</p>
+						</div>
+					</div>
+					<aside class="notes">
+						User study quotes from Video Origami. U3 speaks to agency and entry points — picking up at any layer without re-prompting. U1 speaks to transparency. U5 speaks to the legibility of compositional structure. Advance through them one at a time.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body takeaways-body">
+						<div class="takeaways-block">
+							<h2 class="slide-heading">Takeaways</h2>
+							<ol class="takeaways-list">
+								<li><span class="list-num">1.</span> <strong>Support semantics</strong> &mdash; translate high-level creative intent into algorithms, bridging the gap between how people think and how tools operate.</li>
+								<li><span class="list-num">2.</span> <strong>Support common ground</strong> &mdash; enable shared references between humans, and between humans and AI, so collaboration stays grounded in what everyone can see.</li>
+								<li><span class="list-num">3.</span> <strong>Support iteration</strong> &mdash; creative work is never one-shot. Build tools that make the cycle of exploring, evaluating, and revising intuitive and fun.</li>
+							</ol>
+						</div>
+						<hr class="takeaways-divider" />
+						<div class="takeaways-block">
+							<h2 class="slide-heading slide-heading--accent">Open Opportunities</h2>
+							<ul class="takeaways-list">
+								<li class="fragment"><a href="#/backup-orientation">How do we help users <strong>orient across many parallel branches</strong> of creative exploration?</a></li>
+								<li class="fragment"><a href="#/backup-track-history">How do we <strong>track history</strong> with implicit and explicit creative decisions by agents and humans?</a></li>
+								<li class="fragment"><a href="#/backup-friction">What forms of <strong>friction are beneficial</strong> to the creative process, and how do we design for them?</a></li>
+								<li class="fragment"><a href="#/backup-evaluate">How do we <strong>evaluate these systems</strong> when the outcomes are subjective and the process matters as much as the product?</a></li>
+							</ul>
+						</div>
+					</div>
+					<aside class="notes">
+						Close the arc in one breath: semantics through the lyric-video pipeline and its guidelines; common ground through Snapstream and VisPoll; iteration through compositional structures in VideOrigami. The open questions point to backup slides if the room wants depth on branching, provenance, beneficial friction, or evaluation beyond task metrics.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<div class="slide-body slide-body--center thanks-body">
+						<h2 class="slide-heading">Thanks to&hellip;</h2>
+						<div class="thanks-groups">
+							<div>
+								<p class="thanks-project">Automated Lyric Videos <span>&mdash; UIST &rsquo;23</span></p>
+								<p class="thanks-authors"><strong>Jiaju Ma</strong>, Anyi Rao, Li-Yi Wei, Rubaiat Habib Kazi, Maneesh Agrawala</p>
+							</div>
+							<div>
+								<p class="thanks-project">Snapstream <span>&mdash; CHI &rsquo;20</span></p>
+								<p class="thanks-authors"><strong>Saelyne Yang</strong>, Changyoon Lee, Juho Kim</p>
+							</div>
+							<div>
+								<p class="thanks-project">Beyond Show of Hands <span>&mdash; CHI &rsquo;21</span></p>
+								<p class="thanks-authors"><strong>John Joon Young Chung</strong>, Haijun Xia, Li-Yi Wei, Rubaiat Habib Kazi</p>
+							</div>
+							<div>
+								<p class="thanks-project">VideOrigami <span>&mdash; CHI &rsquo;25</span></p>
+								<p class="thanks-authors"><strong>Yining Cao</strong>, Yiyi Huang, Anh Truong, Valentina Shin, Haijun Xia</p>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						These projects made the talk possible: UIST twenty three lyric automation with Jiaju Ma and colleagues; Snapstream at CHI twenty twenty with Saelyne Yang and collaborators; Beyond Show of Hands at CHI twenty twenty one with John Chung and colleagues; VideOrigami at CHI twenty twenty five with Yining Cao, Yiyi Huang, Anh Truong, Haijun Xia, and others on the paper. Offer to send PDF links after the session.
+					</aside>
+				</section>
+
+			<!-- ═══════════════════════════════════════════════════════ -->
+				<!-- BACKUP SLIDES                                        -->
+				<!-- ═══════════════════════════════════════════════════════ -->
+
+				<section class="title-slide" data-background-color="#ffffff" id="backup-divider">
+					<div class="title-slide-content">
+						<h1 class="title-heading" style="font-size: 1.8em; color: #8a939f;">Backup Slides</h1>
+					</div>
+					<aside class="notes">
+						Optional depth on open challenges. Skip entirely in a short slot; use if the audience asks about branching, provenance, friction, or evaluation.
+					</aside>
+				</section>
+
+				<!-- ═══ BACKUP: Orienting Across Parallel Branches ═══ -->
+
+				<section class="content-slide" id="backup-orientation">
+					<h2 class="slide-heading">Supporting Orientation Across Parallel Branches</h2>
+					<div class="slide-body" style="gap: 0.6em; padding-top: 0.3em;">
+						<p>When AI makes it cheap to generate many variations, the fundamental challenge shifts from <strong>creation</strong> to <strong>orientation</strong>.</p>
+						<div style="border: 1px solid #d4d9e0; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 1px 8px rgba(0,0,0,0.07); padding: 0.7em 0.9em; display: flex; align-items: center; gap: 1em;">
+							<img src="media/kaparthy_x_post.png" alt="Karpathy X post about git assumptions" style="width: 38%; height: auto; object-fit: contain; border-radius: 4px;" />
+							<div style="flex: 1;">
+								<p style="margin: 0 0 0.4em; font-size: 0.85em; line-height: 1.5; color: #2d3748;">&ldquo;Git has a softly built-in assumption of one &lsquo;master&rsquo; branch, which temporarily forks off into PRs just to merge back a bit later.&rdquo;</p>
+								<p style="margin: 0; font-size: 0.7em; color: #8a939f;">&mdash; Andrej Karpathy, March 2026</p>
+								<p style="margin: 0.3em 0 0; font-size: 0.6em;">
+									<a href="https://twitter.com/karpathy/status/2030705271627284816" target="_blank" style="color: #4a6fa5;">Post on X</a> &middot;
+									<a href="https://github.com/karpathy/autoresearch" target="_blank" style="color: #4a6fa5;">karpathy/autoresearch</a>
+								</p>
+							</div>
+						</div>
+						<p style="font-size: 0.85em; color: #2d3748; margin: 0;">The original repo is more of a <strong>seed</strong>, from which could sprout commits on all kinds of different research directions. What does version control look like when branching is the norm, not the exception?</p>
+					</div>
+					<aside class="notes">
+						When generation is cheap, the bottleneck becomes orientation: knowing which branch you are on and how variants differ. Karpathy’s quip about git is a hook for that shift. If asked for related HCI, point to VideoDiff and other diff tools for time-based media.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">VideoDiff: Comparing video versions is hard</h2>
+					<div class="slide-body" style="gap: 0.5em; align-items: center; justify-content: center;">
+						<img src="media/video-diff-transcript-view.png" alt="VideoDiff transcript view" style="max-height: 50vh; max-width: 90%; object-fit: contain; border-radius: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);" />
+						<p style="font-size: 0.6em; color: #8a939f; margin: 0; text-align: center;">Huh et al. &middot; VideoDiff &middot; CHI 2025</p>
+						<p style="font-size: 0.8em; color: #2d3748; margin: 0.3em 0 0; text-align: center; max-width: 88%;"><strong>Key challenge:</strong> Comparing differences between versions is especially hard for time-based, multimodal media. How do we help users make sense of many branches created with AI assistance?</p>
+					</div>
+					<aside class="notes">
+						VideoDiff at CHI twenty twenty five tackles comparison for multimodal timelines. Use it as a concrete neighbor problem to orientation: even if users can branch freely, they still need legible diffs and summaries, not only more thumbnails.
+					</aside>
+				</section>
+
+				<!-- ═══ BACKUP: Track History / Redefining Main ═══ -->
+
+				<section class="content-slide" id="backup-track-history">
+					<h2 class="slide-heading">Redefining &ldquo;main&rdquo; as creative intent, not a single implementation</h2>
+					<div class="slide-body slide-body--split-media">
+						<div class="split-media-panel split-media-panel--video">
+							<video controls preload="metadata">
+								<source src="media/agentic-responsive-layout.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<div class="split-text-panel">
+							<p class="snapstream-summary">
+								The initial design specifies the designer&rsquo;s intent. An agent translates that intent across multiple aspect ratios. The user authors multiple versions simultaneously.
+							</p>
+							<p class="split-media-citation">
+								<small>Kim Pimmel &middot; Designer at Adobe Research</small>
+							</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Prototype from Adobe Research showing one intent authored into several aspect ratios. Backup for “track history”: when agents reinterpret layout, cropping, and pacing, which decisions belong in the changelog for a human reviewer?
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">Intent-Driven Authoring: Open Questions</h2>
+					<div class="slide-body" style="gap: 0.7em; justify-content: center;">
+						<div style="display: flex; gap: 1em; flex-wrap: wrap;">
+							<div style="flex: 1; min-width: 260px; border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.7em 0.9em; background: #fff;">
+								<p style="font-size: 0.6em; font-weight: 700; color: #4a6fa5; margin: 0 0 0.3em;">The Shift</p>
+								<p style="font-size: 0.8em; color: #2d3748; margin: 0; line-height: 1.5;">If &ldquo;main&rdquo; is no longer a single artifact but a <strong>specification of intent</strong>, how do we design version control, collaboration, and review workflows around it?</p>
+							</div>
+							<div style="flex: 1; min-width: 260px; border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.7em 0.9em; background: #fff;">
+								<p style="font-size: 0.6em; font-weight: 700; color: #4a6fa5; margin: 0 0 0.3em;">Tracking Decisions</p>
+								<p style="font-size: 0.8em; color: #2d3748; margin: 0; line-height: 1.5;">As agents make autonomous decisions (cropping, pacing, shot selection), how do we surface <strong>which choices were made implicitly</strong> so creators can audit and revise?</p>
+							</div>
+						</div>
+						<p style="font-size: 0.75em; color: #4a6fa5; font-weight: 600; margin: 0; text-align: center;">What are the right interfaces for intent-driven authoring or consumption of media?</p>
+					</div>
+					<aside class="notes">
+						Spell out the research program: if canonical “main” is an intent graph rather than one rendered timeline, diff and review UIs have to change. Pair with the tracking box: expose implicit agent choices so audits resemble code review, not only scrubbing pixels.
+					</aside>
+				</section>
+
+				<!-- ═══ BACKUP: Beneficial Friction ═══ -->
+
+				<section class="content-slide" id="backup-friction">
+					<h2 class="slide-heading">How do we enrich the creative process?</h2>
+					<div class="slide-body" style="gap: 0.5em; justify-content: center;">
+						<p style="font-size: 0.8em; color: #5c6778; margin: 0;">If agents become perfectly accurate, does the creative process still matter?</p>
+						<div style="border-left: 3px solid #b8c5d4; padding: 0.6em 0.9em; margin: 0.3em 0; background: #f5f7fa; border-radius: 0 6px 6px 0;">
+							<p style="margin: 0; font-size: 0.7em; font-style: italic; color: #2d3748; line-height: 1.55;">&ldquo;What if there were a machine&mdash;a &lsquo;black box&rsquo;&mdash;that could connect directly to a director&rsquo;s brain and translate their intentions instantly into a finished film?&rdquo;</p>
+							<p style="margin: 0.3em 0 0; font-size: 0.55em; color: #8a939f;">&mdash; Walter Murch, <em>In the Blink of an Eye</em></p>
+						</div>
+					</div>
+					<aside class="notes">
+						Reprise the Murch provocation for Q and A: instant perfect output is not obviously desirable if it deletes the reflective steps creators value. Sets up the next two slides on process and on beneficial friction in agentic tools.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">The case for creative process</h2>
+					<div class="slide-body" style="display: flex; flex-wrap: wrap; gap: 0.8em; justify-content: center; align-items: stretch; padding-top: 0.3em;">
+						<div style="flex: 1 1 280px; max-width: 440px; border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.7em 0.9em; background: #fff;">
+							<p style="margin: 0 0 0.2em; font-size: 0.55em; font-weight: 700; font-style: italic; color: #1e3354;">In the Blink of an Eye</p>
+							<p style="margin: 0 0 0.35em; font-size: 0.45em; color: #5c6778;">Walter Murch</p>
+							<p style="margin: 0; font-size: 0.5em; line-height: 1.55; color: #2d3748;">The kind of filmmakers who would reject the offer are interested in the <mark style="background: rgba(255,224,0,0.40); padding: 0.05em 0.15em; border-radius: 2px;">collaborative process of filmmaking</mark>, and in seeing a detailed vision mysteriously emerge out of that process.</p>
+						</div>
+						<div style="flex: 1 1 280px; max-width: 440px; border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.7em 0.9em; background: #fff;">
+							<p style="margin: 0 0 0.2em; font-size: 0.55em; font-weight: 700; color: #1e3354;">Toward Modeling Creative Processes for Algorithmic Painting</p>
+							<p style="margin: 0 0 0.35em; font-size: 0.45em; color: #5c6778;">Aaron Hertzmann &mdash; Adobe Research</p>
+							<p style="margin: 0; font-size: 0.5em; line-height: 1.55; color: #2d3748;">Creative processes often involve two important components: <mark style="background: rgba(255,224,0,0.40); padding: 0.05em 0.15em; border-radius: 2px;">vague, high-level goals</mark> and <mark style="background: rgba(255,224,0,0.40); padding: 0.05em 0.15em; border-radius: 2px;">exploratory processes for discovering new ideas.</mark></p>
+						</div>
+					</div>
+					<aside class="notes">
+						Condensed version of the main-deck evidence cards: keep the citations if someone wants pointers after the talk.
+					</aside>
+				</section>
+
+				<section class="content-slide">
+					<h2 class="slide-heading">Beneficial Friction &amp; Exposing Agent Decisions</h2>
+					<div class="slide-body" style="gap: 0.6em; justify-content: center;">
+						<div style="border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.6em 0.9em; background: #f5f7fa;">
+							<p style="margin: 0; font-size: 0.8em; color: #2d3748; line-height: 1.55;"><strong>Q1:</strong> What forms of friction are beneficial to the creative process, and how should we design for them?</p>
+						</div>
+						<div style="border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.6em 0.9em; background: #f5f7fa;">
+							<p style="margin: 0; font-size: 0.8em; color: #2d3748; line-height: 1.55;"><strong>Q2:</strong> How do we expose the implicit decisions agents make so users can understand, evaluate, and shape them?</p>
+						</div>
+						<p style="font-size: 0.55em; color: #8a939f; margin: 0; text-align: center;">Beyond Code Generation: LLM-Supported Exploration of the Program Design Space &mdash; Zamfirescu-Pereira et al. &mdash; CHI 2025</p>
+						<div style="border-left: 3px solid #4a6fa5; padding: 0.5em 0.8em; background: #f5f7fa; border-radius: 0 6px 6px 0; margin-top: 0.2em;">
+							<p style="margin: 0; font-size: 0.75em; color: #1e3354; line-height: 1.5;"><strong>Design implication:</strong> Rather than removing all friction, identify which moments of pause, reflection, and constraint <em>enhance</em> creative ownership and discovery.</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Cite Zamfirescu-Pereira et al. CHI twenty twenty five as a program for studying exploration support, not only acceleration. Stress Q2: transparency about implicit agent decisions is a first-class HCI problem, especially when models chain multiple tools.
+					</aside>
+				</section>
+
+				<!-- ═══ BACKUP: Evaluating Creative Systems ═══ -->
+
+				<section class="content-slide" id="backup-evaluate">
+					<h2 class="slide-heading">What do we mean by &ldquo;effective&rdquo;?</h2>
+					<div class="slide-body" style="gap: 0.5em; justify-content: center;">
+						<div style="border-left: 3px solid #b8c5d4; padding: 0.4em 0.8em; background: #f5f7fa; border-radius: 0 6px 6px 0;">
+							<p style="margin: 0; font-size: 0.7em; font-style: italic; color: #2d3748;">&ldquo;General methods that leverage computation are ultimately the <strong>most effective</strong>.&rdquo; &mdash; Richard Sutton, 2019</p>
+						</div>
+						<p style="font-size: 0.8em; color: #5c6778; margin: 0.3em 0;">For creativity support tools, &ldquo;effective&rdquo; must go beyond task performance.</p>
+						<div style="display: flex; flex-direction: column; gap: 0.5em;">
+							<div style="border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.5em 0.9em; background: #fff;">
+								<p style="margin: 0; font-size: 0.75em; color: #2d3748; line-height: 1.5;"><strong style="color: #4a6fa5;">Creative Experience:</strong> How do we capture flow, agency, and enjoyment in human&ndash;AI collaboration?</p>
+							</div>
+							<div style="border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.5em 0.9em; background: #fff;">
+								<p style="margin: 0; font-size: 0.75em; color: #2d3748; line-height: 1.5;"><strong style="color: #4a6fa5;">Long-term Impact:</strong> How do AI systems shape creators and creative domains over time? Do they expand or narrow creative possibilities?</p>
+							</div>
+							<div style="border: 1px solid #d4d9e0; border-radius: 8px; padding: 0.5em 0.9em; background: #fff;">
+								<p style="margin: 0; font-size: 0.75em; color: #2d3748; line-height: 1.5;"><strong style="color: #4a6fa5;">Sustainability:</strong> How do we account for environmental and societal costs beyond performance?</p>
+							</div>
+						</div>
+						<p style="font-size: 0.75em; color: #4a6fa5; font-weight: 600; margin: 0.3em 0 0; text-align: center;">Only by developing robust ways to evaluate these dimensions can we design truly effective interfaces.</p>
+					</div>
+					<aside class="notes">
+						Sutton’s “bitter lesson” line is a foil: reward alone is too narrow for subjective media. Argue for mixed methods: creative experience, longitudinal effects on practice, and costs outside the lab. Tie back to the takeaways slide if someone asks how we would know a system succeeded.
+					</aside>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+	<script src="https://player.vimeo.com/api/player.js"></script>
+		<script src="dist/plugin/zoom.js"></script>
+		<script src="dist/plugin/notes.js"></script>
+		<script src="dist/plugin/search.js"></script>
+		<script src="dist/plugin/markdown.js"></script>
+		<script src="dist/plugin/highlight.js"></script>
+		<script>
+			// Also available as an ES module, see: https://revealjs.com/initialization/
+			// import Reveal from 'reveal.js';
+			// import RevealZoom from 'reveal.js/plugin/zoom';
+			// import RevealNotes from 'reveal.js/plugin/notes';
+			// import RevealSearch from 'reveal.js/plugin/search';
+			// import RevealMarkdown from 'reveal.js/plugin/markdown';
+			// import RevealHighlight from 'reveal.js/plugin/highlight';
+
+		Reveal.initialize({
+			width: 1280,
+			height: 720,
+			controls: true,
+			progress: true,
+			center: false,
+			hash: true,
+			mouseWheel: false,
+			touch: true,
+			navigationMode: 'default',
+			autoAnimateEasing: 'ease-in-out',
+			autoAnimateDuration: 0.65,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
+			});
+
+			(function () {
+				var intentSlide = document.getElementById('intent-comparison-slide');
+				if (!intentSlide) return;
+
+				function syncIntentSlideState() {
+					var ops = intentSlide.querySelector('.intent-operations');
+					intentSlide.classList.toggle('intent-shift-up', !!(ops && ops.classList.contains('visible')));
+				}
+
+				Reveal.on('fragmentshown', function (event) {
+					if (event.currentSlide === intentSlide) syncIntentSlideState();
+				});
+				Reveal.on('fragmenthidden', function (event) {
+					if (event.currentSlide === intentSlide) syncIntentSlideState();
+				});
+				Reveal.on('slidechanged', function (event) {
+					if (event.currentSlide === intentSlide || event.previousSlide === intentSlide) {
+						syncIntentSlideState();
+					}
+				});
+				syncIntentSlideState();
+			})();
+
+			document.querySelector('.reveal').addEventListener('click', function (e) {
+				if (e.target.closest('a, button, video, .controls, .navigate-left, .navigate-right, .navigate-up, .navigate-down, #flipCardsRow')) return;
+				Reveal.next();
+			});
+
+
+			(function () {
+				const video = document.getElementById('intro-video');
+				if (!video) return;
+
+				const START_AT = 7 * 60 + 57; // 7:57
+				const END_AT = 8 * 60 + 11.2; // 8:11.5
+
+				function enterFullscreen(el) {
+					const request =
+						el.requestFullscreen ||
+						el.webkitRequestFullscreen ||
+						el.msRequestFullscreen;
+					if (request) request.call(el);
+				}
+
+				function exitFullscreen() {
+					const exit =
+						document.exitFullscreen ||
+						document.webkitExitFullscreen ||
+						document.msExitFullscreen;
+					if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+						exit.call(document);
+					}
+				}
+
+				function seekToStart() {
+					video.pause();
+					if (video.readyState < 1) return;
+					if (typeof video.fastSeek === 'function') {
+						video.fastSeek(START_AT);
+					} else {
+						video.currentTime = START_AT;
+					}
+				}
+
+				video.addEventListener('loadeddata', seekToStart);
+				video.addEventListener('canplay', seekToStart);
+
+				Reveal.on('slidechanged', (event) => {
+					if (event.currentSlide && event.currentSlide.contains(video)) {
+						seekToStart();
+					}
+				});
+
+				seekToStart();
+
+				video.addEventListener('play', () => {
+					if (video.currentTime < START_AT || video.currentTime >= END_AT) {
+						video.currentTime = START_AT;
+					}
+					enterFullscreen(video);
+				});
+
+				video.addEventListener('timeupdate', () => {
+					if (video.currentTime >= END_AT) {
+						video.pause();
+						video.currentTime = END_AT;
+						exitFullscreen();
+					}
+				});
+
+				video.addEventListener('ended', exitFullscreen);
+			})();
+
+			(function () {
+				const video = document.getElementById('vo-canvas-asset-summarize-video');
+				if (!video) return;
+
+				const END_AT = 7.7;
+
+				video.addEventListener('play', () => {
+					if (video.currentTime >= END_AT) {
+						video.currentTime = 0;
+					}
+				});
+
+				video.addEventListener('timeupdate', () => {
+					if (video.currentTime >= END_AT) {
+						video.pause();
+						video.currentTime = END_AT;
+					}
+				});
+			})();
+
+			(function () {
+				var flipLabels = ['Hierarhcy / Affinity', 'Linear', 'Congruence', 'Temporal Synchrony'];
+				var originalLabels = ['Freeform Canvas', 'Linear Text Editor', 'Grid-Based Planner', 'Timeline Editor'];
+				var flipped = [false, false, false, false];
+				var row = document.getElementById('flipCardsRow');
+				var subtitle = document.getElementById('flipSlideSubtitle');
+				var compLabel = document.getElementById('compStructLabel');
+				if (!row) return;
+
+				row.querySelectorAll('.flip-card').forEach(function (card) {
+					card.addEventListener('click', function () {
+						var idx = parseInt(card.dataset.flipIdx);
+						var inner = card.querySelector('.flip-card-inner');
+						var label = card.querySelector('.flip-card-label');
+						flipped[idx] = !flipped[idx];
+						inner.style.transform = flipped[idx] ? 'rotateY(180deg)' : '';
+						label.textContent = flipped[idx] ? flipLabels[idx] : originalLabels[idx];
+
+						var anyFlipped = flipped.some(function (f) { return f; });
+						if (compLabel) {
+							compLabel.classList.toggle('is-visible', anyFlipped);
+						}
+					});
+				});
+		})();
+
+		// Clamp Vimeo snapstream video to 3:37–4:12 (217s–252s)
+		(function () {
+			var iframe = document.getElementById('snapstream-vimeo');
+			if (!iframe || typeof Vimeo === 'undefined') return;
+			var player = new Vimeo.Player(iframe);
+			player.on('timeupdate', function (data) {
+				if (data.seconds > 252) {
+					player.pause();
+					player.setCurrentTime(252);
+				}
+			});
+			Reveal.on('slidechanged', function () {
+				if (iframe.closest('section') === Reveal.getCurrentSlide()) {
+					player.setCurrentTime(217);
+				}
+			});
+		})();
+
+		// Clamp lyric-video playback to 2:45–2:57 (165s–177s)
+		(function () {
+			var vid = document.getElementById('lyric-video');
+			if (!vid) return;
+			vid.addEventListener('timeupdate', function () {
+				if (vid.currentTime > 186) {
+					vid.pause();
+					vid.currentTime = 186;
+				}
+			});
+			// Also seek to start point when the slide becomes visible
+			Reveal.on('slidechanged', function () {
+				if (vid.closest('section') === Reveal.getCurrentSlide()) {
+					vid.currentTime = 173;
+				}
+			});
+		})();
+
+	</script>
+</body>
+</html>

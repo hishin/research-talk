@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Policy Iteration — R&amp;N 4×3 Grid</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        height: 100%;
+        background: #f5f6f8;
+        color: #1a1a1a;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 14px 10px;
+      }
+      .main-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      canvas { background: #f5f6f8; display: block; }
+
+      /* ── Detail panel ─────────────────────────────────────────────────── */
+      .detail-panel {
+        width: 340px;
+        font-size: 18px;
+        color: #1a1a1a;
+        line-height: 1.6;
+      }
+      .detail-panel h3 {
+        font-size: 19px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .bellman-eq {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 17px;
+        color: #0d66d0;
+        margin-bottom: 12px;
+        padding: 8px 10px;
+        background: #eef3fb;
+        border-radius: 4px;
+        line-height: 1.6;
+      }
+      .section-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+        margin-top: 12px;
+      }
+      .section-label:first-of-type { margin-top: 0; }
+      .cell-detail { margin-bottom: 12px; }
+      .cell-label {
+        font-weight: 600;
+        color: #1473e6;
+        font-size: 18px;
+      }
+      .dir-tag {
+        font-size: 18px;
+        color: #555;
+        margin-left: 4px;
+      }
+      .arith {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 16px;
+        color: #444;
+        word-break: break-word;
+        line-height: 1.6;
+      }
+      .arith.muted  { color: #888; }
+      .arith.result { font-weight: 700; color: #1a1a1a; }
+      .change-item {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 16px;
+        color: #3a3a3a;
+        margin-bottom: 3px;
+      }
+      .status-msg {
+        margin-top: 14px;
+        font-size: 17px;
+        font-family: "SF Mono", Menlo, monospace;
+        color: #666;
+      }
+      .status-msg.converged { color: #1a7a40; font-weight: 600; }
+
+      /* ── Controls ─────────────────────────────────────────────────────── */
+      .controls {
+        margin-top: 14px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        font-weight: 500;
+        border-radius: 5px;
+      }
+      button:disabled { opacity: 0.4; cursor: default; }
+      .btn-primary {
+        background: #1473e6;
+        color: white;
+        padding: 9px 20px;
+        font-size: 13px;
+      }
+      .btn-primary:hover:not(:disabled) { background: #0d66d0; }
+      .btn-secondary {
+        background: #e4e6eb;
+        color: #1a1a1a;
+        padding: 9px 16px;
+        font-size: 13px;
+      }
+      .btn-secondary:hover { background: #d4d6db; }
+    </style>
+  </head>
+  <body>
+    <div class="main-row">
+      <canvas id="grid"></canvas>
+      <div class="detail-panel" id="detail-panel"></div>
+    </div>
+    <div class="controls">
+      <button class="btn-primary"  id="step-btn">Step</button>
+      <button class="btn-secondary" id="reset-btn">Reset</button>
+    </div>
+
+    <script>
+      // ── Grid constants ────────────────────────────────────────────────────
+      const COLS = 4, ROWS = 3;
+      const CELL = 150;
+      const ML = 48, MB = 40;
+      const CW = ML + COLS * CELL;   // 648
+      const CH = ROWS * CELL + MB;   // 490
+
+      const canvas = document.getElementById("grid");
+      canvas.width  = CW;
+      canvas.height = CH;
+      const ctx = canvas.getContext("2d");
+
+      // Screen coords: x 0‥3 left→right, y 0‥2 top→bottom
+      function isWall(x, y)     { return x === 1 && y === 1; }
+      function isGoal(x, y)     { return x === 3 && y === 0; }
+      function isTrap(x, y)     { return x === 3 && y === 1; }
+      function isTerminal(x, y) { return isGoal(x, y) || isTrap(x, y); }
+      function inBounds(x, y)   { return x >= 0 && x < COLS && y >= 0 && y < ROWS; }
+
+      // R&N 1-indexed notation: (col, row from bottom-left)
+      function rnLabel(x, y) { return `(${x + 1},${ROWS - y})`; }
+
+      const DIRS = {
+        right: { dx:  1, dy:  0 },
+        left:  { dx: -1, dy:  0 },
+        up:    { dx:  0, dy: -1 },
+        down:  { dx:  0, dy:  1 },
+      };
+      const PERP = {
+        right: ["up",   "down" ],
+        left:  ["up",   "down" ],
+        up:    ["left", "right"],
+        down:  ["left", "right"],
+      };
+      const DIR_KEYS  = ["right", "left", "up", "down"];
+      const DIR_ARROW = { right: "→", left: "←", up: "↑", down: "↓" };
+
+      function tryMove(x, y, dir) {
+        const { dx, dy } = DIRS[dir];
+        const nx = x + dx, ny = y + dy;
+        if (!inBounds(nx, ny) || isWall(nx, ny)) return { x, y };
+        return { x: nx, y: ny };
+      }
+
+      // Stochastic transitions (consolidated — same cell sums probs)
+      function transitions(x, y, action) {
+        const acc = new Map();
+        const add = (nx, ny, p) => {
+          const k = `${nx},${ny}`;
+          acc.set(k, (acc.get(k) || 0) + p);
+        };
+        const m = tryMove(x, y, action);
+        add(m.x, m.y, 0.8);
+        for (const pd of PERP[action]) {
+          const s = tryMove(x, y, pd);
+          add(s.x, s.y, 0.1);
+        }
+        return [...acc.entries()].map(([k, prob]) => {
+          const [nx, ny] = k.split(",").map(Number);
+          return { x: nx, y: ny, prob };
+        });
+      }
+
+      function stateReward(x, y) {
+        if (isGoal(x, y)) return  1;
+        if (isTrap(x, y)) return -1;
+        return -0.04;
+      }
+
+      const NAV_STATES = [];
+      for (let y = 0; y < ROWS; y++)
+        for (let x = 0; x < COLS; x++)
+          if (!isWall(x, y) && !isTerminal(x, y))
+            NAV_STATES.push({ x, y });
+
+      // ── Algorithm state ──────────────────────────────────────────────────
+      let policy     = {};
+      let utilities  = {};
+      let iteration  = 0;
+      let converged  = false;
+      let highlightSet = new Set();
+      let highlightTimer = null;
+
+      function key(x, y) { return `${x},${y}`; }
+      function getU(x, y) { return utilities[key(x, y)] ?? 0; }
+
+      function fmt3(n) {
+        const s = n.toFixed(3);
+        return s === "-0.000" ? "0.000" : s;
+      }
+      function fmtR(r) {
+        // For reward display: +1.00 or -0.04 etc.
+        return (r >= 0 ? "" : "") + r.toFixed(2);
+      }
+
+      function resetState() {
+        policy    = {};
+        utilities = {};
+        for (const { x, y } of NAV_STATES) {
+          policy[key(x, y)]    = "right";
+          utilities[key(x, y)] = 0;
+        }
+        utilities[key(3, 0)] =  1;
+        utilities[key(3, 1)] = -1;
+        iteration = 0;
+        converged = false;
+        highlightSet.clear();
+        if (highlightTimer) { clearTimeout(highlightTimer); highlightTimer = null; }
+        document.getElementById("step-btn").disabled = false;
+        renderIdlePanel();
+        draw();
+      }
+
+      // ── Policy iteration ─────────────────────────────────────────────────
+      function policyEvaluation() {
+        const GAMMA   = 1.0;
+        const EPSILON = 0.001;
+        // Snapshot pre-evaluation utilities
+        const prevU = {};
+        for (const k in utilities) prevU[k] = utilities[k];
+
+        let iters = 0;
+        for (;;) {
+          let delta = 0;
+          const next = {};
+          for (const { x, y } of NAV_STATES) {
+            const a   = policy[key(x, y)];
+            const trs = transitions(x, y, a);
+            let sum = 0;
+            for (const t of trs) sum += t.prob * getU(t.x, t.y);
+            const newVal = stateReward(x, y) + GAMMA * sum;
+            delta = Math.max(delta, Math.abs(newVal - getU(x, y)));
+            next[key(x, y)] = newVal;
+          }
+          for (const k in next) utilities[k] = next[k];
+          iters++;
+          if (delta < EPSILON || iters > 20000) break;
+        }
+
+        // Return top-3 cells by absolute utility change
+        const deltas = NAV_STATES.map(({ x, y }) => ({
+          x, y,
+          delta: Math.abs(getU(x, y) - (prevU[key(x, y)] ?? 0)),
+        }));
+        deltas.sort((a, b) => b.delta - a.delta);
+        return deltas.slice(0, 3);
+      }
+
+      function policyImprovement() {
+        const changes = [];
+        for (const { x, y } of NAV_STATES) {
+          let bestAction = null, bestVal = -Infinity;
+          for (const action of DIR_KEYS) {
+            const trs = transitions(x, y, action);
+            let val = 0;
+            for (const t of trs) val += t.prob * getU(t.x, t.y);
+            if (val > bestVal) { bestVal = val; bestAction = action; }
+          }
+          if (bestAction !== policy[key(x, y)]) {
+            changes.push({ x, y, from: policy[key(x, y)], to: bestAction });
+            policy[key(x, y)] = bestAction;
+          }
+        }
+        return changes;
+      }
+
+      // ── Arithmetic expansion for detail panel ────────────────────────────
+      // Builds display lines for one cell, using pol (pre-improvement policy snapshot)
+      function buildArith(x, y, pol) {
+        const action = pol[key(x, y)];
+        const R      = stateReward(x, y);
+        const perp   = PERP[action];
+
+        const mainDest = tryMove(x, y, action);
+        const p1Dest   = tryMove(x, y, perp[0]);
+        const p2Dest   = tryMove(x, y, perp[1]);
+
+        const mainU = getU(mainDest.x, mainDest.y);
+        const p1U   = getU(p1Dest.x,  p1Dest.y);
+        const p2U   = getU(p2Dest.x,  p2Dest.y);
+
+        const rStr   = fmtR(R);
+        const aArrow = DIR_ARROW[action];
+        const p1Arr  = DIR_ARROW[perp[0]];
+        const p2Arr  = DIR_ARROW[perp[1]];
+
+        const formulaLine = `U${rnLabel(x,y)} = ${rStr} + 0.8·U${rnLabel(mainDest.x,mainDest.y)} + 0.1·U${rnLabel(p1Dest.x,p1Dest.y)} + 0.1·U${rnLabel(p2Dest.x,p2Dest.y)}`;
+        const numericLine = `     = ${rStr} + 0.8·${fmt3(mainU)} + 0.1·${fmt3(p1U)} + 0.1·${fmt3(p2U)}`;
+        const resultLine  = `     = ${fmt3(getU(x, y))}`;
+
+        return { formulaLine, numericLine, resultLine, action };
+      }
+
+      // ── Step ─────────────────────────────────────────────────────────────
+      function step() {
+        if (converged) return;
+
+        // Snapshot policy used during evaluation (before improvement)
+        const evalPolicy = {};
+        for (const k in policy) evalPolicy[k] = policy[k];
+
+        const topCells     = policyEvaluation();
+        const policyChanges = policyImprovement();
+        iteration++;
+
+        // Yellow-flash changed cells
+        highlightSet.clear();
+        for (const { x, y } of policyChanges) highlightSet.add(key(x, y));
+        if (highlightTimer) clearTimeout(highlightTimer);
+        if (policyChanges.length > 0) {
+          highlightTimer = setTimeout(() => {
+            highlightSet.clear();
+            draw();
+          }, 600);
+        }
+
+        renderStepPanel(topCells, policyChanges, evalPolicy);
+
+        if (policyChanges.length === 0) {
+          converged = true;
+          document.getElementById("step-btn").disabled = true;
+        }
+
+        draw();
+      }
+
+      // ── Argmax helpers ───────────────────────────────────────────────────
+      function actionExpectedU(x, y, action) {
+        const trs = transitions(x, y, action);
+        let sum = 0;
+        for (const t of trs) sum += t.prob * getU(t.x, t.y);
+        return sum;
+      }
+
+      function buildArgmaxLines(x, y) {
+        const ARGMAX_KEYS = ['up', 'down', 'left', 'right'];
+        let best = -Infinity, bestA = null;
+        const vals = {};
+        for (const a of ARGMAX_KEYS) {
+          vals[a] = actionExpectedU(x, y, a);
+          if (vals[a] > best) { best = vals[a]; bestA = a; }
+        }
+        let html = `<div class="cell-label">π'${rnLabel(x, y)}: argmax over actions</div>`;
+        for (const a of ARGMAX_KEYS) {
+          const isBest = (a === bestA);
+          const style = isBest ? 'font-weight:700;color:#1a7a40;' : 'color:#888;';
+          html += `<div class="arith" style="${style}">${DIR_ARROW[a]}: ${fmt3(vals[a])}${isBest ? ' ✓' : ''}</div>`;
+        }
+        return html;
+      }
+
+      // ── Detail panel rendering ───────────────────────────────────────────
+      function renderIdlePanel() {
+        // Sort states in R&N reading order: row 1 first (bottom), col 1 first (left)
+        const sorted = [...NAV_STATES].sort((a, b) => {
+          const rA = ROWS - a.y, rB = ROWS - b.y; // R&N row (1 = bottom)
+          if (rA !== rB) return rA - rB;
+          return a.x - b.x;
+        });
+
+        let html = `<div class="bellman-eq">U(s) = R(s) + γ·Σ P(s'|s,π(s))·U(s')</div>`;
+        html += `<div class="section-label" style="margin-top:8px;">Initial policy π: all →</div>`;
+        for (const { x, y } of sorted) {
+          const { formulaLine } = buildArith(x, y, policy);
+          html += `<div class="arith" style="margin-bottom:6px;">${esc(formulaLine)}</div>`;
+        }
+        document.getElementById("detail-panel").innerHTML = html;
+      }
+
+      function renderStepPanel(topCells, policyChanges, evalPolicy) {
+        const panel = document.getElementById("detail-panel");
+
+        let html = `<h3>Iteration ${iteration} — Policy Evaluation</h3>`;
+        html += `<div class="bellman-eq">U(s) = R(s) + γ · Σ P(s'|s,π(s)) · U(s')</div>`;
+
+        // Largest-change cells
+        html += `<div class="section-label">Largest changes</div>`;
+        for (const { x, y } of topCells) {
+          const { formulaLine, numericLine, resultLine, action } = buildArith(x, y, evalPolicy);
+          html += `<div class="cell-detail">`;
+          html += `<span class="cell-label">${rnLabel(x, y)}</span>`;
+          html += `<span class="dir-tag">policy ${DIR_ARROW[action]}</span>`;
+          html += `<div class="arith">${esc(formulaLine)}</div>`;
+          html += `<div class="arith muted">${esc(numericLine)}</div>`;
+          html += `<div class="arith result">${esc(resultLine)}</div>`;
+          html += `</div>`;
+        }
+
+        // Policy improvement — argmax comparison
+        if (policyChanges.length > 0) {
+          html += `<div class="section-label">Policy improvement</div>`;
+          for (const { x, y } of policyChanges.slice(0, 3)) {
+            html += `<div class="cell-detail">${buildArgmaxLines(x, y)}</div>`;
+          }
+          html += `<div class="status-msg">${policyChanges.length} arrow(s) updated</div>`;
+        } else {
+          html += `<div class="status-msg converged" style="margin-top:10px;">Policy unchanged — converged ✓</div>`;
+        }
+
+        panel.innerHTML = html;
+      }
+
+      function esc(s) {
+        return s
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      // ── Drawing ──────────────────────────────────────────────────────────
+      function cellX(x) { return ML + x * CELL; }
+      function cellY(y) { return y * CELL; }
+
+      function draw() {
+        ctx.clearRect(0, 0, CW, CH);
+        ctx.fillStyle = "#f5f6f8";
+        ctx.fillRect(0, 0, CW, CH);
+        for (let y = 0; y < ROWS; y++)
+          for (let x = 0; x < COLS; x++)
+            drawCell(x, y);
+        drawAxisLabels();
+      }
+
+      function drawCell(x, y) {
+        const cx = cellX(x), cy = cellY(y);
+
+        if (isWall(x, y)) {
+          ctx.fillStyle = "#9e9e9e";
+          ctx.fillRect(cx, cy, CELL, CELL);
+          ctx.fillStyle = "#8a8a8a";
+          ctx.fillRect(cx + 4, cy + 4, CELL - 8, CELL - 8);
+          // "WALL" label
+          ctx.fillStyle = "#fff";
+          ctx.font = "bold 14px -apple-system, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("WALL", cx + CELL / 2, cy + CELL / 2);
+          return;
+        }
+
+        // Background (yellow flash for policy change, else normal)
+        if (highlightSet.has(key(x, y))) {
+          ctx.fillStyle = "#fff9c4";
+        } else if (isGoal(x, y)) {
+          ctx.fillStyle = "#d4f4e2";
+        } else if (isTrap(x, y)) {
+          ctx.fillStyle = "#fde8e8";
+        } else {
+          ctx.fillStyle = "#ffffff";
+        }
+        ctx.fillRect(cx, cy, CELL, CELL);
+
+        // Border
+        ctx.strokeStyle = "#c8cad0";
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(cx + 0.75, cy + 0.75, CELL - 1.5, CELL - 1.5);
+
+        const midX = cx + CELL / 2;
+        const midY = cy + CELL / 2;
+
+        if (isGoal(x, y)) {
+          ctx.fillStyle = "#1a7a40";
+          ctx.font = "bold 34px -apple-system, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("+1", midX, midY);
+        } else if (isTrap(x, y)) {
+          ctx.fillStyle = "#b31a1a";
+          ctx.font = "bold 34px -apple-system, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("−1", midX, midY);
+        } else {
+          // Policy arrow (scaled for CELL = 150)
+          const action = policy[key(x, y)];
+          if (action) drawArrow(midX, midY, action);
+
+          // Utility value — only show after first evaluation
+          if (iteration > 0) {
+            ctx.fillStyle = "#999";
+            ctx.font = "12px 'SF Mono', Menlo, monospace";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "alphabetic";
+            ctx.fillText(fmt3(getU(x, y)), midX, cy + CELL - 10);
+          }
+        }
+      }
+
+      function drawArrow(cx, cy, action) {
+        const { dx, dy } = DIRS[action];
+        const px = -dy, py = dx;   // perpendicular unit vector
+
+        // Arrow spans ≈ ±30px from center
+        const tailX  = cx - dx * 28, tailY  = cy - dy * 28;
+        const stemX  = cx + dx * 6,  stemY  = cy + dy * 6;
+        const tipX   = cx + dx * 36, tipY   = cy + dy * 36;
+        const base1X = stemX + px * 16, base1Y = stemY + py * 16;
+        const base2X = stemX - px * 16, base2Y = stemY - py * 16;
+
+        ctx.strokeStyle = "#1473e6";
+        ctx.lineWidth   = 3.5;
+        ctx.lineCap     = "round";
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(stemX, stemY);
+        ctx.stroke();
+
+        ctx.fillStyle = "#1473e6";
+        ctx.beginPath();
+        ctx.moveTo(tipX, tipY);
+        ctx.lineTo(base1X, base1Y);
+        ctx.lineTo(base2X, base2Y);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawAxisLabels() {
+        ctx.fillStyle = "#888";
+        ctx.font = "13px -apple-system, sans-serif";
+        // Column labels below grid
+        for (let x = 0; x < COLS; x++) {
+          ctx.textAlign    = "center";
+          ctx.textBaseline = "top";
+          ctx.fillText(x + 1, cellX(x) + CELL / 2, ROWS * CELL + 10);
+        }
+        // Row labels on left
+        for (let y = 0; y < ROWS; y++) {
+          ctx.textAlign    = "right";
+          ctx.textBaseline = "middle";
+          ctx.fillText(ROWS - y, ML - 10, cellY(y) + CELL / 2);
+        }
+      }
+
+      // ── Event wiring ─────────────────────────────────────────────────────
+      document.getElementById("step-btn").onclick  = step;
+      document.getElementById("reset-btn").onclick = resetState;
+
+      // ── Init ─────────────────────────────────────────────────────────────
+      resetState();
+    </script>
+  </body>
+</html>

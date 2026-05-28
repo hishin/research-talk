@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lagrange multipliers — interactive</title>
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- KaTeX (rendered live for the equation strip) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Plotly (CDN) -->
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- ───── Header ───── -->
+      <header class="app-header">
+        <h1>Constrained optimization with Lagrange multipliers</h1>
+        <p class="subtitle">
+          <span class="problem-name" id="problem-name">The fence problem.</span>
+          <span id="problem-desc">
+            You have P meters of fence. What rectangle has the largest area?
+          </span>
+        </p>
+      </header>
+
+      <!-- ───── Controls ───── -->
+      <section class="controls" aria-label="Controls">
+        <div class="ctrl">
+          <label for="problem-select">Problem:</label>
+          <select id="problem-select">
+            <option value="fence" selected>Fence — maximize area</option>
+            <option value="line">Closest point on a line</option>
+            <option value="ellipse">Closest point on an ellipse</option>
+          </select>
+        </div>
+
+        <div class="ctrl">
+          <label for="P-slider"><span id="param-label">Perimeter P</span>:</label>
+          <input type="range" id="P-slider" min="20" max="200" value="100" step="1" />
+          <span class="param-value" id="param-value">100</span>
+        </div>
+
+        <button class="btn" id="snap-btn">Snap to optimum</button>
+        <button class="btn secondary" id="reset-btn">Reset point</button>
+      </section>
+
+      <!-- ───── Plots row ───── -->
+      <main class="plots">
+        <!-- 2D contour panel -->
+        <section class="card plot-card" aria-label="2D contour plot">
+          <h2>2D contour: f(x, y) and the constraint</h2>
+          <div class="plot-wrap">
+            <div id="plot2d"></div>
+            <div id="drag-overlay" class="drag-overlay" title="Drag to move the point"></div>
+          </div>
+          <div class="alignment-meter" id="alignment-meter">
+            <div class="label">|cos ∠(∇f, ∇g)|</div>
+            <div class="bar"><div class="fill" id="align-fill"></div></div>
+            <div class="value" id="align-value">0.000</div>
+          </div>
+        </section>
+
+        <!-- 3D surface panel -->
+        <section class="card plot-card" aria-label="3D surface plot">
+          <h2>3D surface: z = f(x, y) with lifted constraint</h2>
+          <div class="plot-wrap">
+            <div id="plot3d"></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ───── Bottom strip ───── -->
+      <section class="bottom-strip">
+        <div class="card readouts">
+          <h3>Live scalars</h3>
+          <table>
+            <tbody>
+              <tr><td>x</td><td id="r-x">—</td></tr>
+              <tr><td>y</td><td id="r-y">—</td></tr>
+              <tr><td>f(x, y)</td><td id="r-f">—</td></tr>
+              <tr><td>g(x, y)</td><td id="r-g">—</td></tr>
+              <tr><td>|∇f|</td><td id="r-mf">—</td></tr>
+              <tr><td>|∇g|</td><td id="r-mg">—</td></tr>
+              <tr><td>λ</td><td id="r-lambda">—</td></tr>
+              <tr><td>|cos θ|</td><td id="r-cos">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card rect-card">
+          <h3 id="geom-title">Rectangle (x × y)</h3>
+          <svg id="rect-svg" viewBox="0 0 200 150" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div class="card bar-card">
+          <h3>Components: <span style="color: var(--grad-f)">∇f</span> vs <span style="color: var(--grad-g)">λ∇g</span></h3>
+          <div id="bar-chart"></div>
+        </div>
+
+        <div class="card shadow-card">
+          <h3>Shadow price f*(c): tangent slope = λ</h3>
+          <div id="shadow-plot"></div>
+        </div>
+      </section>
+
+      <!-- ───── Equation strip ───── -->
+      <section class="card equation-strip">
+        <div id="eq-current"></div>
+        <p class="caption">
+          Drag the point along the
+          <span class="sw sw-c"></span><strong style="color: var(--constraint)">red</strong>
+          constraint line. Watch
+          <span class="sw sw-f"></span><strong style="color: var(--grad-f)">∇f</strong>
+          and
+          <span class="sw sw-g"></span><strong style="color: var(--grad-g)">∇g</strong>:
+          they align at the optimum, and the
+          <span class="sw sw-l"></span>level curve of f becomes tangent to the constraint.
+        </p>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Constrained Optimization &amp; Lagrange Multipliers</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/white.css" id="theme" />
+
+    <style>
+      /* Slightly tighter, more presentation-friendly typography. */
+      :root {
+        --r-main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .reveal h1, .reveal h2, .reveal h3 {
+        text-transform: none;
+        letter-spacing: -0.01em;
+      }
+
+      .reveal .accent { color: #2680eb; }
+      .reveal .muted  { color: #6e6e6e; }
+
+      .reveal .subtle {
+        font-size: 0.6em;
+        color: #6e6e6e;
+      }
+
+      .reveal .interactive-frame {
+        /* The Reveal viewport is 1600 × 900; size in slide pixels. */
+        width: 1500px;
+        height: 720px;
+        border: 1px solid #e1e1e1;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(20, 25, 40, 0.05),
+                    0 4px 16px rgba(20, 25, 40, 0.08);
+        background: #f7f8fa;
+      }
+
+      .reveal .open-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 12px auto 0;
+        padding: 10px 18px;
+        background: #2680eb;
+        color: white !important;
+        border-radius: 6px;
+        font-size: 18px;
+        text-decoration: none !important;
+        font-weight: 500;
+        box-shadow: 0 1px 3px rgba(38, 128, 235, 0.3);
+        transition: background 120ms ease, transform 80ms ease;
+      }
+
+      .reveal .open-btn:hover {
+        background: #0d66d0;
+      }
+
+      .reveal .open-btn:active { transform: translateY(1px); }
+
+      .reveal .frame-caption {
+        margin-top: 6px;
+        color: #6e6e6e;
+        font-size: 16px;
+      }
+
+      .reveal .fence-cartoon {
+        display: inline-block;
+        width: 240px;
+        height: 160px;
+        border: 4px solid #c41f1f;
+        background:
+          repeating-linear-gradient(
+            45deg,
+            rgba(196, 31, 31, 0.06),
+            rgba(196, 31, 31, 0.06) 6px,
+            transparent 6px,
+            transparent 12px
+          );
+        margin: 30px auto;
+        border-radius: 4px;
+      }
+
+      .reveal .eq-callout {
+        display: inline-block;
+        padding: 14px 22px;
+        background: #f3f6fb;
+        border-left: 4px solid #2680eb;
+        border-radius: 4px;
+        font-size: 1.05em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- ─── 1. Title ─── -->
+        <section>
+          <h1 style="margin-bottom: 0.3em;">
+            Constrained <span class="accent">Optimization</span>
+          </h1>
+          <h3 class="muted" style="margin-top: 0;">
+            and the Lagrange-multiplier method
+          </h3>
+          <p style="margin-top: 2.2em; font-size: 0.7em;">
+            Hero example: <em>how big a rectangle</em> can you fence with P meters of wire?
+          </p>
+        </section>
+
+        <!-- ─── 2. The problem ─── -->
+        <section>
+          <h2>The fence problem</h2>
+          <p>
+            You have <strong class="accent">P meters</strong> of fence.
+            What rectangle has the <strong>largest area</strong>?
+          </p>
+          <div class="fence-cartoon" aria-hidden="true"></div>
+          <p class="subtle">
+            Objective &nbsp; <strong>maximize</strong> &nbsp; f(x, y) = x · y &nbsp;&nbsp;
+            Constraint &nbsp; 2x + 2y = P
+          </p>
+          <p style="margin-top: 1.2em; font-size: 0.8em;">
+            Guess the answer before the next slide.
+          </p>
+        </section>
+
+        <!-- ─── 3. The interactive ─── -->
+        <section>
+          <h3 style="margin-bottom: 6px;">Drag the point. Watch the gradients align.</h3>
+          <iframe
+            class="interactive-frame"
+            src="interactive/index.html"
+            title="Lagrange multipliers interactive prototype"
+            allow="fullscreen"
+          ></iframe>
+          <p class="frame-caption">
+            ∇f (orange) and ∇g (blue) become parallel exactly at the optimum.
+          </p>
+          <a class="open-btn" href="interactive/index.html" target="_blank" rel="noopener">
+            Open the interactive in a new tab ↗
+          </a>
+        </section>
+
+        <!-- ─── 4. The takeaway ─── -->
+        <section>
+          <h2>The takeaway</h2>
+          <p style="margin-top: 1.2em;">
+            At every constrained optimum, the gradients are parallel:
+          </p>
+          <p class="eq-callout">
+            \[ \nabla f(x^\ast, y^\ast) \;=\; \lambda \, \nabla g(x^\ast, y^\ast) \]
+          </p>
+          <p style="margin-top: 1.5em;">
+            And the multiplier \(\lambda\) has a meaning:
+          </p>
+          <p class="eq-callout">
+            \[ \lambda \;=\; \frac{d f^\ast}{d c} \]
+          </p>
+          <p class="subtle" style="margin-top: 1.5em;">
+            ("shadow price" — how much the optimum value changes per unit of the resource c)
+          </p>
+        </section>
+
+        <!-- ─── 5. Try it ─── -->
+        <section>
+          <h2>Try it yourself</h2>
+          <p>
+            Move the perimeter slider. Switch to the closest-point or ellipse example.
+            Snap to the optimum and watch the tangent line on the shadow-price plot match λ.
+          </p>
+          <a class="open-btn" href="interactive/index.html" target="_blank" rel="noopener">
+            Open the interactive ↗
+          </a>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="dist/plugin/notes.js"></script>
+    <script src="dist/plugin/math.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        controls: true,
+        progress: true,
+        center: true,
+        transition: 'fade',
+        width: 1600,
+        height: 900,
+        margin: 0.04,
+        minScale: 0.2,
+        maxScale: 2.0,
+        plugins: [RevealNotes, RevealMath.KaTeX],
+      });
+    </script>
+  </body>
+</html>
