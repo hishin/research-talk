@@ -402,6 +402,139 @@
 				margin-bottom: 0;
 			}
 
+			.reveal .slides section.content-slide .problem-media-panel {
+				position: relative;
+				align-self: stretch;
+			}
+
+			.reveal .slides section.content-slide .problem-media-panel .problem-list-illustration {
+				width: 100%;
+				height: auto;
+				max-height: min(52vh, 20em);
+				min-height: 10em;
+				flex: 0 1 auto;
+				object-fit: contain;
+				object-position: top center;
+				display: block;
+				margin: 0;
+				border-radius: 6px;
+				border: 1px solid var(--slide-border, #d4d9e0);
+			}
+
+			.reveal .slides section.content-slide .problem-list--stepped li.fragment:not(.visible) {
+				display: none;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .slide-body--problem-stack {
+				flex-direction: column;
+				align-items: stretch;
+				justify-content: flex-start;
+				gap: 0;
+				padding-top: 0;
+				padding-bottom: 0.5em;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-stack-layout {
+				flex: 1 1 auto;
+				display: grid;
+				grid-template-columns: 1fr min(38%, 17em);
+				gap: 1em;
+				min-height: 0;
+				align-items: stretch;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-stack-main {
+				display: flex;
+				flex-direction: column;
+				gap: 0.55em;
+				min-width: 0;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-primary-image {
+				flex: 0 0 min(38vh, 14.5em);
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-start;
+				min-height: min(38vh, 14.5em);
+				max-height: min(38vh, 14.5em);
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-primary-image img {
+				width: auto;
+				max-width: 100%;
+				height: 100%;
+				max-height: min(38vh, 14.5em);
+				object-fit: contain;
+				object-position: top left;
+				margin: 0;
+				border: none;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-primary-image .fragment:not(.visible) {
+				visibility: hidden;
+				opacity: 0;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-stack-side {
+				display: flex;
+				align-items: stretch;
+				justify-content: center;
+				min-width: 0;
+				min-height: 0;
+				align-self: stretch;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-stack-side img {
+				width: 100%;
+				height: 100%;
+				min-height: 100%;
+				object-fit: contain;
+				object-position: center top;
+				margin: 0;
+				border: none;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-stack-side .fragment:not(.visible) {
+				visibility: hidden;
+				opacity: 0;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-list {
+				flex: 0 0 auto;
+				width: 100%;
+				max-width: 100%;
+				justify-content: flex-start;
+				margin: 0;
+				padding: 0;
+				min-height: 4.2em;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-list li {
+				margin: 0 0 0.4em;
+				min-height: 1.25em;
+				line-height: 1.35;
+				text-align: left;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-list li:last-child {
+				margin-bottom: 0;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-list--stepped li.fragment:not(.visible) {
+				display: list-item;
+				visibility: hidden;
+				opacity: 0;
+			}
+
+			.reveal .slides section.content-slide#livestream-problems-slide .problem-list--stepped li.fragment.visible {
+				visibility: visible;
+				opacity: 1;
+			}
+
 		.reveal .slides section.content-slide .problem-list li.fragment:not(.visible) {
 			opacity: 0;
 		}
@@ -445,6 +578,35 @@
 				color: var(--slide-muted);
 				margin: 0;
 				max-width: 40em;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-slide-body {
+				justify-content: flex-start;
+				gap: 0.55em;
+				padding-top: 0.15em;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar {
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-media {
+				flex: 1 1 auto;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 1.25em;
+				min-height: 0;
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-media img {
+				flex: 1;
+				width: 0;
+				max-height: min(40vh, 13em);
+				object-fit: contain;
+				margin: 0;
 			}
 
 			.reveal .slides section.content-slide .research-questions {
@@ -499,12 +661,22 @@
 		.reveal .slides section.content-slide .intent-comparison-layout {
 			display: grid;
 			grid-template-columns: 65fr 35fr;
+			grid-template-rows: auto auto auto;
 			align-items: center;
 			gap: 0 1.75em;
 			width: 100%;
 			max-width: 98%;
 			margin: 0 auto;
 			text-align: center;
+		}
+
+		.reveal .slides section.content-slide .intent-comparison-intent {
+			grid-column: 1;
+			grid-row: 1;
+			min-width: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 		}
 
 		.reveal .slides section.content-slide .intent-comparison .intent-text {
@@ -514,27 +686,19 @@
 			line-height: 1.42;
 		}
 
-			.reveal .slides section.content-slide .intent-comparison-main {
-				min-width: 0;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				transform: translateY(0.65em);
-				transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-			}
-
-			.reveal .slides section.content-slide.intent-shift-up .intent-comparison-main {
-				transform: translateY(0);
-			}
-
 			.reveal .slides section.content-slide .intent-comparison-gulf {
-				min-height: 7.5em;
+				grid-column: 2;
+				grid-row: 1 / 3;
+				align-self: center;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				min-height: 0;
 			}
 
 			.reveal .slides section.content-slide .intent-comparison .intent-operations {
+				grid-column: 1;
+				grid-row: 2;
 				border-top: 1px solid transparent;
 				padding-top: 0;
 				margin-top: 0;
@@ -552,12 +716,49 @@
 			}
 
 			.reveal .slides section.content-slide .intent-comparison .intent-operations.visible {
-				max-height: 10em;
+				max-height: 8em;
 				opacity: 1 !important;
 				visibility: visible;
 				padding-top: 1em;
 				margin-top: 0.15em;
 				border-top-color: #d4d9e0;
+			}
+
+			.reveal .slides section.content-slide .intent-comparison .intent-operations-demo {
+				grid-column: 1;
+				grid-row: 3;
+				justify-self: center;
+				display: block;
+				width: auto;
+				max-width: 80%;
+				height: auto;
+				margin: 0.45em auto 0;
+				border: none;
+				border-radius: 0;
+				background: transparent;
+				box-shadow: none;
+				opacity: 0 !important;
+				visibility: hidden;
+				max-height: 0;
+				overflow: hidden;
+				transition:
+					max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+					opacity 0.45s ease,
+					margin 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+				filter:
+					drop-shadow(0 4px 14px rgba(30, 51, 84, 0.18))
+					drop-shadow(0 1px 4px rgba(30, 51, 84, 0.1));
+			}
+
+			.reveal .slides section.content-slide .intent-comparison .intent-operations-demo.visible {
+				max-height: 24em;
+				opacity: 1 !important;
+				visibility: visible;
+				overflow: visible;
+			}
+
+			.reveal .slides section.content-slide#intent-comparison-slide .slide-body.intent-comparison {
+				overflow: visible;
 			}
 
 			.reveal .slides section.content-slide .intent-comparison .gulf-callout {
@@ -581,11 +782,11 @@
 				transform: translateX(0);
 			}
 
-			.reveal .slides section.content-slide .intent-comparison-main .intent-text {
+			.reveal .slides section.content-slide .intent-comparison-intent .intent-text {
 				margin-bottom: 0.85em;
 			}
 
-			.reveal .slides section.content-slide .intent-comparison-main .intent-operations .intent-text {
+			.reveal .slides section.content-slide .intent-comparison .intent-operations .intent-text {
 				margin-bottom: 0;
 			}
 
@@ -670,6 +871,7 @@
 
 			.reveal .slides section.content-slide .slide-body--energy-map {
 				padding-top: 0;
+				padding-bottom: 0.5em;
 				justify-content: flex-start;
 				overflow: hidden;
 				gap: 0.2em;
@@ -677,14 +879,22 @@
 				line-height: 1.38;
 			}
 
+			.reveal .slides section.content-slide .slide-body--energy-map .energy-grid {
+				flex: 0 1 auto;
+			}
+
+			.reveal .slides section.content-slide .slide-body--energy-map .energy-equation {
+				margin-top: 0.5em;
+			}
+
 			.reveal .slides section.content-slide .slide-body--energy-map .intent-label {
-				font-size: calc(var(--text-label) * 0.92);
+				font-size: calc(var(--text-label) * 1.38);
 				margin-bottom: 0.1em;
 				flex-shrink: 0;
 			}
 
 			.reveal .slides section.content-slide .slide-body--energy-map .intent-text {
-				font-size: calc(var(--text-body-lg) * 0.88);
+				font-size: calc(var(--text-body-lg) * 1.32);
 				line-height: 1.32;
 				color: var(--slide-muted);
 				margin-bottom: 0.35em;
@@ -719,12 +929,12 @@
 			}
 
 			.reveal .slides section.content-slide .energy-section-label {
-				font-size: 0.42em;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				color: #4a6fa5;
-				font-weight: 700;
-				margin: 0 0 0.25em;
+				font-size: inherit;
+				text-transform: none;
+				letter-spacing: normal;
+				color: inherit;
+				font-weight: inherit;
+				margin: 0 0 0.35em;
 			}
 
 			.reveal .slides section.content-slide .energy-temporal {
@@ -814,9 +1024,9 @@
 			}
 
 			.reveal .slides section.content-slide .physics-example-layout .physics-visual .physics-label {
-				font-size: 0.6em;
-				font-weight: 600;
-				color: #2d3748;
+				font-size: 0.75em;
+				font-weight: 700;
+				color: #1e3354;
 				margin: 0.5em 0 0;
 			}
 
@@ -905,7 +1115,7 @@
 			}
 
 			.reveal .slides section.content-slide .energy-cell .energy-term {
-				font-size: calc(var(--text-caption) * 1.15);
+				font-size: calc(var(--text-caption) * 1.38);
 				color: #4a6fa5;
 				font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
 				font-style: italic;
@@ -927,6 +1137,29 @@
 				border-radius: 6px;
 			}
 
+			.reveal .slides section.content-slide .energy-temporal-visual-wrap {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 0.2em 0 0;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal-visual-wrap .energy-temporal-visual {
+				width: 100%;
+				max-width: 58em;
+				height: auto;
+				margin: 0;
+				display: block;
+			}
+
+			.reveal .slides section.content-slide .energy-temporal--standalone .energy-temporal-visual {
+				width: 100%;
+				max-width: 58em;
+				height: auto;
+				margin: 0 0 0.35em;
+				display: block;
+			}
+
 			.reveal .slides section.content-slide .energy-temporal--standalone .energy-temporal-placeholder {
 				font-size: 0.9em;
 				margin: 0 0 0.4em;
@@ -942,32 +1175,18 @@
 			}
 
 			.reveal .slides section.content-slide .energy-equation {
-				margin: 0.3em 0 0;
-				padding: 0.45em 0.75em;
-				flex-shrink: 0;
-				border-radius: 4px;
-				background-color: #f5f7fa;
-				border-left: 4px solid #4a6fa5;
+				margin: 0.35em 0 0;
 				text-align: center;
 				flex-shrink: 0;
 			}
 
-			.reveal .slides section.content-slide .energy-equation .energy-equation-label {
-				font-size: 0.45em;
-				text-transform: uppercase;
-				letter-spacing: 0.12em;
-				color: #4a6fa5;
-				font-weight: 700;
-				margin: 0 0 0.45em;
-			}
-
 			.reveal .slides section.content-slide .energy-equation .energy-equation-formula {
-				font-size: 0.7em;
-				color: #1e3354;
+				font-size: calc(var(--text-caption) * 1.72);
+				color: #4a6fa5;
 				font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
 				font-style: italic;
 				margin: 0;
-				line-height: 1.45;
+				line-height: 1.35;
 			}
 
 			.reveal .slides section.content-slide .slide-body p {
@@ -1212,6 +1431,163 @@
 				display: block;
 			}
 
+			.reveal .slides section.content-slide#research-principles-slide,
+			.reveal .slides section.content-slide#talk-outline-slide,
+			.reveal .slides section.content-slide#talk-outline-end-slide,
+			.reveal .slides section.content-slide#talk-outline-recap-slide {
+				--research-principle-img-height: 24vh;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-slide,
+			.reveal .slides section.content-slide#talk-outline-end-slide,
+			.reveal .slides section.content-slide#talk-outline-recap-slide {
+				--research-principle-img-height: 22vh;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principles-layout,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principles-layout,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principles-layout,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principles-layout {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				justify-content: center;
+				gap: 1.1em;
+				min-height: 0;
+				width: 100%;
+				padding-top: 0;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principles-lead,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principles-lead,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principles-lead,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principles-lead {
+				margin: -0.15em 0 0.45em;
+				font-size: calc(var(--text-body) * 0.864);
+				line-height: 1.45;
+				color: var(--slide-muted);
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principles-columns,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principles-columns,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principles-columns,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principles-columns {
+				flex: 1;
+				display: flex;
+				align-items: flex-start;
+				justify-content: center;
+				gap: 1.25em;
+				min-height: 0;
+				width: 100%;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principle-column,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principle-column,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principle-column,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principle-column {
+				flex: 1;
+				min-width: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.55em;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principle-column.fragment:not(.visible) {
+				visibility: hidden;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principle-column.fragment.visible {
+				visibility: visible;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principle-column img,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principle-column img,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principle-column img,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principle-column img {
+				height: var(--research-principle-img-height);
+				width: auto;
+				max-width: 100%;
+				object-fit: contain;
+				object-position: center;
+				margin: 0;
+				display: block;
+				border-radius: 4px;
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principle-column .research-principle,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principle-column .research-principle,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principle-column .research-principle,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principle-column .research-principle {
+				margin: 0;
+				font-size: 0.864em;
+				line-height: 1.3;
+				color: var(--slide-muted);
+			}
+
+			.reveal .slides section.content-slide#research-principles-slide .research-principle strong,
+			.reveal .slides section.content-slide#talk-outline-slide .research-principle strong,
+			.reveal .slides section.content-slide#talk-outline-end-slide .research-principle strong,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principle strong {
+				color: var(--slide-navy);
+				font-weight: 700;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-slide .research-principles-layout,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .research-principles-layout {
+				position: relative;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-slide .talk-outline-item,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .talk-outline-item {
+				transition: opacity 0.4s ease;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-slide .talk-outline-marker,
+			.reveal .slides section.content-slide#talk-outline-recap-slide .talk-outline-marker {
+				position: absolute;
+				width: 0;
+				height: 0;
+				overflow: hidden;
+				opacity: 0;
+				pointer-events: none;
+			}
+
+			/* Default: semantic authoring emphasized after lyric-video section */
+			.reveal .slides section.content-slide#talk-outline-slide .talk-outline-item:not([data-outline-item="1"]) {
+				opacity: 0.28;
+			}
+
+			/* First click: shift emphasis to common ground */
+			.reveal .slides section.content-slide#talk-outline-slide:has(.talk-outline-marker[data-fragment-index="0"].visible) .talk-outline-item:not([data-outline-item="2"]) {
+				opacity: 0.28;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-slide:has(.talk-outline-marker[data-fragment-index="0"].visible) .talk-outline-item[data-outline-item="2"] {
+				opacity: 1;
+			}
+
+			/* Recap slide: start with common ground, click to emphasize iteration */
+			.reveal .slides section.content-slide#talk-outline-recap-slide .talk-outline-item:not([data-outline-item="2"]) {
+				opacity: 0.28;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-recap-slide:has(.talk-outline-marker[data-fragment-index="0"].visible) .talk-outline-item:not([data-outline-item="3"]) {
+				opacity: 0.28;
+			}
+
+			.reveal .slides section.content-slide#talk-outline-recap-slide:has(.talk-outline-marker[data-fragment-index="0"].visible) .talk-outline-item[data-outline-item="3"] {
+				opacity: 1;
+			}
+
+			/* End recap: all three pillars at full emphasis */
+			.reveal .slides section.content-slide#talk-outline-end-slide .talk-outline-item {
+				opacity: 1;
+			}
+
 			.reveal .slides section.media-slide {
 				font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 				height: 100%;
@@ -1283,6 +1659,24 @@
 				flex-shrink: 0;
 			}
 
+			.reveal .slides section.media-slide .media-dot-list {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				gap: 0.35em 0.65em;
+				margin: 0.5em 0 0;
+				font-size: 0.8em;
+				color: #8a939f;
+				text-align: center;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .media-dot-list__sep {
+				line-height: 1;
+				opacity: 0.65;
+			}
+
 			.reveal .slides section.media-slide .media-split {
 				flex: 1;
 				display: flex;
@@ -1294,12 +1688,18 @@
 				overflow: hidden;
 			}
 
-			.reveal .slides section.media-slide .media-split img {
+			.reveal .slides section.media-slide .media-split img,
+			.reveal .slides section.media-slide .media-split video {
 				flex: 1;
 				width: 0;
 				max-height: 100%;
 				object-fit: contain;
 				margin: 0;
+			}
+
+			.reveal .slides section.media-slide .media-split video {
+				background: #000;
+				display: block;
 			}
 
 			.reveal .slides section.media-slide .media-stack {
@@ -1371,11 +1771,13 @@
 				max-height: 90%;
 			}
 
-			.reveal .slides section.media-slide.media-slide--video-fill > .slide-subtitle {
+			.reveal .slides section.media-slide.media-slide--video-fill > .slide-subtitle,
+			.reveal .slides section.media-slide.media-slide--video-fill > .slide-heading {
 				margin-bottom: 0.15em;
 			}
 
-			.reveal .slides section.media-slide.media-slide--video-fill > .slide-subtitle + .media-frame {
+			.reveal .slides section.media-slide.media-slide--video-fill > .slide-subtitle + .media-frame,
+			.reveal .slides section.media-slide.media-slide--video-fill > .slide-heading + .media-frame {
 				justify-content: flex-start;
 			}
 
@@ -1526,6 +1928,15 @@
 			pointer-events: none;
 		}
 
+		.reveal .slides section.content-slide .cluster-count--more {
+			top: 98%;
+			left: 50%;
+			right: auto;
+			transform: translate(-50%, calc(-100% + 10px));
+			font-size: 0.675em;
+			background: rgb(255, 0, 0);
+		}
+
 			.reveal .slides section.content-slide .quote-slide {
 				max-width: 90%;
 				text-align: center;
@@ -1592,36 +2003,25 @@
 				padding-top: 0.15em;
 			}
 
-			.reveal .slides section.content-slide#agentic-slide .slide-body--split-media {
+			.reveal .slides section.content-slide#agentic-slide .agentic-video-wrap {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: min(52%, 32em);
 				max-width: 100%;
-				justify-content: center;
-				align-items: stretch;
 				flex: 1 1 auto;
+				min-height: 0;
 			}
 
-			.reveal .slides section.content-slide#agentic-slide .split-media-panel {
-				justify-content: center;
-			}
-
-			.reveal .slides section.content-slide#agentic-slide .split-media-panel--news {
-				flex: 0 0 42%;
-			}
-
-			.reveal .slides section.content-slide#agentic-slide .split-media-panel--video {
-				flex: 0 0 54%;
-			}
-
-			.reveal .slides section.content-slide#agentic-slide .split-media-panel img,
-			.reveal .slides section.content-slide#agentic-slide .split-media-panel--video video {
-				flex: 0 1 auto;
+			.reveal .slides section.content-slide#agentic-slide .agentic-video-wrap video {
 				width: 100%;
 				max-width: 100%;
-				max-height: min(52vh, 20em);
+				max-height: min(50vh, 20em);
 				height: auto;
-				margin-left: auto;
-				margin-right: auto;
 				object-fit: contain;
 				object-position: center center;
+				border-radius: 4px;
 			}
 
 			.reveal .slides section.content-slide#agentic-slide .agentic-source {
@@ -1921,7 +2321,7 @@
 
 			.reveal .slides section.content-slide#creative-process-sources-slide .source-card-excerpt {
 				margin: 0;
-				font-size: 0.44em;
+				font-size: 0.572em;
 				line-height: 1.48;
 				text-align: justify;
 				color: #222;
@@ -1961,14 +2361,15 @@
 			}
 
 			.reveal .slides section.content-slide#artifactsFlipSlide .slide-heading {
-				margin-bottom: 0.35em;
+				margin-bottom: 0.2em;
 				flex-shrink: 0;
 			}
 
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-slide-body {
 				justify-content: flex-start;
-				padding-top: 0.3em;
-				gap: 0.4em;
+				align-items: flex-start;
+				padding-top: 0.15em;
+				gap: 0.28em;
 				overflow: hidden;
 			}
 
@@ -1977,96 +2378,133 @@
 			}
 
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-subtitle {
-				font-size: 0.82em;
+				width: 100%;
+				max-width: 100%;
+				text-align: left;
+				align-self: flex-start;
+				font-size: 0.76em;
+				line-height: 1.25;
 				margin: 0;
 				flex-shrink: 0;
-				text-align: left;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-semantic-caption {
-				font-size: 0.82em;
-				margin: 0;
-				text-align: left;
-				flex-shrink: 0;
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-subtitle + .workflow-combined {
+				margin-top: 1.56em;
 			}
 
 			/* Stacked boards: row 1 layout is independent of row 2 reveal */
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-combined {
 				display: flex;
 				flex-direction: column;
-				row-gap: 0.45em;
+				row-gap: 0.38em;
 				align-items: stretch;
 				width: 100%;
 				max-width: 100%;
-				flex-shrink: 0;
+				flex-shrink: 1;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--artifacts,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--structures {
+				margin-top: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--artifacts + .workflow-board--structures {
+				margin-top: 0;
 			}
 
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board {
 				display: grid;
-				grid-template-columns: 6.5em minmax(0, 1fr) 1em minmax(0, 1fr) 1em minmax(0, 1fr) 1em minmax(0, 1fr);
-				column-gap: 0.5em;
+				grid-template-columns: 6.2em repeat(4, minmax(0, 1fr));
+				column-gap: 0.4em;
 				align-items: start;
 				width: 100%;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--artifacts.fragment:not(.visible) {
+			/* Left row labels: align with image row, not image + caption block */
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-row-label {
+				align-self: start;
+				padding-top: calc(min(8.5vh, 3.85em) / 2 - 0.65em);
+				text-align: right;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--artifacts.fragment:not(.visible),
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-board--structures.fragment:not(.visible) {
 				display: none !important;
 			}
 
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage,
-			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card {
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifact-cell,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-structure-cell {
 				justify-self: center;
 				width: auto;
 				max-width: none;
-				gap: 0.35em;
+				gap: 0.2em;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifacts-label {
-				text-align: right;
-				display: flex;
-				flex-direction: column;
-				align-items: flex-end;
-				gap: 0.45em;
-			}
-
-			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage img {
-				width: min(10vh, 4.5em);
-				height: min(10vh, 4.5em);
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage img,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifact-cell img,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-structure-cell img {
+				width: min(8.5vh, 3.85em);
+				height: min(8.5vh, 3.85em);
 				object-fit: contain;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card-inner {
-				width: min(10vh, 4.5em);
-				height: min(10vh, 4.5em);
-				max-width: none;
-				flex-shrink: 0;
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.2em;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card-label,
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage-name {
-				font-size: calc(var(--text-small) / 1.2);
-				line-height: 1.3;
+				white-space: nowrap;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifact-cell,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-structure-cell {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.2em;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifact-cell .workflow-structure-icon,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-structure-cell .workflow-structure-icon {
+				width: min(8.5vh, 3.85em);
+				height: min(8.5vh, 3.85em);
+				padding: 0.25em;
+				background: var(--slide-bg);
+				border-radius: 10px;
+				border: 1px solid var(--slide-border);
+				box-shadow: 0 2px 10px rgba(74, 111, 165, 0.12);
+				box-sizing: border-box;
 				flex-shrink: 0;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-row-label {
-				font-size: var(--text-label);
-				line-height: 1.35;
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-artifact-cell img,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-structure-cell img {
+				display: block;
+				border-radius: 4px;
+				border: 1px solid var(--slide-border);
+				background: #fff;
+				padding: 0.12em;
+				box-sizing: border-box;
 			}
 
-			.reveal .slides section.content-slide#artifactsFlipSlide .flip-card-label,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-cell-label,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage-name,
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-row-label {
+				font-size: calc(var(--text-small) / 1.45);
+				line-height: 1.2;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-cell-label,
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-stage-name,
 			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-row-label {
 				margin: 0;
-			}
-
-			.reveal .slides section.content-slide#artifactsFlipSlide .workflow-arrow {
-				font-size: 1em;
-				align-self: start;
-				height: min(10vh, 4.5em);
-				display: flex;
-				align-items: center;
-				justify-content: center;
 			}
 
 			.reveal .slides section.content-slide .workflow-subtitle {
@@ -2088,7 +2526,8 @@
 				flex-shrink: 0;
 			}
 
-			.reveal .slides section.content-slide .workflow-board--artifacts {
+			.reveal .slides section.content-slide .workflow-board--artifacts,
+			.reveal .slides section.content-slide .workflow-board--structures {
 				margin-top: 0.15em;
 			}
 
@@ -2328,7 +2767,8 @@
 				margin-bottom: 0.15em;
 			}
 
-			.reveal .slides section.media-slide .videorigami-visual {
+			.reveal .slides section.media-slide .videorigami-visual,
+			.reveal .slides section.content-slide .videorigami-visual {
 				flex: 1;
 				min-height: 0;
 				display: flex;
@@ -2338,7 +2778,8 @@
 				width: 100%;
 			}
 
-			.reveal .slides section.media-slide .videorigami-panels {
+			.reveal .slides section.media-slide .videorigami-panels,
+			.reveal .slides section.content-slide .videorigami-panels {
 				display: flex;
 				align-items: flex-end;
 				justify-content: center;
@@ -2346,23 +2787,28 @@
 				width: 100%;
 				max-width: 94%;
 				margin: 0 auto;
-				flex: 0 1 auto;
+				flex: 1 1 auto;
 				min-height: 0;
+				/* 72% of parent when parent has flex-bounded height (see #videorigami-intro-slide .videorigami-block) */
 				max-height: 72%;
+				overflow: hidden;
 			}
 
-			.reveal .slides section.media-slide .videorigami-panels img {
-				flex: 1;
-				width: 0;
+			.reveal .slides section.media-slide .videorigami-panels img,
+			.reveal .slides section.content-slide .videorigami-panels img {
+				flex: 0 0 auto;
+				width: auto;
 				min-height: 0;
-				height: 100%;
+				max-height: 100%;
+				height: auto;
 				object-fit: contain;
 				object-position: bottom center;
 				margin: 0;
 				display: block;
 			}
 
-			.reveal .slides section.media-slide .videorigami-labels {
+			.reveal .slides section.media-slide .videorigami-labels,
+			.reveal .slides section.content-slide .videorigami-labels {
 				display: grid;
 				grid-template-columns: repeat(4, 1fr);
 				width: 100%;
@@ -2371,12 +2817,80 @@
 				flex-shrink: 0;
 			}
 
-			.reveal .slides section.media-slide .videorigami-labels p {
+			.reveal .slides section.media-slide .videorigami-labels p,
+			.reveal .slides section.content-slide .videorigami-labels p {
 				font-size: 0.5em;
 				color: var(--slide-navy);
 				font-weight: 600;
 				margin: 0;
 				text-align: center;
+			}
+
+			/* Content-slide intro: images abut with no gap (natural width, not equal flex columns) */
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-intro-reveal {
+				flex: 1 1 auto;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				gap: 0.15em;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-intro-reveal .slide-subtitle {
+				margin: 0 0 0.1em;
+			}
+
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-visual {
+				align-items: center;
+				flex: 1 1 auto;
+				min-height: 0;
+				justify-content: flex-start;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-block {
+				width: fit-content;
+				max-width: 94%;
+				margin: 0 auto;
+				flex: 1 1 auto;
+				min-height: 0;
+				height: 100%;
+				max-height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: stretch;
+				overflow: hidden;
+			}
+
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-panels {
+				width: 100%;
+				max-width: none;
+				flex: 0 1 auto;
+				min-height: 0;
+				max-height: 72%;
+				align-items: flex-end;
+				align-self: center;
+				justify-content: center;
+				line-height: 0;
+			}
+
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-panels img {
+				flex: 0 0 auto;
+				width: auto;
+				height: auto;
+				max-height: 100%;
+				object-fit: contain;
+				object-position: bottom center;
+				display: block;
+			}
+
+			.reveal .slides section.content-slide#videorigami-intro-slide .videorigami-labels {
+				width: 100%;
+				max-width: none;
+				margin-left: 0;
+				margin-right: 0;
 			}
 
 			.reveal .slides section.media-slide .videorigami-citation {
@@ -2452,11 +2966,11 @@
 							controls
 							preload="auto"
 						>
-							<source src="media/leAh00n3hno.mp4#t=477" type="video/mp4" />
+							<source src="media/leAh00n3hno.mp4#t=477,492" type="video/mp4" />
 						</video>
 					</div>
 					<aside class="notes">
-						Play the clip full screen if your setup allows. It is trimmed to a short beat; let it land, then advance. If the file fails, summarize verbally: generative models are changing how moving images get made, which motivates the rest of the talk.
+						Does anyone know which movie this ending is from?
 					</aside>
 				</section>
 
@@ -2466,30 +2980,27 @@
 							src="media/threelittlepigstitle.jpeg"
 							alt="Walt Disney's Silly Symphony – Three Little Pigs title card"
 						/>
-						<p><small><em>Three Little Pigs</em>, 1933. Animated short film produced by Walt Disney.</small></p>
+						<p><em>Three Little Pigs</em>, 1933. Animated short film produced by Walt Disney.</p>
 					</div>
 					<aside class="notes">
-						"Who knows this movie?" [Pause for audience]
-						Three Little Pigs, 1933 Disney. What is less well known is how this animated short was a breakthrough in animation technology. This film marked a major leap in production technique. It was the first cartoon to be fully storyboarded beat for beat — a technique credited to story man Webb Smith.
+						"It's Three Little Pigs, an animated short film produced by Watl Disney in 1933. It won the Academy Award for Best Animated Short Film, and in 1994 it was voted #11 of the 50 Greatest cartoons of all times selected by 1000 Animation professionals.
 					</aside>
 				</section>
 
 				<section class="media-slide">
-					<div class="media-split">
-						<img
-							src="media/three-little-pigs-story-sketch.jpg"
-							alt="Three Little Pigs story sketch — scenes I–III"
-						/>
+					<h2 class="slide-heading">First film to be fully storyboarded</h2>
+					<div class="media-stack">
 						<img
 							src="media/storyboard-meeting.jpg"
 							alt="Walt Disney story meeting at the studio"
 						/>
-					</div>
+						</div>
 					<aside class="notes">
-						Here you can see the actual story sketches from the production — Scene I, II, III all planned out on paper. And on the right, this is what a story meeting looked like at the Disney studio. The whole team gathered around a board, discussing the structure of the film before a single frame was animated. The first story to be storyboarded. It was the first time an animated cartoon was fully planned out beat for beat.
+						Another interesting fact about the Three Little Pigs is that it brought about one of the biggest break-throughs in character animation. 
+						And part of that breakthrough is attributed to the fact that it was the first film to be fully story-boarded beat for beat.
 					</aside>
 				</section>
-
+				
 				<section class="content-slide timeline-slide">
 					<h2 class="slide-heading">Storyboarding becomes industry standard</h2>
 					<div class="storyboard-timeline slide-body">
@@ -2523,15 +3034,42 @@
 						</div>
 					</div>
 					<aside class="notes">
-						"So what happened after Three Little Pigs?"
 						[CLICK] In 1933, Walt Disney established the studio's first dedicated Story Department.
-						[CLICK] By 1938, every major American animation studio had a dedicated story department. It spread incredibly fast.
+						[CLICK] By 1938, all animation studios and the animation production process in the United States had begun using storyboards before they started production.
 						[CLICK] And it wasn't just animation. In 1939, William Cameron Menzies used storyboards to plan every single shot of Gone with the Wind.
 						[CLICK] And then you have Hitchcock, who took it even further. In a 1969 interview with Roger Ebert he said: "Once the screenplay is finished, I'd just as soon not make the film at all. I have a strongly visual mind. I visualize a picture right down to the final cuts."
-						So why was storyboarding so important? Three reasons:
-						One — it allowed you to look at the entire structure of a film at once.
-						Two — it acts as an intermediate artifact you can iterate on cheaply.
-						Three — it expresses the most important semantics: the shot angle, the beat, the emotion, the character.
+						So how did people make films before storyboarding became a standard practice?
+					</aside>
+				</section>
+
+				<section class="media-slide">
+					<h2 class="slide-heading">Before storyboarding</h2>
+					<div class="media-split">
+						<img
+							src="media/steamboat_willie.jpg"
+							alt="Original Steamboat Willie storyboard page"
+						/>
+						<video
+							id="steamboat-willie-video"
+							muted
+							playsinline
+							preload="auto"
+						>
+							<source src="media/M2ORkIrHUbg.mp4" type="video/mp4" />
+						</video>
+					</div>
+					<p class="media-dot-list fragment">
+						<span>Lack of shared vision</span>
+						<span class="media-dot-list__sep" aria-hidden="true">&middot;</span>
+						<span>Difficult to communicate pacing and timing</span>
+						<span class="media-dot-list__sep" aria-hidden="true">&middot;</span>
+						<span>Misinterpretations</span>
+						<span class="media-dot-list__sep" aria-hidden="true">&middot;</span>
+						<span>Expensive to iterate</span>
+					</p>
+
+					<aside class="notes">
+						Before this animators worked with loose comic strip style story sketches. And each animator had to interpret how exactly to animate each scene. Similarly filmmakers relied heavily on screenplays and written shot lists, treating scenes like stage plays. 
 					</aside>
 				</section>
 
@@ -2553,7 +3091,8 @@
 						</div>
 					</div>
 					<aside class="notes">
-						So, why was Webb Smith's bulletin board so revolutionary? It did three things: First, it allowed creators to think in semantic units — "the wolf blows the house down" — rather than individual frames. Second, it created a shared reference point for the whole studio to communicate. And third, because of the thumbtacks, it became a flexible substrate for rapid iteration.
+						So how did storyboarding help, and why did it become so important?
+						It did three things: First, it allowed creators to think in semantic units — "the wolf blows the house down" — rather than individual frames. Second, it created a shared reference point for the whole studio to communicate down to the details of shot angle, framing and pacing. And third, it enabled cheaper and easy iteration. Directors could easily switch the order of panels, or redraw panels before going committing to production. But why am I talking about storyboarding today? 
 					</aside>
 				</section>
 
@@ -2573,28 +3112,42 @@
 						</div>
 					</div>
 					<aside class="notes">
-						But a funny thing happened when we transitioned to digital video authoring. We lost the story board. Today, our most powerful timeline editors force us to manipulate timecodes and keyframes.
+						Compare the storyboard to a modern video editing interface. Unfortunately, despite living in a time with an unprecendented amount of media being produced, authoring and editing media remains an extremely difficult and tedious task. These tools give us incredible precision, but often at the cost of ease of use. 
 					</aside>
 				</section>
 
-				<section class="stacked-slide">
-					<div class="stacked-layout">
-						<div class="stacked-top">
-							<img
-								src="media/premiere-pro.webp"
-								alt="Adobe Premiere Pro timeline interface"
-							/>
-						</div>
-						<div class="stacked-bottom stacked-bottom--text">
-							<div class="slide-body">
-								<p>
-								My research focused on building <br><strong>effective interfaces for audiovisual media</strong> by supporting <strong>semantics</strong>, <strong>common ground</strong>, and <strong>iteration</strong>.
-								</p>
+				<section class="content-slide" id="research-principles-slide">
+					<h2 class="slide-heading">This talk (my research) is about</h2>
+					<p class="research-principles-lead">
+						designing effective audiovisual interfaces by supporting
+					</p>
+					<div class="slide-body research-principles-layout">
+						<div class="research-principles-columns">
+							<div class="research-principle-column fragment" data-fragment-index="1">
+								<img
+									src="media/woody-and-buzz.jpg"
+									alt="Toy Story storyboard sketch beside final rendered frame"
+								/>
+								<p class="research-principle"><strong>semantic authoring</strong></p>
+							</div>
+							<div class="research-principle-column fragment" data-fragment-index="2">
+								<img
+									src="media/storyboard-painting.jpeg"
+									alt="Storyboard meeting with sketches pinned on the wall"
+								/>
+								<p class="research-principle"><strong>common ground</strong></p>
+							</div>
+							<div class="research-principle-column fragment" data-fragment-index="3">
+								<img
+									src="media/storyboard-iterate.gif"
+									alt="Animator rearranging storyboard panels on a wall"
+								/>
+								<p class="research-principle"><strong>iteration</strong></p>
 							</div>
 						</div>
 					</div>
 					<aside class="notes">
-						So my research has focused on desining effective interfaces for audiovisual media by brining back the power of story boarding, that is by supporting semantics, shared references, and iteration. Today I'll talk about each of these aspects in turn.
+						In today's talk I will talk about my research that has focused on designing effective interfaces for audiovisual media. And I will use the benefits of storyboards as guiding principles. That is: I will talk about how effective interfaces support semantic authoring, establish common ground, and enable iteration. 
 					</aside>
 				</section>
 
@@ -2606,7 +3159,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						I'll start with supporting semantic authoring. We can do this by translating high-level user intent into algorithms or operatons. Let me explain with an example.
+						I'll start with supporting semantic authoring. We can do this by translating high-level user intent into algorithms or operations. Let me explain with a concrete example. Take a look at this lyric video.
 					</aside>
 				</section>
 
@@ -2617,7 +3170,7 @@
 						controls
 						preload="auto"
 					>
-						<source src="media/F5TMU6916U8.mp4#t=173,186" type="video/mp4" />
+						<source src="media/F5TMU6916U8.mp4#t=171" type="video/mp4" />
 					</video>
 						<p class="media-attribution media-attribution--left">
 							Taylor Swift &mdash; <em>Long Live</em>
@@ -2627,7 +3180,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						Lyric videos is a type of music video that displays the song lyrics together with video imagery. Many artists release lyric videos for their songs. Such as Taylor Swift. For music fans, a common way to make lyric videos is to convert an existing music video by adding text to it. 
+						Lyric videos is a type of music video that displays the song lyrics together with video imagery. Many artists like Taylor swift release lyric videos for their songs. For music fans, a common way to make lyric videos is to convert an existing music video by adding text to it. It looks simple but pay attention to how the lyrics are timed precisely with the song, the placement layout of the text move in a way that naturally follows the video imagery.
 				</section>
 
 				<section
@@ -2639,18 +3192,24 @@
 				>
 					<div class="slide-body intent-comparison">
 						<div class="intent-comparison-layout">
-							<div class="intent-comparison-main">
+							<div class="intent-comparison-intent">
 								<p data-id="intent-label" class="intent-label">User&rsquo;s Intent</p>
 								<p data-id="intent-text" class="intent-text">
-									Show the lyrics on the screen naturally within the scene.
+									Show the lyrics naturally within the scene.
 								</p>
-								<div class="fragment intent-operations" data-fragment-index="1">
-									<p class="intent-label">Operations</p>
-									<p class="intent-text">
-										Adjust text segments, bounding boxes, timestamps, color, and keyframes.
-									</p>
-								</div>
 							</div>
+							<div class="fragment intent-operations" data-fragment-index="1">
+								<p class="intent-label">Operations</p>
+								<p class="intent-text">
+									Adjust text segments, bounding boxes, timestamps, color, and keyframes.
+								</p>
+							</div>
+							<img
+								class="fragment intent-operations-demo"
+								data-fragment-index="1"
+								src="media/lyric-video.gif"
+								alt="After Effects timeline showing lyric text segments, bounding boxes, and keyframes"
+							/>
 							<div class="intent-comparison-gulf">
 								<div class="fragment gulf-callout" data-fragment-index="2">
 									<svg width="28" height="110" viewBox="0 0 36 140" style="overflow: visible; flex-shrink: 0;">
@@ -2670,7 +3229,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						When creators think about making a lyric video, they have a high-level intention that can be simplified as: show the lyrics on the screen naturally within the scene.However the production process of converting music videos into lyric videos is challenging because users need to translate this high-level intention into many detached low-level operations, like segmenting text, adjusting the bounding boxes, aligning timestamps, picking colors and setting keyframes. This is an example of what Don Norman called the Gulf of Execution. There's a big gap between the user's goal and what the system's interface allows them to do in order to achieve that goal.
+						When creators think about making a lyric video, they have a high-level intention that can be simplified as: show the lyrics naturally within the scene. However the production process of converting music videos into lyric videos is challenging because users need to translate this high-level intention into many detached low-level operations, like segmenting text, adjusting the bounding boxes, aligning timestamps, picking colors and setting keyframes. This is an example of what Don Norman called the Gulf of Execution. There's a big gap between the user's goal and what the system's interface allows them to do in order to achieve that goal.
 					</aside>
 				</section>
 
@@ -2680,7 +3239,7 @@
 							Automated Conversion of Music Videos <br>into Lyric Videos
 						</p>
 						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
-							<strong>Jiaju Ma</strong><sup>1</sup>,
+							Jiaju Ma<sup>1</sup>,
 							Anyi Rao<sup>1</sup>,
 							Li-Yi Wei<sup>2</sup>,
 							Rubaiat Habib Kazi<sup>2</sup>,
@@ -2695,7 +3254,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						So in this work, Automated Conversion of Music Videos into Lyric Videos, with collaborators from Stanford, we looked at how do we map the user's high-level intent into a automated pipeline?
+						So in this work, Automated Conversion of Music Videos into Lyric Videos, with collaborators from Stanford, we looked at how do we map the user's high-level intent into an automated pipeline?
 					</aside>
 				</section>
 
@@ -2703,21 +3262,22 @@
 				<div class="slide-body slide-body--energy-map">
 						<p data-id="intent-label" class="intent-label">User&rsquo;s Intent</p>
 						<p data-id="intent-text" class="intent-text">
-							Show the lyrics on the screen naturally within the scene.
+							Show the lyrics naturally within the scene.
 						</p>
 
 						<div class="fragment" data-fragment-index="1">
-							<p class="energy-section-label">Temporally &mdash; show readable segments</p>
-							<div class="energy-temporal energy-temporal--standalone">
-								<p class="energy-temporal-placeholder">[ Stage&nbsp;1 preprocessing visual &mdash; placeholder ]</p>
-								<p class="energy-temporal-detail">
-									AutoLyrixAlign &rarr; group by temporal proximity &rarr; break long lines
-								</p>
-							</div>
+							<p class="energy-section-label">Temporal: show readable chunks of lyrics timed with the song</p>
+						</div>
+						<div class="fragment energy-temporal-visual-wrap" data-fragment-index="2">
+							<img
+								class="energy-temporal-visual"
+								src="media/lyric-phrase-line-break.svg"
+								alt="Long Live lyrics in two phrases: I had the time of my life; I was screaming long live that look on your face"
+							/>
 						</div>
 					</div>
 					<aside class="notes">
-						Let's break down the user's intent. What it means to place lyrics naturally within the scene. First, there's the temporal element: lyrics should land in sync with the song, in chunks people can actually read. To achieve this, we have a pre-processing step to align words to the song and group them into phrases taking into account the beat of the song. We break lines for long lyric phrases. This groups the lyric text into chunks that can be displayed one at a time. 
+						Let's break down the user's intent. What it means to place lyrics naturally within the scene. First, there's the temporal element: lyrics should be broken into readable chunks and displayed in sync with the song. To achieve this, we have a pre-processing step to align words to the song and group them into phrases taking into account the beat of the song. We break lines for long lyric phrases. This groups the lyric text into chunks that can be displayed one at a time. 
 					</aside>
 				</section>
 
@@ -2725,46 +3285,47 @@
 					<div class="slide-body slide-body--energy-map">
 						<p data-id="intent-label" class="intent-label">User&rsquo;s Intent</p>
 						<p data-id="intent-text" class="intent-text">
-							Show the lyrics on the screen naturally within the scene.
+							Show the lyrics naturally within the scene.
 						</p>
 
 						<p class="energy-section-label">Spatially &mdash; find optimal placement</p>
-						<div class="energy-input">
+						<div class="fragment energy-input" data-fragment-index="1">
 							<img src="media/input-scenes.png" alt="Input video frames spanned by the lyric phrase" />
 						</div>
 
 						<div class="energy-grid">
-							<div class="fragment energy-cell" data-fragment-index="1">
+							<div class="fragment energy-cell" data-fragment-index="2">
 								<img src="media/average-fg-mask.png" alt="Average foreground mask" />
 								<p class="energy-bullet">Not occluding important subject</p>
 								<p class="energy-term">E<sub>fgd</sub> = s&#772;<sub>fgd</sub> &otimes; k</p>
 							</div>
-							<div class="fragment energy-cell" data-fragment-index="2">
+							<div class="fragment energy-cell" data-fragment-index="3">
 								<img src="media/average-focus-mask.png" alt="Average focus mask with center of mass" />
 								<p class="energy-bullet">Close to natural attention</p>
 								<p class="energy-term">E<sub>fcs</sub> = &#8214;p<sub>center</sub> &minus; p&#8214;&sup2;</p>
 							</div>
-							<div class="fragment energy-cell" data-fragment-index="3">
+							<div class="fragment energy-cell" data-fragment-index="4">
 								<img src="media/color-diff-map.png" alt="Background color difference map" />
 								<p class="energy-bullet">Contrast with background</p>
 								<p class="energy-term">E<sub>cnt</sub> = c(p)</p>
 							</div>
-							<div class="fragment energy-cell" data-fragment-index="4">
+							<div class="fragment energy-cell" data-fragment-index="5">
 								<img src="media/previous-position.png" alt="Previous lyric phrase position" />
 								<p class="energy-bullet">Consistent across phrases</p>
 								<p class="energy-term">E<sub>prv</sub> = &#8214;p<sub>prev</sub> &minus; p&#8214;&sup2;</p>
 							</div>
 						</div>
 
-						<div class="fragment energy-equation" data-fragment-index="5">
-							<p class="energy-equation-label">Find optimal placement by minimizing total energy</p>
+						<div class="fragment energy-equation" data-fragment-index="6">
 							<p class="energy-equation-formula">
 								p<sub>min</sub> = arg&nbsp;min<sub>p</sub>&nbsp;( w<sub>fgd</sub>&middot;E<sub>fgd</sub> + w<sub>fcs</sub>&middot;E<sub>fcs</sub> + w<sub>cnt</sub>&middot;E<sub>cnt</sub> + w<sub>prv</sub>&middot;E<sub>prv</sub> )
 							</p>
 						</div>
 					</div>
 					<aside class="notes">
-						The other part of the user's high-level intent is spatial. Finding an optimal placement has several components. We operationalize each of these into an energy function. First, we don't want to occlude the main subject in the video. Given the collection of frames spanned by a lyric phrase, we compute the average foreground mask, and focus of attention mask. The first energy term computes the overlap between the text and the foreground mask. Second, we want to place the lyrics near the salient region, where the viewer's attention is likely to be at. The second term tries to minimize the distance between the text and the center of mass of the focus mask. Third, we want to place the text against background regions with high color contrast. And Finally, we want to place the text close to the previous phrase to maintain consistency.
+						The other part of the user's high-level intent is spatial. Finding an optimal placement has several components. We operationalize each of these into an energy function. Given the collection of frames spanned by a lyric phrase... First, we don't want to occlude the main subject in the video. So the first energy term computes the overlap between the text and the average foreground mask. Second, we want to place the lyrics near the salient region, where the viewer's attention is likely to be at. The second term tries to minimize the distance between the text and the center of mass of the average focus mask. Third, we want to place the text against background regions with high color contrast. So, we compute the color difference map between the text and the surrounding background pixels. And Finally, we want to place the text close to the previous phrase to have smooth eye gaze movement. So, we compute the distance between the text and the previous phrase's position.
+
+						The optimal position of the text is the positoin that minimizes the weighted sum of the four energy terms.
 					</aside>
 				</section>
 
@@ -2772,6 +3333,8 @@
 					<div class="media-frame">
 					<iframe
 						id="snapstream-vimeo"
+						data-autoplay
+						tabindex="-1"
 						src="https://player.vimeo.com/video/858468154?title=0&byline=0&portrait=0&api=1#t=217"
 						width="960" height="540"
 						frameborder="0"
@@ -2783,36 +3346,76 @@
 						Results generated from our pipeline
 					</p>
 					<aside class="notes">
-						Here is output from the full pipeline: same design guidelines for readability and unified focus of attention, applied end to end. In the user study, viewers rated these outputs well on reading ease and on keeping attention with the song and picture; use that if someone asks how we know it works.
+						Here are examples outputs from the full pipeline.
 					</aside>
 				</section>
 
-				<section class="content-slide theme-pillar-slide">
+				<section class="content-slide">
 					<div class="slide-body slide-body--center">
+						<p class="theme-callout">
+							Map high-level intent to semantic operations
+						</p>
+					</div>
+					<aside class="notes">
+						In this example, we implemented a fully automatic pipeline by mapping intent into meaningful energy functions.
+						But the main insight carries on even if we were to introduce interactive components. We want the unit of interaction to be close to semantic intents. 
+					</aside>
+				</section>
+				<section class="content-slide" id="talk-outline-slide">
+					<h2 class="slide-heading">Designing effective audiovisual interfaces
+					</h2>
+					<div class="slide-body research-principles-layout">
+						<div class="research-principles-columns">
+							<div class="research-principle-column talk-outline-item" data-outline-item="1">
+								<img
+									src="media/woody-and-buzz.jpg"
+									alt="Toy Story storyboard sketch beside final rendered frame"
+								/>
+								<p class="research-principle"><strong>semantic authoring</strong></p>
+							</div>
+							<div class="research-principle-column talk-outline-item" data-outline-item="2">
+								<img
+									src="media/storyboard-painting.jpeg"
+									alt="Storyboard meeting with sketches pinned on the wall"
+								/>
+								<p class="research-principle"><strong>common ground</strong></p>
+							</div>
+							<div class="research-principle-column talk-outline-item" data-outline-item="3">
+								<img
+									src="media/storyboard-iterate.gif"
+									alt="Animator rearranging storyboard panels on a wall"
+								/>
+								<p class="research-principle"><strong>iteration</strong></p>
+							</div>
+						</div>
+						<span class="fragment talk-outline-marker" data-fragment-index="0" aria-hidden="true"></span>
+					</div>
+					<aside class="notes">
+						That's what I wanted to say about supporting semantic authoring. Next, let's talk about establishing common ground.
+					</aside>
+				</section>
+
+				<section class="content-slide theme-pillar-slide theme-pillar-slide--media">
+					<div class="slide-body slide-body--center theme-pillar-slide-body">
 						<div class="theme-pillar">
 							<p class="theme-pillar-label">Establish Common Ground</p>
 							<p class="theme-pillar-desc">between humans, and between humans and AI through shared references.</p>
 						</div>
+						<div class="theme-pillar-media">
+							<img
+								src="media/storyboard-meeting.jpg"
+								alt="Walt Disney story meeting at the studio"
+							/>
+							<img
+								src="media/common-ground.png"
+								alt="Diagram illustrating common ground in communication"
+							/>
+						</div>
 					</div>
 					<aside class="notes">
-						That closes the lyric-video thread. Next theme is shared references: building common ground between people, and between people and models, so coordination does not depend on everyone staring at the same raw pixels.
-					</aside>
-				</section>
-
-				<section class="media-slide">
-					<h2 class="slide-heading">People communicate by establishing common ground</h2>
-					<div class="media-split">
-						<img
-							src="media/storyboard-meeting.jpg"
-							alt="Walt Disney story meeting at the studio"
-						/>
-						<img
-							src="media/common-ground.png"
-							alt="Diagram illustrating common ground in communication"
-						/>
-					</div>
-					<aside class="notes">
-						When people coordinate, they rely on common ground: mutual knowledge that each side knows the other knows. A storyboard in a room full of artists is a classic example; everyone can point at the same panel. Live streaming revives that need at scale: thousands of viewers reacting to the same moving image in real time.
+						Many creative tasks are collaborative. To facilitate communication between collaborators, we need to establish common ground, whether it is between humans or between humans and AI. And one way to do this is through shared references.
+						Psychologists Clark and Brennan developed the theory of common ground and showed that successful collaboration depends on building shared understanding or common ground. 
+						Again, let me explain with a concrete problem in the video domain.						
 					</aside>
 				</section>
 
@@ -2831,40 +3434,47 @@
 						</p>
 					</div>
 					<aside class="notes">
-						Chat is the default channel, but it is almost entirely text in a side column. That is fine for emotes and short reactions; it is a weak match when viewers want to refer to something specific on the video itself.
+						Take a look at live streaming. It's a popular genre that let's creators share experiences with audiences in real time. One of the primary ways streamers and viewres interact is through live chat.
 					</aside>
 				</section>
 
-				<section class="content-slide">
+				<section class="content-slide" id="livestream-problems-slide">
 					<h2 class="slide-heading">The problem with live stream interaction</h2>
-					<div class="slide-body slide-body--split-media">
-						<div class="split-media-panel">
-							<img
-								src="media/twitch-chat.gif"
-								alt="Fast-moving Twitch live stream chat"
-							/>
-							<p class="split-media-caption">
-								<small>
-									<a href="https://sproutsocial.com/insights/twitch-marketing/" target="_blank" rel="noopener noreferrer">
-										sproutsocial.com/insights/twitch-marketing
-									</a>
-								</small>
-							</p>
+					<div class="slide-body slide-body--problem-stack">
+						<div class="problem-stack-layout">
+							<div class="problem-stack-main">
+								<div class="problem-primary-image">
+									<img
+										class="fragment problem-media-1"
+										data-fragment-index="0"
+										src="media/chat-visual-reference-confusion.svg"
+										alt="Live stream chat messages confused about which on-screen visual element viewers mean"
+									/>
+								</div>
+								<ul class="problem-list problem-list--stepped">
+									<li class="fragment" data-fragment-index="0">
+										Visual references are awkward in text chat.
+									</li>
+									<li class="fragment" data-fragment-index="1">
+										Streamers must split attention between performing and reading chat.
+									</li>
+									<li class="fragment" data-fragment-index="2">
+										Latency disrupts the communication.
+									</li>
+								</ul>
+							</div>
+							<div class="problem-stack-side">
+								<img
+									class="fragment problem-media-2"
+									data-fragment-index="1"
+									src="media/twitch-chat.gif"
+									alt="Fast-moving Twitch live stream chat"
+								/>
+							</div>
 						</div>
-						<ul class="problem-list">
-							<li class="fragment">
-								Visual references are awkward in text chat. 
-							</li>
-							<li class="fragment">
-								Latency disrupts the communication.
-							</li>
-							<li class="fragment">
-								Streamers must split attention between performing and reading chat.
-							</li>
-						</ul>
 					</div>
 					<aside class="notes">
-						Three friction points we heard in prior work and in our own studies: plain text makes deictic references clumsy; network delay breaks conversational rhythm; and performing while monitoring a firehose of chat is cognitively expensive. These set up why we need a richer shared reference than scrolling text alone.
+						But the text chat comes with limitations. It's really hard to refer to specific visual elements in the ongoing video stream. Streamers must split attention between performing and reading chat which can go very fast. The latency does not help with the back and forth communication.
 					</aside>
 				</section>
 
@@ -2876,7 +3486,7 @@
 						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
 							Saelyne Yang<sup>1</sup>,
 							Changyoon Lee<sup>1</sup>,
-							<strong>Hijung Valentina Shin</strong><sup>2</sup>, and
+							Hijung Valentina Shin<sup>2</sup>, and
 							Juho Kim<sup>1</sup>
 						</p>
 						<p class="paper-citation-affiliations" style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: -0.6em 0 0;">
@@ -2897,24 +3507,55 @@
 						<script>
 							(function () {
 								var vid = document.getElementById('snapstream-video');
-								if (vid) {
-									vid.addEventListener('play', function () {
-										var el = vid;
-										if (el.requestFullscreen) el.requestFullscreen();
-										else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-										else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
-									});
+								if (!vid) return;
+
+								var START_AT = 12.5; // 0:12
+								var END_AT = 72;   // 1:12
+
+								function enterFullscreen(el) {
+									if (el.requestFullscreen) el.requestFullscreen();
+									else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+									else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
 								}
+
+								function exitFullscreen() {
+									var exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+									if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+										exit.call(document);
+									}
+								}
+
+								function resetToClipStart() {
+									if (vid.currentTime < START_AT || vid.currentTime >= END_AT) {
+										vid.currentTime = START_AT;
+									}
+								}
+
+								vid.addEventListener('play', function () {
+									resetToClipStart();
+									enterFullscreen(vid);
+								});
+
+								vid.addEventListener('timeupdate', function () {
+									if (vid.currentTime >= END_AT) {
+										vid.pause();
+										vid.currentTime = END_AT;
+										exitFullscreen();
+									}
+								});
+
+								vid.addEventListener('ended', exitFullscreen);
 							})();
 						</script>
 					</div>
 					<aside class="notes">
-						Snapstream, from our CHI twenty twenty paper, gives viewers a frozen frame they can mark up and send back as a conversational anchor. It restores a literal shared image between streamer and viewers, which works beautifully for smaller, art-focused streams.
+						That's the problem we tried to address in work Snap stream, with collaborators from KAIST. In this video, we will show an example of a visual art live streaming, where the streamer is drawing a picture during the stream. Viewers try to communicate about the streamers art work using snapshots.
+						Now, snapshots solve one part of the problem, by creating shared visual references. But viewer's inputs are still quite limited to text and screenshots.
 					</aside>
 				</section>
 
 				<section class="content-slide">
-					<h2 class="slide-heading">What about visual input from viewers?</h2>
+					<h2 class="slide-heading">What about richer visual input from viewers?</h2>
 					<div class="slide-body slide-body--center" style="gap: 0.6em; align-items: center; justify-content: center;">
 						<img
 							src="media/blog_img2.png"
@@ -2926,12 +3567,10 @@
 								johnr0.github.io/publications/VisPoll_CHI2021
 							</a>
 						</p>
-						<p class="research-question fragment" style="margin-top: 0.4em; text-align: left;">How can we support flexible and scalable viewer visual input?</p>
+						<p class="research-question fragment" style="margin-top: 0.4em; text-align: left;">How can we enable flexible and scalable viewer visual input?</p>
 					</div>
 					<aside class="notes">
-						With Snapstream, the shared reference was literal: one image everyone could inspect. At massive scale, literal pixels collapse into noise. The VisPoll work argues the common ground should shift from the bitmap to the structure of the input.
-
-						On the second fragment: the research question becomes how to support visual input from viewers that stays flexible for streamers yet scales to large audiences.
+						But what about richer visual input from viewers? How can we enable flexible and scalable viewer visual input?
 					</aside>
 				</section>
 
@@ -2942,7 +3581,7 @@
 						</p>
 						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
 							John Joon Young Chung<sup>1</sup>,
-							<strong>Hijung Valentina Shin</strong><sup>2</sup>,
+							Hijung Valentina Shin<sup>2</sup>,
 							Haijun Xia<sup>3</sup>,
 							Li-Yi Wei<sup>2</sup>, and
 							Rubaiat Habib Kazi<sup>2</sup>
@@ -2955,7 +3594,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						This is the Beyond Show of Hands paper, published at CHI 2021 with John Joon Young Chung and collaborators. It introduces VisPoll, a framework for scalable visual input from live stream viewers through structured attribute constraints.
+						In a follow-up work, Beyond Show of Hands, we looked at the problem of collecting visual input from viewers in a scalable way. Our key insight was to use visual attributes as common ground.
 					</aside>
 				</section>
 
@@ -2963,7 +3602,7 @@
 					<h2 class="slide-heading">Visual attributes as common ground</h2>
 					<div class="slide-body slide-body--center visual-attrs-body">
 						<p class="slide-lead fragment" data-fragment-index="1" style="text-align: left;">
-							Viewer visual inputs can be decomposed into <strong>visual attributes</strong> &mdash; shared dimensions that streamers and viewers use to make sense.
+							Viewer visual inputs can be decomposed into <strong>visual attributes</strong> &mdash; shared dimensions that streamers and viewers use to make sense
 						</p>
 						<div class="visual-attrs-grid">
 							<div class="fragment visual-attr-cell visual-attr-cell--stagger" data-fragment-index="2" style="--stagger-delay: 0s;">
@@ -2989,9 +3628,9 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Our insight was to use visual attributes as common ground. Instead of treating user's visual input as raw pixels, we decompose them into shared visual attributes, which become shared dimensions that streamers and viewers can use to make sense of the hundreds of inputs.
+						Instead of treating user's visual input as raw pixels, we decompose them into visual attributes, which become shared dimensions that streamers and viewers can use to make sense of the hundreds of inputs.
 						
-						For example, inputs can be decomposed into: position, shape, rotation, size, color. Position is where the mark sits; shape is the primitive viewers draw with; rotation and size often encode direction and magnitude; color can encode categories or votes.
+						For example, inputs can be decomposed into: position, shape, rotation, size, color. 
 
 						Let me use a concrete example to illustrate this.
 					</aside>
@@ -3037,11 +3676,15 @@
 					<div class="pipeline-stage">
 						<p class="pipeline-stage-label">Viewer input</p>
 						<div class="pipeline-img-wrap">
-							<img
-								class="pipeline-gif"
-								src="media/viewer-input.gif"
-								alt="Viewer input animation showing multiple viewers drawing friction arrows"
-							/>
+							<div class="pipeline-cluster-wrap">
+								<img
+									id="viewer-input-gif"
+									class="pipeline-gif"
+									src="media/viewer-input.gif"
+									alt="Viewer input animation showing multiple viewers drawing friction arrows"
+								/>
+								<span class="cluster-count cluster-count--more">...</span>
+							</div>
 						</div>
 					</div>
 				<div class="fragment pipeline-stage" data-fragment-index="1">
@@ -3100,17 +3743,41 @@
 					</aside>
 				</section>
 
-				<section class="content-slide">
-					<div class="slide-body slide-body--center">
-						<p class="theme-callout">
-							Establishing common ground facilitates collaboration.
-						</p>
+				<section class="content-slide" id="talk-outline-recap-slide">
+					<h2 class="slide-heading">Designing effective audiovisual interfaces</h2>
+					<div class="slide-body research-principles-layout">
+						<div class="research-principles-columns">
+							<div class="research-principle-column talk-outline-item" data-outline-item="1">
+								<img
+									src="media/woody-and-buzz.jpg"
+									alt="Toy Story storyboard sketch beside final rendered frame"
+								/>
+								<p class="research-principle"><strong>semantic authoring</strong></p>
+							</div>
+							<div class="research-principle-column talk-outline-item" data-outline-item="2">
+								<img
+									src="media/storyboard-painting.jpeg"
+									alt="Storyboard meeting with sketches pinned on the wall"
+								/>
+								<p class="research-principle"><strong>common ground</strong></p>
+							</div>
+							<div class="research-principle-column talk-outline-item" data-outline-item="3">
+								<img
+									src="media/storyboard-iterate.gif"
+									alt="Animator rearranging storyboard panels on a wall"
+								/>
+								<p class="research-principle"><strong>iteration</strong></p>
+							</div>
+						</div>
+						<span class="fragment talk-outline-marker" data-fragment-index="0" aria-hidden="true"></span>
+						<p>Effective interfaces provide common ground</p>
 					</div>
 					<aside class="notes">
-						Let's zoom out for a second. We looked at two very different ways of establishing common ground between people. One using a screenshot as a visual reference, and the other using visual attributes to parameterize visual inputs. The principle I want to return to is that common ground is necessary for collaboration, whether it is between humans like streamers and viewers, or between humans and AI as we will see next. Effective interfaces need to provide this common ground. 
+						Let's zoom out for a second. We looked at two very different ways of establishing common ground between people. One using a screenshot as a visual reference, and the other using visual attributes to parameterize visual inputs. The principle I want to return to is that effective interfaces provide common ground, which is necessary for collaboration, whether it is between humans like streamers and viewers, or between humans and AI as we will see next. Now, let's talk about supporting iteration. But before we do, I'd like to take a brief detour and talk about agentic video editing.
 					</aside>
 				</section>
 
+				<!--
 				<section class="content-slide theme-pillar-slide">
 					<div class="slide-body slide-body--center">
 						<div class="theme-pillar">
@@ -3122,30 +3789,23 @@
 						Finally, let's talk about supporting iteration.
 					</aside>
 				</section>
+				-->
 
 				<section class="content-slide" id="agentic-slide">
 					<h2 class="slide-heading">The promise of agentic video editing?</h2>
-					<div class="slide-body slide-body--center slide-body--split-media">
-						<div class="split-media-panel split-media-panel--news">
-							<img
-								src="media/news-agentic-editing.png"
-								alt="Google News search results for Agentic Video Editing"
-							/>
-							<p class="agentic-source">
-								Google News Search &ldquo;Agentic Video Editing&rdquo;
-							</p>
-						</div>
-						<div class="split-media-panel split-media-panel--video">
+					<div class="slide-body slide-body--center">
+						<div class="agentic-video-wrap">
 							<video controls preload="metadata" playsinline>
 								<source src="media/runway-idea-to-video.mp4" type="video/mp4" />
 							</video>
 							<p class="agentic-source">
-									<a href="https://www.reddit.com/user/RunwayAI/comments/1tjuk71/from_idea_to_finished_video_in_minutes/" target="_blank" rel="noopener noreferrer">RunwayAI on Reddit</a>
+								<a href="https://www.reddit.com/user/RunwayAI/comments/1tjuk71/from_idea_to_finished_video_in_minutes/" target="_blank" rel="noopener noreferrer">RunwayAI on Reddit</a>
 							</p>
 						</div>
 					</div>
 					<aside class="notes">
-						Point to the Google News screenshot: the phrase is everywhere in industry press. Then play Runway’s Agent promo on the right if helpful. Advance to Murch’s thought experiment on the next slide.
+						Take a look at this promotional video from RunWayAI.
+						Go from idea to video in 5 minutes. If we can create beautiful videos with simple prompts, do we even need a storyboard? Or an interface?
 					</aside>
 				</section>
 
@@ -3165,12 +3825,12 @@
 						/>
 					</div>
 					<aside class="notes">
-						Murch’s provocation: a perfect brain-to-film black box would skip the very collaboration and discovery many directors want to keep. Use it as a rhetorical bridge to why we still need rich substrates for iteration, not only faster generation.
+						Walter Murch, a renowned film editor, asked a similar question in his book In the blink of an eye. He asks: What if there were a machine, a black box that could connect directly to a director's brain and translate their intentions instantly into a finished film? Would directors want that black box, like a brain-machine interface?						
 					</aside>
 				</section>
 
 				<section class="content-slide" id="creative-process-sources-slide">
-					<h2 class="slide-heading">Creative process is as important as the creative output, perhaps even more.</h2>
+					<h2 class="slide-heading fragment" data-fragment-index="1">Creative process is as important as the creative output, perhaps even more.</h2>
 					<div class="slide-body source-cards">
 						<div class="source-card-wrap">
 							<div class="source-card">
@@ -3183,7 +3843,7 @@
 								<a href="https://www.amazon.com/Blink-Eye-Perspective-Film-Editing/dp/1879505622" target="_blank" rel="noopener noreferrer">In the Blink of an Eye</a> &mdash; Silman-James Press
 							</p>
 						</div>
-						<div class="source-card-wrap">
+						<div class="source-card-wrap fragment" data-fragment-index="2">
 							<div class="source-card">
 								<p class="source-card-title">Toward Modeling Creative Processes for Algorithmic Painting</p>
 								<p class="source-card-author">Aaron Hertzmann</p>
@@ -3198,7 +3858,9 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Two reinforcements from outside HCI vendor demos. Murch argues many filmmakers care about the collaborative emergence of a film, not only the finished file. Hertzmann’s ICCC piece makes the same point computationally: experts trade in fuzzy goals plus exploratory search. Together they justify why “support iteration” belongs alongside semantics and common ground.
+						Murch argues that most filmmakers would reject the black box, with the possible exception of Hitchcock. He writes that they are interested foremost in &ldquo;the collaborative process of filmmaking, and in seeing a detailed vision mysteriously emerge out of that process,&rdquo; rather than having it imposed by a single individual from the beginning.
+
+						The idea that creative process is as important as the creative output, perhaps even more, is echoed by many artists as well as researchers. Aaron Hertzmann, computer graphics researcher at Adobe, writes that &ldquo;creative processes often involve two important components: vague, high-level goals (e.g., &lsquo;make a good painting&rsquo;), and exploratory processes for discovering new ideas.&rdquo; And this creative process is fundamentally iterative.
 					</aside>
 				</section>
 
@@ -3220,7 +3882,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Use this beat to humanize iteration. Lasseter is describing Pixar story development as continual revision, not a single locked script. The same point generalizes beyond film to any creative practice where the value is in the journey, not instant export.
+						This is a quote from John Lasseter, former Chief Creative Officer of Pixar Animation Studios. 
 					</aside>
 				</section>
 
@@ -3231,7 +3893,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						So how do we support iteration?
+						So back to iteration: How do we support iteration?
 					</aside>
 				</section>
 
@@ -3241,7 +3903,7 @@
 						<p id="flipSlideSubtitle" class="fragment workflow-subtitle" data-fragment-index="1">
 							Video editing workflows involve multiple stages and intermediate artifacts.
 						</p>
-						<!-- Two stacked boards share fixed column tracks; row 2 reveals as one fragment -->
+						<!-- Three stacked boards share fixed column tracks; rows 2–3 each reveal as one fragment -->
 						<div id="flipCardsRow" class="fragment workflow-combined" data-fragment-index="2">
 
 							<!-- ── ROW 1: Workflow Stages ── -->
@@ -3249,209 +3911,210 @@
 								<p class="workflow-row-label">Workflow<br>Stages</p>
 								<div class="workflow-stage">
 									<img src="media/vo-assets.png" alt="Asset collection stage" />
-									<p class="workflow-stage-name">Asset<br>Collection</p>
+									<p class="workflow-stage-name">Asset Collection</p>
 								</div>
-								<span class="workflow-arrow">&rarr;</span>
 								<div class="workflow-stage">
 									<img src="media/vo-narrative.png" alt="Narrative development stage" />
-									<p class="workflow-stage-name">Narrative<br>Development</p>
+									<p class="workflow-stage-name">Narrative Development</p>
 								</div>
-								<span class="workflow-arrow">&rarr;</span>
 								<div class="workflow-stage">
 									<img src="media/vo-scene-planning.png" alt="Scene planning stage" />
-									<p class="workflow-stage-name">Scene<br>Planning</p>
+									<p class="workflow-stage-name">Scene Planning</p>
 								</div>
-								<span class="workflow-arrow">&rarr;</span>
 								<div class="workflow-stage">
 									<img src="media/vo-timeline.png" alt="Pacing adjustment stage" />
-									<p class="workflow-stage-name">Pacing<br>Adjustment</p>
+									<p class="workflow-stage-name">Timeline Sequencing</p>
 								</div>
 							</div>
 
-							<!-- ── ROW 2: Intermediate Artifacts ── -->
+							<!-- ── ROW 2: Intermediate Artifacts (tool icons) ── -->
 							<div class="workflow-board workflow-board--artifacts fragment" data-fragment-index="3">
-								<div class="workflow-artifacts-label">
-									<p class="workflow-row-label">Intermediate<br>Artifacts</p>
-									<p id="compStructLabel" class="workflow-row-label workflow-row-label--secondary">Compositional<br>Structures</p>
+								<p class="workflow-row-label">Intermediate<br>Artifacts</p>
+								<div class="workflow-artifact-cell">
+									<svg class="workflow-structure-icon" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="2" y="2" width="20" height="20" rx="2"/>
+										<circle cx="7" cy="7" r="1.8" fill="#4a6fa5" fill-opacity="0.22" stroke="none"/>
+										<rect x="12" y="5" width="6" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.15" stroke="none"/>
+										<rect x="5" y="13" width="5" height="5" rx="1" fill="#4a6fa5" fill-opacity="0.15" stroke="none"/>
+										<line x1="13" y1="14" x2="19" y2="14"/>
+										<line x1="13" y1="17" x2="17" y2="17"/>
+									</svg>
+									<p class="workflow-cell-label">Canvas</p>
 								</div>
-								<div class="flip-card" data-flip-idx="0">
-								<div class="flip-card-inner">
-									<div class="flip-card-face flip-card-front">
-										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-											<rect x="2" y="2" width="20" height="20" rx="2"/>
-											<circle cx="7" cy="7" r="1.8" fill="#4a6fa5" fill-opacity="0.22" stroke="none"/>
-											<rect x="12" y="5" width="6" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.15" stroke="none"/>
-											<rect x="5" y="13" width="5" height="5" rx="1" fill="#4a6fa5" fill-opacity="0.15" stroke="none"/>
-											<line x1="13" y1="14" x2="19" y2="14"/>
-											<line x1="13" y1="17" x2="17" y2="17"/>
-										</svg>
-									</div>
-									<div class="flip-card-face flip-card-back">
-										<img src="media/set.png" alt="Set structure" />
-									</div>
+								<div class="workflow-artifact-cell">
+									<svg class="workflow-structure-icon" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="3" y="2" width="18" height="20" rx="2"/>
+										<line x1="7" y1="7" x2="17" y2="7"/>
+										<line x1="7" y1="10" x2="17" y2="10"/>
+										<line x1="7" y1="13" x2="15" y2="13"/>
+										<line x1="7" y1="16" x2="13" y2="16"/>
+										<line x1="7" y1="19" x2="11" y2="19"/>
+									</svg>
+									<p class="workflow-cell-label">Text Editor</p>
 								</div>
-								<p class="flip-card-label">Freeform Canvas</p>
+								<div class="workflow-artifact-cell">
+									<svg class="workflow-structure-icon" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="2" y="2" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.15"/>
+										<rect x="13" y="2" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.15"/>
+										<rect x="2" y="10" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.22"/>
+										<rect x="13" y="10" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.22"/>
+										<rect x="2" y="18" width="9" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.28"/>
+										<rect x="13" y="18" width="9" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.28"/>
+									</svg>
+									<p class="workflow-cell-label">Storyboard</p>
 								</div>
-								<span class="workflow-arrow">&rarr;</span>
-								<div class="flip-card" data-flip-idx="1">
-								<div class="flip-card-inner">
-									<div class="flip-card-face flip-card-front">
-										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-											<rect x="3" y="2" width="18" height="20" rx="2"/>
-											<line x1="7" y1="7" x2="17" y2="7"/>
-											<line x1="7" y1="10" x2="17" y2="10"/>
-											<line x1="7" y1="13" x2="15" y2="13"/>
-											<line x1="7" y1="16" x2="13" y2="16"/>
-											<line x1="7" y1="19" x2="11" y2="19"/>
-										</svg>
-									</div>
-									<div class="flip-card-face flip-card-back">
-										<img src="media/linear.png" alt="Linear structure" />
-									</div>
+								<div class="workflow-artifact-cell">
+									<svg class="workflow-structure-icon" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="2" y="13" width="5" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.18"/>
+										<rect x="8" y="13" width="7" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
+										<rect x="16" y="13" width="6" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.18"/>
+										<rect x="2" y="18" width="6" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
+										<rect x="9" y="18" width="5" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.38"/>
+										<rect x="15" y="18" width="7" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
+										<line x1="2" y1="10" x2="22" y2="10"/>
+										<polygon points="11,3 13,8 9,8" fill="#4a6fa5" fill-opacity="0.35" stroke="#4a6fa5" stroke-width="1.3" stroke-linejoin="round"/>
+									</svg>
+									<p class="workflow-cell-label">Timeline</p>
 								</div>
-								<p class="flip-card-label">Linear Text Editor</p>
+							</div>
+
+							<!-- ── ROW 3: Compositional Structures (one fragment) ── -->
+							<div class="workflow-board workflow-board--structures fragment" data-fragment-index="4">
+								<p class="workflow-row-label">Compositional<br>Structures</p>
+								<div class="workflow-structure-cell">
+									<img src="media/set.png" alt="Hierarchy / affinity structure" />
+									<p class="workflow-cell-label">Hierarchy / Affinity</p>
 								</div>
-								<span class="workflow-arrow">&rarr;</span>
-								<div class="flip-card" data-flip-idx="2">
-								<div class="flip-card-inner">
-									<div class="flip-card-face flip-card-front">
-										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-											<rect x="2" y="2" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.15"/>
-											<rect x="13" y="2" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.15"/>
-											<rect x="2" y="10" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.22"/>
-											<rect x="13" y="10" width="9" height="6" rx="1" fill="#4a6fa5" fill-opacity="0.22"/>
-											<rect x="2" y="18" width="9" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.28"/>
-											<rect x="13" y="18" width="9" height="4" rx="1" fill="#4a6fa5" fill-opacity="0.28"/>
-										</svg>
-									</div>
-									<div class="flip-card-face flip-card-back">
-										<img src="media/grid.png" alt="Grid structure" />
-									</div>
+								<div class="workflow-structure-cell">
+									<img src="media/linear.png" alt="Linear structure" />
+									<p class="workflow-cell-label">Linear</p>
 								</div>
-								<p class="flip-card-label">Grid-Based Planner</p>
+								<div class="workflow-structure-cell">
+									<img src="media/grid.png" alt="Congruence structure" />
+									<p class="workflow-cell-label">Alignment</p>
 								</div>
-								<span class="workflow-arrow">&rarr;</span>
-								<div class="flip-card" data-flip-idx="3">
-								<div class="flip-card-inner">
-									<div class="flip-card-face flip-card-front">
-										<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#4a6fa5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-											<rect x="2" y="13" width="5" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.18"/>
-											<rect x="8" y="13" width="7" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
-											<rect x="16" y="13" width="6" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.18"/>
-											<rect x="2" y="18" width="6" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
-											<rect x="9" y="18" width="5" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.38"/>
-											<rect x="15" y="18" width="7" height="3.5" rx="0.5" fill="#4a6fa5" fill-opacity="0.28"/>
-											<line x1="2" y1="10" x2="22" y2="10"/>
-											<polygon points="11,3 13,8 9,8" fill="#4a6fa5" fill-opacity="0.35" stroke="#4a6fa5" stroke-width="1.3" stroke-linejoin="round"/>
-										</svg>
-									</div>
-									<div class="flip-card-face flip-card-back">
-										<img src="media/temporal-sync.png" alt="Temporal sync structure" />
-									</div>
-								</div>
-								<p class="flip-card-label">Timeline Editor</p>
+								<div class="workflow-structure-cell">
+									<img src="media/temporal-sync.png" alt="Temporal synchrony structure" />
+									<p class="workflow-cell-label">Temporal Synchrony</p>
 								</div>
 							</div>
 						</div>
-						<p class="fragment workflow-subtitle workflow-semantic-caption" data-fragment-index="4">
-							Intermediate artifacts encode semantic structures of its elements.
-						</p>
 					</div>
 					<aside class="notes">
 						One important way is through intermediate artifacts.
-						Let me explain with an example of video editing. We interviewed 9 expert video creators across different genres. Although their workflows varied, they all shared four core stages. They started with a collection of assets, like photos, footage and reference documents, then they developed a storyline; with these the editors planned out each scene by breaking down the story into narrative beats and matching visuals, much like the storyboard we discussed in the beginning. And the scenes were sequenced in the timeline editor to adjust pacing. This was not a single pass linear process, but an iterative process.
-						{click} to reveal intermediate artifacts.
-						And each of these stages involved intermediate artifacts such as a canvas board or a file system with a set of assets
-						a document in a linear text editor, a grid or a table for the storyboard, and the sequences in the timeline editor.
+						Let me explain with an example of video editing. We interviewed expert video creators across different genres. Although their workflows varied, they all shared four core stages. They collected assets, like photos, footage and reference documents; they developed a storyline; they planned out the scenes on a storyboard; and they sequenced the scenes in the timeline editor. This was not a single pass linear process, but an iterative process.
+						
+						And each of these stages involved intermediate artifacts such as a canvas or a file system for collecting a set of assets,
+						a text editor, a table for the storyboard, and the timeline.
 						What's more interesting is that each of the intermediate artifacts have semantic structures that encode the relationship between its individual elements.
 						So for example a canvas board or a file system of assets could encode a hierarchial relationship between individual assets;
-						The text editor encodes a linear progression of narrative. The grid based storyboard encodes congruence between the narration and the visual scene, and finally the timeline encodes the temporal synchrony between the clips.
-					</aside>
-				</section>
-
-				<section class="content-slide">
-					<div class="slide-body slide-body--center">
-						<p class="theme-callout">
-							Effective interfaces should surface intermediate artifacts that encode semantic structures.
-						</p>
-					</div>
-					<aside class="notes">
-						This is the key design principle: it's not enough to hide the complexity of AI pipelines behind a single chat box. Effective interfaces should make intermediate artifacts visible — and those artifacts should carry the semantic structure of the work. When a creator can see and manipulate a canvas of assets, a narrative document, a scene grid, and a timeline, they're working with representations that encode the meaning and relationships of their material. That structure is what makes AI assistance legible and controllable at each stage.
+						The text editor encodes a linear progression of narrative. The storyboard encodes alignment between the narration and the visual scene, and finally the timeline encodes the temporal synchrony between the clips.
 					</aside>
 				</section>
 
 				<section class="media-slide media-slide--video-fill" style="position:relative;">
 					<h2 class="slide-heading">Agentic Video Editing &ne; <br>Chat Interface</h2>
 					<div class="media-frame" style="overflow:hidden;">
-						<video controls preload="auto" style="width:100%;height:100%;">
+						<video id="coconut-agent-trace-video" controls preload="auto" playsinline muted style="width:100%;height:100%;">
 							<source src="media/coconut_agent_trace_3x_withsound.mp4" type="video/mp4" />
 						</video>
 					</div>
 					<aside class="notes">
-						The problem with most applications  agentic video editing applications out there right now is that they hide these intermediate results or only show them in a chat response. They are not structured intermediate artifacts that you can make sense of and interact with.
+						The problem with most video editing apps that claim to be agentic is that they hide these intermediate results or only show them in a chat response. They are not structured intermediate artifacts that you can make sense of and interact with.
+					</aside>
+				</section>
+				<section class="content-slide">
+					<div class="slide-body slide-body--center" style="justify-content: center; gap: 1.2em;">
+						<p class="paper-citation-title" style="font-size: 1.05em; font-weight: 700; color: var(--slide-navy); line-height: 1.3; max-width: 88%; text-align: center; margin: 0 auto;">
+							Compositional Structures as Substrates for <br>Human-AI Co-creation Environment: <br>A Design Approach and A Case Study
+						</p>
+						<p class="paper-citation-authors" style="font-size: 0.62em; color: var(--slide-body, #2c3e50); text-align: center; margin: 0;">
+							Yining Cao<sup>1</sup>,
+							Yiyi Huang<sup>1</sup>,
+							Anh Truong<sup>2</sup>,
+							Hijung Valentina Shin<sup>2</sup>, and
+							Haijun Xia<sup>1</sup>
+						</p>
+						<p class="paper-citation-affiliations" style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: -0.6em 0 0;">
+							<sup>1</sup>UC San Diego &ensp; <sup>2</sup>Adobe Research
+						</p>
+						<p class="paper-citation-venue" style="font-size: 0.58em; font-style: italic; color: var(--slide-accent); text-align: center; margin: 0.4em 0 0;">
+							ACM CHI Conference on Human Factors in Computing Systems (CHI 2025)
+						</p>
+					</div>
+					<aside class="notes">
+						In our work presented at CHI last year on compositional structures as substrates, 
 					</aside>
 				</section>
 
-				<section class="media-slide">
-					<div class="videorigami-showcase">
-						<h2 class="slide-heading">Video Origami</h2>
-						<p class="slide-subtitle">Design approach that leverages structured intermediate artifacts to support human-AI co-creation.</p>
-						<div class="videorigami-visual">
-							<div class="videorigami-panels">
-								<img src="media/vo-canvas-editor.png" alt="VideOrigami Canvas and Editor views" />
-								<img src="media/vo-grid-timeline.png" alt="VideOrigami Grid and Timeline views" />
-							</div>
-							<div class="videorigami-labels">
-								<p>Canvas</p>
-								<p>Editor</p>
-								<p>Storyboard</p>
-								<p>Timeline</p>
+				<section class="content-slide" id="videorigami-intro-slide">
+					<div class="slide-body slide-body--center" style="align-items: flex-start; justify-content: flex-start; text-align: left; gap: 0.5em;">
+						<p class="theme-callout">
+							Effective interfaces should surface intermediate artifacts that encode semantic structures
+						</p>
+						<div class="fragment videorigami-intro-reveal">
+							<p class="slide-subtitle">Video Origami: an agent supported video editing interface</p>
+							<div class="videorigami-visual">
+								<div class="videorigami-block">
+									<div class="videorigami-panels">
+										<img src="media/vo-canvas-editor.png" alt="VideOrigami Canvas and Editor views" />
+										<img src="media/vo-grid-timeline.png" alt="VideOrigami Grid and Timeline views" />
+									</div>
+									<div class="videorigami-labels">
+										<p>Canvas</p>
+										<p>Editor</p>
+										<p>Storyboard</p>
+										<p>Timeline</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 					<aside class="notes">
-						In our recent work VideoOrigami presented at CHI, we propose a design approach that leverages structured intermediate artifacts to support human AI co-creation. And we instantiate this approach in an agent-supported video editing interface which incorporated the 4 intermediate artifacts that are common to video workflows: a canvas, a document editor, a grid or storyboard and a timeline. Let me walk you through an example of a user using VideoOrigami to make an informational video about fortune cookies. 
+						we propose that effective interfaces should surface intermediate artifacts that encode semantic structures.
+						And we instantiate this design approach in an agent-supported video editing interface, Video Origami.
+						Video Origami incorporated the 4 intermediate artifacts that are common to video workflows: a canvas, a document editor, a storyboard and a timeline. Let me walk you through an example of a user using VideoOrigami to make an informational video about fortune cookies.
 					</aside>
 				</section>
 
 				<section class="media-slide media-slide--video-fill">
-					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<h2 class="slide-heading">User and agent collaborates on<br> intermediate artifacts</h2>
 					<div class="media-frame">
 						<video id="vo-canvas-asset-summarize-video" controls preload="auto">
 							<source src="media/vo-canvas-asset-summarize.mp4" type="video/mp4" />
 						</video>
 					</div>
 					<aside class="notes">
-						Instead of the agent simply outputting the final timeline from a user prompt, in Video Origami, the user and the agent fluidly collaborate on intermediate artifacts. So here, the user collected some assets on a canvas, several source documents about fortune cookies. She invokes the agent to summarize one of the documents. The agent creates another intermediate artifact, a note with a summary of the article and links it with the orignal asset.
+						Instead of the agent simply outputting the final timeline from a user prompt, in Video Origami, the user and the agent collaborate on intermediate artifacts. So here, on the canvas, the user collected several source documents about fortune cookies. She invokes the agent to summarize one of the documents. The agent creates another intermediate artifact, a note with a summary of the article and links it with the orignal asset.
 					</aside>
 				</section>
 
 				<section class="media-slide media-slide--video-fill">
-					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<h2 class="slide-heading">Agents help synchronize across<br> intermediate artifacts</h2>
 					<div class="media-frame">
 						<video controls preload="auto">
 							<source src="media/fortunate_cookie_part3.mp4" type="video/mp4" />
 						</video>
 					</div>
 					<aside class="notes">
-						Next, when the user moves into the narrative editor she can collaborate with the AI on the script. As she works on the script, the agent tracks provenance, linking each part of the narrative back to the source assets it draws from. So, AI is helping to synchronize across different intermediate artifacts.
+						Next, in the narrative editor, as the user works on the script with, the agent tracks provenance, linking each part of the narrative back to the source assets it draws from. So, AI is helping to synchronize across different intermediate artifacts.
 					</aside>
 				</section>
 
 				<section class="media-slide media-slide--video-fill">
-					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<h2 class="slide-heading">Agents suggest, <br> users edit</h2>
 					<div class="media-frame">
-						<video controls preload="auto">
+						<video id="editor-transform-grid-video" controls preload="auto">
 							<source src="media/editor-transform-grid.mp4" type="video/mp4" />
 						</video>
 					</div>
 					<aside class="notes">
-						 The narrative editor can be transformed into a grid — the storyboard. The agent suggests how to break the script into initial scenes and pair each one with appropriate visuals. Becuase intermediate artifacts are surfaces as first-class citizens, it is easy to go back and forth between the asset view and the storyboard view.
+						 The agent also helps transform the narrative to a storyboard by suggesting how to break the script into pairs of scenes and narrative beats. Agents can suggest, but the user can always edit becuase intermediate artifacts are surfaced as first-class citizens.
 					</aside>
 				</section>
 
 				<section class="media-slide" id="cell-correspondence-slide">
-					<p class="slide-subtitle">User and agent fluidly collaborate on intermediate artifacts.</p>
+					<h2 class="slide-heading">Users can iterate between stages <br>through synced intermediate artifacts</h2>
 					<div class="media-frame">
 						<div class="correspondence-stack">
 							<img
@@ -3474,11 +4137,11 @@
 						</div>
 					</div>
 					<aside class="notes">
-						When the user moves on to work on the timeline, each portion of the timeline corresponds directly to a cell in the scene plan. As the user selects a segment on the timeline, the corresponding cell in the scene plan is highlighted, and vice versa. 
+						Finally, when the user works on the timeline, each portion of the timeline is synced directly to the corresponding cell in the storyboard, and to the original assets. It is easy for users to iterate between steps through synced intermediate artifacts. 
 					</aside>
 				</section>
 
-				<section class="content-slide" id="video-origami-study-quotes-slide">
+				<!-- <section class="content-slide" id="video-origami-study-quotes-slide">
 					<h2 class="slide-heading">Intermediate artifacts helped users iterate with AI without losing control</h2>
 					<div class="slide-body" style="flex-direction: column; justify-content: center; gap: 1.6em;">
 						<div class="quote-slide" style="text-align: left; max-width: 100%;">
@@ -3494,28 +4157,50 @@
 					<aside class="notes">
 						User study quotes from Video Origami. U3 speaks to agency and entry points — picking up at any layer without re-prompting. U1 speaks to transparency. U5 speaks to the legibility of compositional structure. Advance through them one at a time.
 					</aside>
+				</section> -->
+
+				<section class="content-slide" id="talk-outline-end-slide">
+					<h2 class="slide-heading">Designing effective audiovisual interfaces
+					</h2>
+					<div class="slide-body research-principles-layout">
+						<div class="research-principles-columns">
+							<div class="research-principle-column talk-outline-item" data-outline-item="1">
+								<img
+									src="media/woody-and-buzz.jpg"
+									alt="Toy Story storyboard sketch beside final rendered frame"
+								/>
+								<p class="research-principle"><strong>semantic authoring</strong></p>
+							</div>
+							<div class="research-principle-column talk-outline-item" data-outline-item="2">
+								<img
+									src="media/storyboard-painting.jpeg"
+									alt="Storyboard meeting with sketches pinned on the wall"
+								/>
+								<p class="research-principle"><strong>common ground</strong></p>
+							</div>
+							<div class="research-principle-column talk-outline-item" data-outline-item="3">
+								<img
+									src="media/storyboard-iterate.gif"
+									alt="Animator rearranging storyboard panels on a wall"
+								/>
+								<p class="research-principle"><strong>iteration</strong></p>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						Recap the three themes before takeaways.
+					</aside>
 				</section>
 
 				<section class="content-slide">
-					<div class="slide-body takeaways-body">
-						<div class="takeaways-block">
-							<h2 class="slide-heading">Takeaways</h2>
-							<ol class="takeaways-list">
-								<li><span class="list-num">1.</span> <strong>Support semantics</strong> &mdash; translate high-level creative intent into algorithms, bridging the gap between how people think and how tools operate.</li>
-								<li><span class="list-num">2.</span> <strong>Support common ground</strong> &mdash; enable shared references between humans, and between humans and AI, so collaboration stays grounded in what everyone can see.</li>
-								<li><span class="list-num">3.</span> <strong>Support iteration</strong> &mdash; creative work is never one-shot. Build tools that make the cycle of exploring, evaluating, and revising intuitive and fun.</li>
-							</ol>
-						</div>
-						<hr class="takeaways-divider" />
-						<div class="takeaways-block">
-							<h2 class="slide-heading slide-heading--accent">Open Opportunities</h2>
-							<ul class="takeaways-list">
-								<li class="fragment"><a href="#/backup-orientation">How do we help users <strong>orient across many parallel branches</strong> of creative exploration?</a></li>
-								<li class="fragment"><a href="#/backup-track-history">How do we <strong>track history</strong> with implicit and explicit creative decisions by agents and humans?</a></li>
-								<li class="fragment"><a href="#/backup-friction">What forms of <strong>friction are beneficial</strong> to the creative process, and how do we design for them?</a></li>
-								<li class="fragment"><a href="#/backup-evaluate">How do we <strong>evaluate these systems</strong> when the outcomes are subjective and the process matters as much as the product?</a></li>
-							</ul>
-						</div>
+					<h2 class="slide-heading">Future Directions</h2>
+					<div class="slide-body">
+						<ul class="takeaways-list">
+							<li class="fragment"><a href="#/backup-orientation">How do we help users <strong>orient across many parallel branches</strong> of creative exploration?</a></li>
+							<li class="fragment"><a href="#/backup-track-history">How do we <strong>track history</strong> with implicit and explicit creative decisions by agents and humans?</a></li>
+							<li class="fragment"><a href="#/backup-friction">What forms of <strong>friction are beneficial</strong> to the creative process, and how do we design for them?</a></li>
+							<li class="fragment"><a href="#/backup-evaluate">How do we <strong>evaluate these systems</strong> when the outcomes are subjective and the process matters as much as the product?</a></li>
+						</ul>
 					</div>
 					<aside class="notes">
 						Close the arc in one breath: semantics through the lyric-video pipeline and its guidelines; common ground through Snapstream and VisPoll; iteration through compositional structures in VideOrigami. The open questions point to backup slides if the room wants depth on branching, provenance, beneficial friction, or evaluation beyond task metrics.
@@ -3528,19 +4213,19 @@
 						<div class="thanks-groups">
 							<div>
 								<p class="thanks-project">Automated Lyric Videos <span>&mdash; UIST &rsquo;23</span></p>
-								<p class="thanks-authors"><strong>Jiaju Ma</strong>, Anyi Rao, Li-Yi Wei, Rubaiat Habib Kazi, Maneesh Agrawala</p>
+								<p class="thanks-authors">Jiaju Ma, Anyi Rao, Li-Yi Wei, Rubaiat Habib Kazi, Maneesh Agrawala</p>
 							</div>
 							<div>
 								<p class="thanks-project">Snapstream <span>&mdash; CHI &rsquo;20</span></p>
-								<p class="thanks-authors"><strong>Saelyne Yang</strong>, Changyoon Lee, Juho Kim</p>
+								<p class="thanks-authors">Saelyne Yang, Changyoon Lee, Juho Kim</p>
 							</div>
 							<div>
 								<p class="thanks-project">Beyond Show of Hands <span>&mdash; CHI &rsquo;21</span></p>
-								<p class="thanks-authors"><strong>John Joon Young Chung</strong>, Haijun Xia, Li-Yi Wei, Rubaiat Habib Kazi</p>
+								<p class="thanks-authors">John Joon Young Chung, Haijun Xia, Li-Yi Wei, Rubaiat Habib Kazi</p>
 							</div>
 							<div>
 								<p class="thanks-project">VideOrigami <span>&mdash; CHI &rsquo;25</span></p>
-								<p class="thanks-authors"><strong>Yining Cao</strong>, Yiyi Huang, Anh Truong, Valentina Shin, Haijun Xia</p>
+								<p class="thanks-authors">Yining Cao, Yiyi Huang, Anh Truong, Valentina Shin, Haijun Xia</p>
 							</div>
 						</div>
 					</div>
@@ -3752,6 +4437,7 @@
 			mouseWheel: false,
 			touch: true,
 			navigationMode: 'default',
+			preventIframeAutoFocus: true,
 			autoAnimateEasing: 'ease-in-out',
 			autoAnimateDuration: 0.65,
 
@@ -3759,31 +4445,8 @@
 				plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
 			});
 
-			(function () {
-				var intentSlide = document.getElementById('intent-comparison-slide');
-				if (!intentSlide) return;
-
-				function syncIntentSlideState() {
-					var ops = intentSlide.querySelector('.intent-operations');
-					intentSlide.classList.toggle('intent-shift-up', !!(ops && ops.classList.contains('visible')));
-				}
-
-				Reveal.on('fragmentshown', function (event) {
-					if (event.currentSlide === intentSlide) syncIntentSlideState();
-				});
-				Reveal.on('fragmenthidden', function (event) {
-					if (event.currentSlide === intentSlide) syncIntentSlideState();
-				});
-				Reveal.on('slidechanged', function (event) {
-					if (event.currentSlide === intentSlide || event.previousSlide === intentSlide) {
-						syncIntentSlideState();
-					}
-				});
-				syncIntentSlideState();
-			})();
-
 			document.querySelector('.reveal').addEventListener('click', function (e) {
-				if (e.target.closest('a, button, video, .controls, .navigate-left, .navigate-right, .navigate-up, .navigate-down, #flipCardsRow')) return;
+				if (e.target.closest('a, button, video, iframe, .media-frame, .controls, .navigate-left, .navigate-right, .navigate-up, .navigate-down, #flipCardsRow')) return;
 				Reveal.next();
 			});
 
@@ -3793,7 +4456,7 @@
 				if (!video) return;
 
 				const START_AT = 7 * 60 + 57; // 7:57
-				const END_AT = 8 * 60 + 11.2; // 8:11.5
+				const END_AT = 8 * 60 + 11.15; // 8:11.2
 
 				function enterFullscreen(el) {
 					const request =
@@ -3813,31 +4476,23 @@
 					}
 				}
 
-				function seekToStart() {
-					video.pause();
-					if (video.readyState < 1) return;
-					if (typeof video.fastSeek === 'function') {
-						video.fastSeek(START_AT);
-					} else {
+				function resetToClipStart() {
+					if (video.currentTime < START_AT || video.currentTime >= END_AT) {
 						video.currentTime = START_AT;
 					}
 				}
 
-				video.addEventListener('loadeddata', seekToStart);
-				video.addEventListener('canplay', seekToStart);
-
 				Reveal.on('slidechanged', (event) => {
 					if (event.currentSlide && event.currentSlide.contains(video)) {
-						seekToStart();
+						resetToClipStart();
+					} else if (event.previousSlide && event.previousSlide.contains(video)) {
+						video.pause();
+						exitFullscreen();
 					}
 				});
 
-				seekToStart();
-
 				video.addEventListener('play', () => {
-					if (video.currentTime < START_AT || video.currentTime >= END_AT) {
-						video.currentTime = START_AT;
-					}
+					resetToClipStart();
 					enterFullscreen(video);
 				});
 
@@ -3873,63 +4528,179 @@
 			})();
 
 			(function () {
-				var flipLabels = ['Hierarhcy / Affinity', 'Linear', 'Congruence', 'Temporal Synchrony'];
-				var originalLabels = ['Freeform Canvas', 'Linear Text Editor', 'Grid-Based Planner', 'Timeline Editor'];
-				var flipped = [false, false, false, false];
-				var row = document.getElementById('flipCardsRow');
-				var subtitle = document.getElementById('flipSlideSubtitle');
-				var compLabel = document.getElementById('compStructLabel');
-				if (!row) return;
+				const video = document.getElementById('editor-transform-grid-video');
+				if (!video) return;
 
-				row.querySelectorAll('.flip-card').forEach(function (card) {
-					card.addEventListener('click', function () {
-						var idx = parseInt(card.dataset.flipIdx);
-						var inner = card.querySelector('.flip-card-inner');
-						var label = card.querySelector('.flip-card-label');
-						flipped[idx] = !flipped[idx];
-						inner.style.transform = flipped[idx] ? 'rotateY(180deg)' : '';
-						label.textContent = flipped[idx] ? flipLabels[idx] : originalLabels[idx];
+				const END_AT = 3;
+				video.playbackRate = 2 / 3; // 1.5× slower
 
-						var anyFlipped = flipped.some(function (f) { return f; });
-						if (compLabel) {
-							compLabel.classList.toggle('is-visible', anyFlipped);
-						}
-					});
+				video.addEventListener('play', () => {
+					if (video.currentTime >= END_AT) {
+						video.currentTime = 0;
+					}
 				});
-		})();
 
-		// Clamp Vimeo snapstream video to 3:37–4:12 (217s–252s)
+				video.addEventListener('timeupdate', () => {
+					if (video.currentTime >= END_AT) {
+						video.pause();
+						video.currentTime = END_AT;
+					}
+				});
+			})();
+
+
+		// Snapstream Vimeo: autoplay on slide enter, clamp 3:37–4:12, keep focus on deck
 		(function () {
 			var iframe = document.getElementById('snapstream-vimeo');
 			if (!iframe || typeof Vimeo === 'undefined') return;
 			var player = new Vimeo.Player(iframe);
+			var section = iframe.closest('section');
+			var START = 217;
+			var END = 252;
+
+			function releaseFocus() {
+				iframe.blur();
+				if (document.activeElement === iframe) {
+					document.activeElement.blur();
+				}
+				document.body.focus({ preventScroll: true });
+			}
+
+			function playClip() {
+				player.setCurrentTime(START).then(function () {
+					return player.play();
+				}).catch(function () {});
+				setTimeout(releaseFocus, 100);
+			}
+
+			function stopClip() {
+				player.pause().catch(function () {});
+				releaseFocus();
+			}
+
 			player.on('timeupdate', function (data) {
-				if (data.seconds > 252) {
+				if (data.seconds > END) {
 					player.pause();
-					player.setCurrentTime(252);
+					player.setCurrentTime(END);
+					releaseFocus();
 				}
 			});
-			Reveal.on('slidechanged', function () {
-				if (iframe.closest('section') === Reveal.getCurrentSlide()) {
-					player.setCurrentTime(217);
+
+			function onSlideChange() {
+				if (section === Reveal.getCurrentSlide()) {
+					playClip();
+				} else {
+					stopClip();
+				}
+			}
+
+			Reveal.on('slidechanged', onSlideChange);
+			Reveal.on('ready', onSlideChange);
+		})();
+
+		// Coconut agent trace: autoplay on slide enter
+		(function () {
+			var video = document.getElementById('coconut-agent-trace-video');
+			if (!video) return;
+
+			function playFromStart() {
+				video.muted = true;
+				video.currentTime = 0;
+				video.play().catch(function () {});
+			}
+
+			function onSlideChange(event) {
+				if (event.currentSlide && event.currentSlide.contains(video)) {
+					playFromStart();
+				} else if (event.previousSlide && event.previousSlide.contains(video)) {
+					video.pause();
+					video.currentTime = 0;
+				}
+			}
+
+			Reveal.on('slidechanged', onSlideChange);
+			Reveal.on('ready', function () {
+				if (video.closest('section') === Reveal.getCurrentSlide()) {
+					playFromStart();
 				}
 			});
 		})();
 
-		// Clamp lyric-video playback to 2:45–2:57 (165s–177s)
+		// Steamboat Willie: muted autoplay on slide enter (clip is pre-trimmed to 1:17–1:45)
+		(function () {
+			var video = document.getElementById('steamboat-willie-video');
+			if (!video) return;
+
+			function playFromStart() {
+				video.currentTime = 0;
+				video.play().catch(function () {});
+			}
+
+			Reveal.on('slidechanged', function (event) {
+				if (event.currentSlide && event.currentSlide.contains(video)) {
+					playFromStart();
+				} else if (event.previousSlide && event.previousSlide.contains(video)) {
+					video.pause();
+					video.currentTime = 0;
+				}
+			});
+		})();
+
+		// Lyric video: start at 2:51, fade volume out after 3:01 while playback continues
 		(function () {
 			var vid = document.getElementById('lyric-video');
 			if (!vid) return;
-			vid.addEventListener('timeupdate', function () {
-				if (vid.currentTime > 186) {
-					vid.pause();
-					vid.currentTime = 186;
+
+			var START_AT = 171; // 2:51
+			var FADE_START = 181; // 3:01
+			var FADE_DURATION = 5; // seconds
+
+			function applyVolumeFade() {
+				if (vid.currentTime < FADE_START) {
+					vid.volume = 1;
+					return;
 				}
-			});
-			// Also seek to start point when the slide becomes visible
+				var fadeProgress = (vid.currentTime - FADE_START) / FADE_DURATION;
+				vid.volume = Math.max(0, 1 - fadeProgress);
+			}
+
+			function resetClip() {
+				vid.currentTime = START_AT;
+				vid.volume = 1;
+			}
+
+			vid.addEventListener('timeupdate', applyVolumeFade);
+			vid.addEventListener('play', applyVolumeFade);
+			vid.addEventListener('seeked', applyVolumeFade);
+
 			Reveal.on('slidechanged', function () {
 				if (vid.closest('section') === Reveal.getCurrentSlide()) {
-					vid.currentTime = 173;
+					resetClip();
+				}
+			});
+		})();
+
+		// Viewer input GIF: restart animation when slide is shown
+		(function () {
+			var gif = document.getElementById('viewer-input-gif');
+			if (!gif) return;
+
+			var src = gif.getAttribute('src');
+
+			function restartGif() {
+				gif.src = '';
+				gif.src = src;
+			}
+
+			Reveal.on('slidechanged', function (event) {
+				if (event.currentSlide && event.currentSlide.contains(gif)) {
+					restartGif();
+				}
+			});
+
+			Reveal.on('ready', function () {
+				if (gif.closest('section') === Reveal.getCurrentSlide()) {
+					restartGif();
 				}
 			});
 		})();

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 300" role="img" aria-labelledby="title desc">
+  <title id="title">Lyric phrases - Taylor Swift, Long Live</title>
+  <desc id="desc">Two lyric phrases from Long Live grouped as phrase 1 and phrase 2.</desc>
+  <defs>
+    <style>
+      .staff { stroke: #111; stroke-width: 1.1; fill: none; }
+      .barline { stroke: #111; stroke-width: 1.4; }
+      .note-head { fill: #111; }
+      .note-head-hollow { fill: #fff; stroke: #111; stroke-width: 1.1; }
+      .stem { stroke: #111; stroke-width: 1.2; stroke-linecap: square; }
+      .slur { fill: none; stroke: #111; stroke-width: 1.1; }
+      .tie { fill: none; stroke: #111; stroke-width: 1; }
+      .lyric { font-family: 'Times New Roman', Times, Georgia, serif; font-size: 15px; fill: #111; }
+      .lyric-cont { font-family: 'Times New Roman', Times, Georgia, serif; font-size: 14px; fill: #111; }
+      .phrase-label { font-family: Helvetica, Arial, sans-serif; font-size: 17px; fill: #1e3354; font-weight: 700; }
+      .phrase-box { fill: #eef3fa; stroke: #b8c5d4; stroke-width: 1; rx: 4; }
+    </style>
+  </defs>
+
+  <rect width="1240" height="300" fill="#fff"/>
+
+  <!-- ========== PHRASE 1 ========== -->
+  <rect class="phrase-box" x="28" y="14" width="548" height="30"/>
+  <text class="phrase-label" x="302" y="35" text-anchor="middle">Phrase 1</text>
+
+  <line class="barline" x1="40" y1="48" x2="40" y2="258"/>
+  <line class="barline" x1="564" y1="48" x2="564" y2="258"/>
+
+  <g id="m1-treble">
+    <line class="staff" x1="40" y1="64" x2="564" y2="64"/>
+    <line class="staff" x1="40" y1="76" x2="564" y2="76"/>
+    <line class="staff" x1="40" y1="88" x2="564" y2="88"/>
+    <line class="staff" x1="40" y1="100" x2="564" y2="100"/>
+    <line class="staff" x1="40" y1="112" x2="564" y2="112"/>
+
+    <ellipse class="note-head" cx="88" cy="64" rx="6.5" ry="5"/>
+    <line class="stem" x1="94" y1="64" x2="94" y2="38"/>
+    <circle cx="99" cy="44" r="2" fill="#111"/>
+
+    <ellipse class="note-head" cx="168" cy="100" rx="6.5" ry="5"/>
+    <line class="stem" x1="174" y1="100" x2="174" y2="74"/>
+    <path d="M 179 78 Q 185 72 191 78" fill="#111"/>
+    <ellipse class="note-head" cx="238" cy="100" rx="6.5" ry="5"/>
+    <line class="stem" x1="244" y1="100" x2="244" y2="74"/>
+    <path class="tie" d="M 174 100 Q 206 95 238 100"/>
+
+    <ellipse class="note-head" cx="328" cy="88" rx="6.5" ry="5"/>
+    <line class="stem" x1="334" y1="88" x2="334" y2="62"/>
+    <ellipse class="note-head-hollow" cx="408" cy="88" rx="6.5" ry="5"/>
+    <line class="stem" x1="414" y1="88" x2="414" y2="62"/>
+    <path class="slur" d="M 334 58 Q 372 46 414 58"/>
+
+    <ellipse class="note-head" cx="488" cy="100" rx="6.5" ry="5"/>
+    <line class="stem" x1="494" y1="100" x2="494" y2="74"/>
+    <ellipse class="note-head" cx="538" cy="94" rx="6.5" ry="5"/>
+    <line class="stem" x1="544" y1="94" x2="544" y2="68"/>
+  </g>
+
+  <text class="lyric" text-anchor="middle">
+    <tspan x="88" y="142">I</tspan>
+    <tspan x="168" y="142">had</tspan>
+    <tspan x="238" y="142">the</tspan>
+    <tspan x="328" y="142">time</tspan>
+    <tspan x="408" y="142">of</tspan>
+    <tspan x="488" y="142">my</tspan>
+    <tspan x="538" y="142">life</tspan>
+  </text>
+
+  <g id="m1-bass">
+    <line class="staff" x1="40" y1="182" x2="564" y2="182"/>
+    <line class="staff" x1="40" y1="194" x2="564" y2="194"/>
+    <line class="staff" x1="40" y1="206" x2="564" y2="206"/>
+    <line class="staff" x1="40" y1="218" x2="564" y2="218"/>
+    <line class="staff" x1="40" y1="230" x2="564" y2="230"/>
+
+    <ellipse class="note-head-hollow" cx="128" cy="206" rx="6.5" ry="5"/>
+    <line class="stem" x1="134" y1="206" x2="134" y2="176"/>
+    <circle cx="140" cy="188" r="2" fill="#111"/>
+
+    <ellipse class="note-head" cx="328" cy="218" rx="6.5" ry="5"/>
+    <line class="stem" x1="334" y1="218" x2="334" y2="246"/>
+    <ellipse class="note-head-hollow" cx="408" cy="218" rx="6.5" ry="5"/>
+    <line class="stem" x1="414" y1="218" x2="414" y2="246"/>
+    <path class="slur" d="M 334 250 Q 372 262 414 250"/>
+  </g>
+
+  <text class="lyric-cont" text-anchor="middle">
+    <tspan x="128" y="254">fighting</tspan>
+    <tspan x="238" y="254">dragons</tspan>
+    <tspan x="328" y="254">with</tspan>
+    <tspan x="408" y="254">you</tspan>
+  </text>
+
+  <!-- ========== PHRASE 2 ========== -->
+  <rect class="phrase-box" x="612" y="14" width="548" height="30"/>
+  <text class="phrase-label" x="886" y="35" text-anchor="middle">Phrase 2</text>
+
+  <line class="barline" x1="624" y1="48" x2="624" y2="258"/>
+  <line class="barline" x1="1148" y1="48" x2="1148" y2="258"/>
+
+  <g id="m2-treble">
+    <line class="staff" x1="624" y1="64" x2="1148" y2="64"/>
+    <line class="staff" x1="624" y1="76" x2="1148" y2="76"/>
+    <line class="staff" x1="624" y1="88" x2="1148" y2="88"/>
+    <line class="staff" x1="624" y1="100" x2="1148" y2="100"/>
+    <line class="staff" x1="624" y1="112" x2="1148" y2="112"/>
+
+    <ellipse class="note-head" cx="658" cy="64" rx="6.5" ry="5"/>
+    <line class="stem" x1="664" y1="64" x2="664" y2="38"/>
+    <ellipse class="note-head" cx="708" cy="100" rx="6.5" ry="5"/>
+    <line class="stem" x1="714" y1="100" x2="714" y2="74"/>
+    <ellipse class="note-head" cx="748" cy="88" rx="6.5" ry="5"/>
+    <line class="stem" x1="754" y1="88" x2="754" y2="62"/>
+    <ellipse class="note-head" cx="928" cy="100" rx="6.5" ry="5"/>
+    <line class="stem" x1="934" y1="100" x2="934" y2="74"/>
+    <ellipse class="note-head" cx="988" cy="88" rx="6.5" ry="5"/>
+    <line class="stem" x1="994" y1="88" x2="994" y2="62"/>
+    <ellipse class="note-head-hollow" cx="1042" cy="88" rx="6.5" ry="5"/>
+    <line class="stem" x1="1048" y1="88" x2="1048" y2="62"/>
+    <path class="slur" d="M 994 58 Q 1018 46 1048 58"/>
+  </g>
+
+  <text class="lyric" text-anchor="middle">
+    <tspan x="658" y="142">I</tspan>
+    <tspan x="708" y="142">was</tspan>
+    <tspan x="748" y="142">screaming</tspan>
+    <tspan x="928" y="142">long</tspan>
+    <tspan x="988" y="142">live</tspan>
+  </text>
+
+  <g id="m2-bass">
+    <line class="staff" x1="624" y1="182" x2="1148" y2="182"/>
+    <line class="staff" x1="624" y1="194" x2="1148" y2="194"/>
+    <line class="staff" x1="624" y1="206" x2="1148" y2="206"/>
+    <line class="staff" x1="624" y1="218" x2="1148" y2="218"/>
+    <line class="staff" x1="624" y1="230" x2="1148" y2="230"/>
+
+    <ellipse class="note-head-hollow" cx="708" cy="206" rx="6.5" ry="5"/>
+    <line class="stem" x1="714" y1="206" x2="714" y2="176"/>
+    <ellipse class="note-head" cx="858" cy="218" rx="6.5" ry="5"/>
+    <line class="stem" x1="864" y1="218" x2="864" y2="246"/>
+    <ellipse class="note-head" cx="958" cy="218" rx="6.5" ry="5"/>
+    <line class="stem" x1="964" y1="218" x2="964" y2="246"/>
+    <ellipse class="note-head-hollow" cx="1058" cy="218" rx="6.5" ry="5"/>
+    <line class="stem" x1="1064" y1="218" x2="1064" y2="246"/>
+    <path class="slur" d="M 964 250 Q 1011 262 1064 250"/>
+  </g>
+
+  <text class="lyric-cont" text-anchor="middle">
+    <tspan x="708" y="254">that</tspan>
+    <tspan x="808" y="254">look</tspan>
+    <tspan x="858" y="254">on</tspan>
+    <tspan x="958" y="254">your</tspan>
+    <tspan x="1058" y="254">face</tspan>
+  </text>
+
+</svg>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 368 158" role="img" aria-labelledby="title desc">
+  <title id="title">Chat messages struggling to refer to on-screen visuals</title>
+  <desc id="desc">Live stream chat log with timestamps and usernames showing visual reference confusion.</desc>
+
+  <rect width="368" height="158" fill="#ffffff"/>
+
+  <text x="4" y="14" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#8a939f" font-weight="600" letter-spacing="0.04em">LIVE CHAT</text>
+
+  <text x="4" y="36" font-family="Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif" font-size="13" fill="#2d3748">
+    <tspan fill="#adadb8" font-size="11">1:24</tspan>
+    <tspan dx="8" fill="#5b9bd5" font-weight="700">PixelPanda</tspan>
+    <tspan fill="#2d3748" font-weight="400">:</tspan>
+    <tspan dx="4">the thing on the canvas right now?? &#x1F440;</tspan>
+  </text>
+
+  <text x="4" y="58" font-family="Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif" font-size="13" fill="#2d3748">
+    <tspan fill="#adadb8" font-size="11">1:24</tspan>
+    <tspan dx="8" fill="#9147ff" font-weight="700">ArtFan22</tspan>
+    <tspan fill="#2d3748" font-weight="400">:</tspan>
+    <tspan dx="4">near the red ball &#x1F534;</tspan>
+  </text>
+
+  <text x="4" y="80" font-family="Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif" font-size="13" fill="#2d3748">
+    <tspan fill="#adadb8" font-size="11">1:25</tspan>
+    <tspan dx="8" fill="#00a86b" font-weight="700">streamlover</tspan>
+    <tspan fill="#2d3748" font-weight="400">:</tspan>
+    <tspan dx="4">which red ball? there&apos;s two &#x1F625;</tspan>
+  </text>
+
+  <text x="4" y="102" font-family="Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif" font-size="13" fill="#2d3748">
+    <tspan fill="#adadb8" font-size="11">1:25</tspan>
+    <tspan dx="8" fill="#e67e22" font-weight="700">coolviewer</tspan>
+    <tspan fill="#2d3748" font-weight="400">:</tspan>
+    <tspan dx="4">the left one &#x1F448;</tspan>
+  </text>
+
+  <text x="4" y="124" font-family="Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif" font-size="13" fill="#2d3748">
+    <tspan fill="#adadb8" font-size="11">1:35</tspan>
+    <tspan dx="8" fill="#bf94ff" font-weight="700">nightOwl</tspan>
+    <tspan fill="#2d3748" font-weight="400">:</tspan>
+    <tspan dx="4">oops its gone now &#x1F62D;</tspan>
+  </text>
+</svg>
