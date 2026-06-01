@@ -139,6 +139,10 @@
         margin: 0.3em 0;
       }
 
+      .reveal ul.modeling-decisions > li:not(.decision-shown) {
+        display: none;
+      }
+
       .reveal .modeling-takeaway {
         margin: 0.75em 0 0;
         font-weight: 600;
@@ -215,13 +219,8 @@
         display: none;
       }
 
-      .reveal details.decision-details[open] .summary-sub,
-      .reveal details.decision-details.decision-revealed .summary-sub {
+      .reveal details.decision-details[open] .summary-sub {
         display: inline;
-      }
-
-      .reveal details.decision-details.decision-revealed:not([open]) .decision-detail {
-        display: block;
       }
 
       .reveal .slide-citation {
@@ -635,6 +634,202 @@
         font-size: var(--prose-size);
         color: var(--text-body);
         text-align: left;
+      }
+
+      .reveal .contraction-intro .reward-label,
+      .reveal .missing-link-slide .banach-intro .reward-label,
+      .reveal .bellman-op-intro .reward-label {
+        display: inline;
+        margin-bottom: 0;
+        font-size: inherit;
+      }
+
+      .reveal .bellman-op-intro .bellman-op-symbol.cb-math {
+        display: inline;
+        font-size: 1em;
+        margin-right: 0.35em;
+      }
+
+      .reveal .bellman-op-intro .bellman-op-symbol .katex {
+        color: var(--accent);
+        font-size: 1em;
+      }
+
+      .reveal .missing-link-slide .banach-fpt {
+        list-style: disc;
+        padding-left: 1.25em;
+        margin: 0.35em 0 0;
+      }
+
+      .reveal .missing-link-slide .banach-fpt li {
+        margin: 0.22em 0;
+      }
+
+      .reveal .missing-link-slide .banach-fpt .banach-fp-inline {
+        margin-left: 0.55em;
+      }
+
+      .reveal .missing-link-slide .banach-fpt .banach-fp-eq.cb-math {
+        display: inline;
+        font-size: 1em;
+        color: var(--accent);
+      }
+
+      .reveal .missing-link-slide .banach-fpt .banach-fp-eq .katex {
+        color: var(--accent);
+        font-size: 1em;
+      }
+
+      .reveal .contraction-ineq {
+        text-align: center;
+      }
+
+      .reveal .content-section .content-block > .bellman-compact-eq {
+        margin-top: calc(var(--item-gap) * 1.5);
+      }
+
+      .reveal .bellman-compact-build .bellman-compact-part.fragment:not(.visible),
+      .reveal .bellman-proof-first-build .bellman-proof-part.fragment:not(.visible) {
+        display: none;
+      }
+
+      .reveal .bellman-compact-build:has(.bellman-compact-part.visible) .bellman-compact-part.fragment:not(.visible),
+      .reveal .bellman-proof-first-build:has(.bellman-proof-part.visible) .bellman-proof-part.fragment:not(.visible) {
+        display: inline;
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      .reveal .bellman-compact-build .bellman-compact-part.fragment.visible,
+      .reveal .bellman-proof-first-build .bellman-proof-part.fragment.visible {
+        display: inline;
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .reveal .bellman-compact-build .bellman-compact-part .katex,
+      .reveal .bellman-proof-first-build .bellman-proof-part .katex {
+        color: var(--accent);
+      }
+
+      .reveal .bellman-proof-slide h2 {
+        margin-bottom: 0.05em;
+      }
+
+      .reveal .bellman-proof-slide .content-body {
+        padding-top: 0;
+      }
+
+      .reveal .bellman-proof-slide .content-block {
+        margin-top: 0;
+      }
+
+      .reveal .bellman-proof-slide .bellman-proof-eq-stack + .bellman-proof-eq-stack {
+        margin-top: 0.2em;
+      }
+
+      .reveal .bellman-proof-slide .bellman-op-intro {
+        margin-top: 0.28em;
+      }
+
+      .reveal .bellman-proof-slide .bellman-proof-conclusion-eq {
+        margin-top: calc(var(--item-gap) * 1.4);
+      }
+
+      .reveal .bellman-proof-slide .bellman-proof-eq-stack .bellman-proof-eq-line {
+        margin: 0.26em 0;
+      }
+
+      .reveal .bellman-proof-slide .cb-math {
+        font-size: calc(var(--prose-size) * 0.88);
+      }
+
+      .reveal .bellman-proof-slide .bellman-proof-eq-stack .bellman-proof-eq-line .katex-display {
+        margin: 0;
+      }
+
+      .reveal .bellman-proof-slide .bellman-r-strike {
+        position: relative;
+        display: inline-block;
+      }
+
+      .reveal .bellman-proof-slide .bellman-r-strike::after {
+        content: "";
+        position: absolute;
+        left: 8%;
+        top: -8%;
+        width: 2.5px;
+        height: 115%;
+        background: #c82020;
+        border-radius: 1px;
+        transform: rotate(-52deg) scaleY(0);
+        transform-origin: top center;
+        pointer-events: none;
+      }
+
+      .reveal .bellman-proof-slide:has(#bellman-proof-cancel-step.visible) .bellman-r-strike::after {
+        animation: bellman-r-slash 0.42s ease-out forwards;
+      }
+
+      .reveal .bellman-proof-slide:has(#bellman-proof-cancel-step.visible) .bellman-r-strike {
+        opacity: 0.5;
+        transition: opacity 0.35s ease;
+      }
+
+      @keyframes bellman-r-slash {
+        from {
+          transform: rotate(-52deg) scaleY(0);
+        }
+        to {
+          transform: rotate(-52deg) scaleY(1);
+        }
+      }
+
+      .reveal .bellman-proof-slide .bellman-max-mark {
+        transition: color 0.3s ease;
+      }
+
+      .reveal .bellman-proof-slide:has(#bellman-proof-max-highlight.visible) .bellman-max-mark,
+      .reveal .bellman-proof-slide:has(#bellman-proof-max-highlight.visible) .bellman-max-mark .katex {
+        color: #c82020 !important;
+      }
+
+      .reveal .bellman-proof-slide .bellman-proof-max-highlight-trigger {
+        display: block;
+        height: 0;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        line-height: 0;
+      }
+
+      .reveal .missing-link-slide .cb-math {
+        font-size: calc(var(--prose-size) * 0.9);
+      }
+
+      .reveal .missing-link-slide .contraction-examples {
+        margin: 0.35em 0 0;
+        color: var(--text-strong);
+      }
+
+      .reveal .missing-link-slide .contraction-examples .katex {
+        color: var(--text-strong);
+      }
+
+      .reveal .missing-link-slide .cb-math.cb-math-mixed {
+        color: var(--text-body);
+        font-weight: 400;
+      }
+
+      .reveal .missing-link-slide .cb-math.cb-math-mixed strong {
+        color: var(--text-strong);
+        font-weight: 700;
+      }
+
+      .reveal .missing-link-slide .cb-math.cb-math-mixed .katex {
+        color: var(--accent);
+        font-weight: inherit;
+        font-size: 1em;
       }
 
       .reveal .content-section .cb-math {
@@ -1448,7 +1643,7 @@
         text-align: left;
       }
       .pi-demo .vi-max-row-val.vi-max-row-expand {
-        white-space: normal;
+        white-space: nowrap;
         min-width: 0;
         font-size: 0.92em;
         line-height: 1.35;
@@ -2289,7 +2484,7 @@
                   <span class="def-chip-label">Rewards</span>
                 </div>
                 <div class="def-chip fragment" data-def-stage="6" data-fragment-index="7" id="def-chip-u">
-                  <span class="def-math">\( U(s) \)</span>
+                  <span class="def-math">\( U) \)</span>
                   <span class="def-chip-label">Utility</span>
                 </div>
                 <span class="fragment def-stage-marker" data-def-stage="7" data-fragment-index="8" aria-hidden="true"></span>
@@ -2576,10 +2771,10 @@
                         <span class="fragment math-part" data-fragment-index="7">\( R(s) \)</span>
                       </td>
                       <td class="cb-math formula-math-cell">
-                        <span class="fragment math-part" data-fragment-index="8">\( + \gamma \)</span>
+                        <span class="fragment math-part" data-fragment-index="8">\( + \)</span>
                       </td>
                       <td class="cb-math formula-math-cell">
-                        <span class="fragment math-part" data-fragment-index="9">\( \max_a \mathbb{E}\!\left[ U^{\pi^*}(s') \mid s,\, a \right] \)</span>
+                        <span class="fragment math-part" data-fragment-index="9">\( \max\limits_{a} \left[ \gamma \, \mathbb{E}_{s'} \left[ U^{\pi^*}(s') \right] \right] \)</span>
                       </td>
                     </tr>
                     <tr class="formula-gloss-row">
@@ -2590,7 +2785,7 @@
                         <span class="fragment glossary-part" data-fragment-index="7">Immediate<br>Reward</span>
                       </td>
                       <td class="formula-glossary-gloss formula-glossary-multiline">
-                        <span class="fragment glossary-part" data-fragment-index="8">Discounted</span>
+                        <span class="fragment glossary-part" data-fragment-index="8">plus</span>
                       </td>
                       <td class="formula-glossary-gloss formula-glossary-multiline">
                         <span class="fragment glossary-part" data-fragment-index="9">Maximum over<br>actions (a)</span>
@@ -2662,6 +2857,141 @@ We repeat this update for every cell in the grid. Importantly, all of the new ut
 We continue performing these iterations until the utility values stop changing significantly—that is, until they converge.
 
 At convergence, the utility function represents the optimal expected return from each state. Once we have these optimal utility values, deriving the optimal policy is straightforward. For each state, we simply choose the action that leads to the highest expected utility.
+          </aside>
+        </section>
+        <section data-background-color="#f5f6f8" class="content-section missing-link-slide">
+          <h2>The missing link</h2>
+          <div class="content-body">
+            <div class="content-block">
+              <div class="cb-desc">
+                How can we be certain that this iterative process converges to an optimal solution?
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="cb-desc contraction-intro">
+                <span class="reward-label fragment" data-fragment-index="0">Contraction mapping</span><span class="fragment" data-fragment-index="1"> is a function that brings points closer together</span>
+              </div>
+              <div class="cb-math cb-math-mixed fragment" data-fragment-index="2">
+                \( f : X \to X \) is a <strong>contraction</strong> if there exists \( \gamma \in [0,1) \) such that \( \forall x, y \in X \):
+              </div>
+              <div class="cb-math contraction-ineq fragment" data-fragment-index="3">
+                \( d\bigl(f(x), f(y)\bigr) \le \gamma\, d(x,y) \)
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="reward-label fragment" data-fragment-index="4">Examples</div>
+              <div class="contraction-examples cb-math fragment" data-fragment-index="4">
+                \( f(x) = x/n \qquad f(x) = \cos x \qquad f(x) = \sqrt{x+2} \)
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            We described the algorithm, but we haven't answered an important question: why does this work?
+            How can we be certain this iterative process converges? The key idea behind the proof is a contraction mapping. [CLICK] [CLICK] It is a function that brings points closer together. [CLICK] Formally, f maps X to itself: there exists gamma in the unit interval such that for all x and y. [CLICK] The distance between f of x and f of y is less than or equal to gamma times the distance between x and y. Because gamma is less than one, the function shrinks distances. [CLICK] Examples include dividing by n, cosine, and the square root of x plus two.
+          </aside>
+        </section>
+
+        <section data-background-color="#f5f6f8" class="content-section missing-link-slide">
+          <h2>The missing link</h2>
+          <div class="content-body">
+            <div class="content-block">
+              <div class="cb-desc">
+                How can we be certain that this iterative process converges to an optimal solution?
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="cb-desc contraction-intro">
+                <span class="reward-label">Contraction mapping</span><span> is a function that brings points closer together</span>
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="cb-desc banach-intro">
+                <span class="reward-label fragment" data-fragment-index="0">Banach&rsquo;s Fixed-Point Theorem</span>
+              </div>
+              <div class="cb-desc fragment" data-fragment-index="1">For any contraction mapping in a complete metric space:</div>
+              <ul class="banach-fpt cb-desc">
+                <li class="fragment" data-fragment-index="2"><strong>Uniqueness:</strong> There exists exactly one unique <strong>fixed point</strong><span class="fragment banach-fp-inline" data-fragment-index="3"><span class="cb-math banach-fp-eq">\( f(x^*) = x^* \)</span></span>.</li>
+                <li class="fragment" data-fragment-index="4"><strong>Convergence:</strong> Iteratively applying the function from any starting point will always converge to that fixed point.</li>
+              </ul>
+            </div>
+          </div>
+          <aside class="notes">
+            So how is contraction mapping related to our value iteration algorithm? [CLICK] This is where Banach&rsquo;s Fixed Point Theorem comes in. [CLICK] Banach&rsquo;s theorem tells us that for any contraction mapping defined on a complete metric space, two very powerful properties hold. [CLICK] First, there exists exactly one fixed point. A fixed point is a point x-star such that f of x-star equals x-star. In other words, applying the function doesn’t change the point. [CLICK] Second, if we repeatedly apply the function starting from any initial point, the sequence will always converge to that unique fixed point. 
+            Now we&rsquo;re starting to see some of the ingredients we care about. We have a guarantee of uniqueness, so there is only one solution we can converge to. And we have a guarantee of convergence, meaning that repeated application of the function will eventually reach that solution. But we&rsquo;re not done yet. We still need to connect this theorem to value iteration.
+            Specifically, what is the function being repeatedly applied in value iteration? 
+          </aside>
+        </section>
+        <section data-background-color="#f5f6f8" class="content-section">
+          <h2>The Bellman update</h2>
+          <div class="content-body">
+            <div class="content-block">
+              <div class="cb-math contraction-ineq">
+                \( U_{i+1}(s) \leftarrow R(s) + \max\limits_{a} \left[ \gamma \, \mathbb{E}_{s'} \left[ U_i(s') \right] \right] \)
+              </div>
+
+              <div class="cb-math contraction-ineq bellman-compact-eq bellman-compact-build">
+                <span class="fragment bellman-compact-part" data-fragment-index="2">\( U_{i+1} = \)</span><span class="fragment bellman-compact-part" data-fragment-index="0">\( B \)</span><span class="fragment bellman-compact-part" data-fragment-index="1">\( \, U_i \)</span>
+              </div>
+              <div class="cb-desc bellman-op-intro fragment" data-fragment-index="3">
+                <span>If </span><span class="reward-label">Bellman update</span><span> </span><span class="cb-math bellman-op-symbol">\( B \)</span><span>is a <strong>contraction mapping</strong>, </span><span class="reward-label">Banach&rsquo;s theorem</span><span> guarantees convergence to a unique solution.</span>
+              </div>
+              <div class="cb-math contraction-ineq fragment" data-fragment-index="4">
+                \( \|B U - B U'\|_\infty \le \gamma \|U - U'\|_\infty \)
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            Recall that in value iteration, we repeatedly update the utility function using the Bellman optimality equation.
+            So here’s the key idea.
+            We can think of the Bellman update as a function $B$. [CLICK] It takes our current estimate $U_i$. [CLICK] and produces the next estimate $U_{i+1}$. [CLICK] Value iteration simply applies this function over and over again.
+
+            So, if we can prove that this Bellman update is a contraction mapping, then Banach&rsquo;s theorem guarantees convergence. The next slide walks through that proof. [CLICK through proof on next slide]
+          </aside>
+        </section>
+
+        <section data-background-color="#f5f6f8" class="content-section missing-link-slide bellman-proof-slide">
+          <h2>Proof: \( B \) is a contraction mapping</h2>
+          <div class="content-body">
+            <div class="content-block">
+              <div class="bellman-proof-eq-stack">
+                <div class="cb-math contraction-ineq bellman-proof-eq-line bellman-proof-first-build">
+                  <span class="bellman-proof-part fragment" data-fragment-index="4">\( \lvert \)</span><span class="bellman-proof-part fragment" data-fragment-index="3">\( B \)</span><span class="bellman-proof-part fragment" data-fragment-index="2">\( U \)</span><span class="bellman-proof-part fragment" data-fragment-index="1">\( (s) \)</span><span class="bellman-proof-part fragment" data-fragment-index="2">\( - \)</span><span class="bellman-proof-part fragment" data-fragment-index="3">\( B \)</span><span class="bellman-proof-part fragment" data-fragment-index="2">\( U' \)</span><span class="bellman-proof-part fragment" data-fragment-index="2">\( (s) \)</span><span class="bellman-proof-part fragment" data-fragment-index="4">\( \rvert = \)</span>
+                </div>
+                <div class="cb-math contraction-ineq bellman-proof-eq-line fragment" data-fragment-index="5" id="bellman-proof-pre-cancel">
+                  \( \left| \bigl( \htmlClass{bellman-r-strike}{R(s)} + \max\limits_{a} \left[ \gamma \, \mathbb{E}_{s'} \left[ U(s') \right] \right] \bigr) - \bigl( \htmlClass{bellman-r-strike}{R(s)} + \max\limits_{a} \left[ \gamma \, \mathbb{E}_{s'} \left[ U'(s') \right] \right] \bigr) \right| \)
+                </div>
+                <div class="cb-math contraction-ineq bellman-proof-eq-line fragment" data-fragment-index="6" id="bellman-proof-cancel-step">
+                  \( = \left| \htmlClass{bellman-max-mark}{\max\limits_{a}} \left[ \gamma \, \mathbb{E}_{s'} \left[ U(s') \right] \right] - \htmlClass{bellman-max-mark}{\max\limits_{a}} \left[ \gamma \, \mathbb{E}_{s'} \left[ U'(s') \right] \right] \right| \)
+                </div>
+                <span class="fragment bellman-proof-max-highlight-trigger" data-fragment-index="7" id="bellman-proof-max-highlight" aria-hidden="true"></span>
+              </div>
+              <div class="bellman-proof-eq-stack">
+                <div class="cb-math contraction-ineq bellman-proof-eq-line fragment" data-fragment-index="8">
+                  \( \le \gamma \, \htmlClass{bellman-max-mark}{\max\limits_{a}} \left| \mathbb{E}_{s'} \left[ U(s') - U'(s') \right] \right| \)
+                </div>
+                <div class="cb-math contraction-ineq bellman-proof-eq-line fragment" data-fragment-index="9">
+                  \( \le \gamma \max\limits_{a} \mathbb{E}_{s'} \left[ \| U - U' \|_\infty \right] \)
+                </div>
+                <div class="cb-math contraction-ineq bellman-proof-eq-line fragment" data-fragment-index="10">
+                  \( = \gamma \, \| U - U' \|_\infty \)
+                </div>
+              </div>
+              <!-- <div class="cb-desc bellman-op-intro fragment" data-fragment-index="11">
+                <span class="cb-math bellman-op-symbol">\( B \)</span><span> is a <strong>contraction</strong></span>
+              </div> -->
+              <div class="cb-math contraction-ineq bellman-proof-eq-line bellman-proof-conclusion-eq fragment" data-fragment-index="12">
+                \( \|B U_1 - B U_2\|_\infty \le \gamma \|U_1 - U_2\|_\infty \)
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            Okay, so let&rsquo;s fix a state $s$. [CLICK] We take two completely different guesses for our utility, $U$ and $U'$, at that state. [CLICK] Apply the Bellman update $B$. [CLICK] And look at their absolute difference. [CLICK] Let&rsquo;s write out the Bellman operator. The reward term cancels out. [CLICK] 
+            We know that the difference of two maximums is less than or equal to the maximum of their differences, so we will pull the 'max' outside. 
+            Now, what's left is our discount factor, Gamma, times the maximum expected difference. The expected difference is a weighted average over a probability distribution, but it can never be larger than the absolute worst-case difference. So, we can replace the inside of the expectation with the infinity norm.
+            And the infinity norm is a constant; it doesn't depend on the state or action. So the maximum expected value of that constant is just the constant itself.
+
+            So, this says that for any state $s$, the absolute difference between $BU(s)$ and $BU'(s)$ is bounded by Gamma times the infinity norm. Since this holds for any state, it also holds for the maximum error as well.
+
           </aside>
         </section>
 
@@ -2882,6 +3212,9 @@ At convergence, the utility function represents the optimal expected return from
             </ol>
           </div>
           <aside class="notes">
+            Throughout this lecture, we've assumed that we know the states, the transition probabilities, and the reward function. Given all of that information, we were able to compute an optimal policy.
+
+            But in many real-world problems, those assumptions don't hold. In the following weeks, we will look at the next stages of decision making where agents need explore, learn and adapt.
           </aside>
         </section>
 
@@ -2904,6 +3237,9 @@ At convergence, the utility function represents the optimal expected return from
         minScale: 0.2,
         maxScale: 2.0,
         plugins: [RevealNotes, RevealMath.KaTeX],
+        katex: {
+          trust: true,
+        },
       });
 
       document.querySelector('.reveal').addEventListener('click', function(e) {
@@ -2915,8 +3251,10 @@ At convergence, the utility function represents the optimal expected return from
 
       document.querySelectorAll('details.decision-details').forEach(function(details) {
         details.addEventListener('toggle', function() {
+          var li = details.closest('li');
           if (details.open) {
-            details.classList.add('decision-revealed');
+            if (li) li.classList.add('decision-shown');
+            details.classList.add('decision-expanded', 'decision-revealed');
             var group = details.closest('ul.modeling-decisions');
             if (group) {
               group.querySelectorAll('details.decision-details').forEach(function(other) {
@@ -2934,22 +3272,46 @@ At convergence, the utility function represents the optimal expected return from
         return slide && slide.classList.contains('modeling-decisions-slide') ? slide : null;
       }
 
-      function getNextUnrevealedDecision(slide) {
-        var items = slide.querySelectorAll('ul.modeling-decisions details.decision-details');
-        for (var i = 0; i < items.length; i++) {
-          if (!items[i].classList.contains('decision-revealed')) {
-            return items[i];
-          }
-        }
-        return null;
+      function resetModelingDecisionsSlide(slide) {
+        slide.querySelectorAll('ul.modeling-decisions > li').forEach(function(li) {
+          li.classList.remove('decision-shown');
+        });
+        slide.querySelectorAll('details.decision-details').forEach(function(details) {
+          details.open = false;
+          details.classList.remove('decision-expanded', 'decision-revealed');
+        });
+        var takeaway = slide.querySelector('.modeling-takeaway');
+        if (takeaway) takeaway.classList.remove('visible');
+      }
+
+      function closeOtherDecisions(items, keep) {
+        items.forEach(function(other) {
+          if (other !== keep) other.open = false;
+        });
       }
 
       function advanceModelingSlide(slide) {
-        var next = getNextUnrevealedDecision(slide);
-        if (next) {
-          next.open = true;
-          return true;
+        var items = slide.querySelectorAll('ul.modeling-decisions details.decision-details');
+
+        for (var j = 0; j < items.length; j++) {
+          var liExpand = items[j].closest('li');
+          if (liExpand.classList.contains('decision-shown') && !items[j].classList.contains('decision-expanded')) {
+            closeOtherDecisions(items, items[j]);
+            items[j].open = true;
+            items[j].classList.add('decision-expanded', 'decision-revealed');
+            return true;
+          }
         }
+
+        for (var i = 0; i < items.length; i++) {
+          var li = items[i].closest('li');
+          if (!li.classList.contains('decision-shown')) {
+            closeOtherDecisions(items, null);
+            li.classList.add('decision-shown');
+            return true;
+          }
+        }
+
         var takeaway = slide.querySelector('.modeling-takeaway');
         if (takeaway && !takeaway.classList.contains('visible')) {
           takeaway.classList.add('visible');
@@ -2957,6 +3319,12 @@ At convergence, the utility function represents the optimal expected return from
         }
         return false;
       }
+
+      Reveal.on('slidechanged', function(event) {
+        if (event.previousSlide && event.previousSlide.classList.contains('modeling-decisions-slide')) {
+          resetModelingDecisionsSlide(event.previousSlide);
+        }
+      });
 
       document.addEventListener('keydown', function(e) {
         if (e.key !== 'ArrowRight' || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -3064,7 +3432,8 @@ At convergence, the utility function represents the optimal expected return from
         let convergeAnimating = false;
         let showPolicy       = false;
         const CONVERGE_STEP_MS = 100;
-        const GAMMA   = 1.0;
+        const GAMMA   = 0.9;
+        const GAMMA_LIT = String(GAMMA);
         const EPSILON = 0.001;
         const DEMO_CELLS = [
           { x: 0, y: 2 }, // (1,1) — START
@@ -3100,12 +3469,18 @@ At convergence, the utility function represents the optimal expected return from
         function getU(x, y) { return utilities[key(x, y)] ?? 0; }
         function getPrevU(x, y) { return prevUtilities[key(x, y)] ?? 0; }
 
+        function trimZeros(s) {
+          return s.indexOf(".") === -1 ? s : s.replace(/\.?0+$/, "");
+        }
         function fmt3(n) {
-          const s = n.toFixed(3);
-          return s === "-0.000" ? "0.000" : s;
+          let s = n.toFixed(3);
+          if (s === "-0.000") s = "0.000";
+          return trimZeros(s);
         }
         function fmtR(r) {
-          return r.toFixed(2);
+          let s = r.toFixed(2);
+          if (s === "-0.00") s = "0.00";
+          return trimZeros(s);
         }
 
         function rnSortedNavStates() {
@@ -3286,7 +3661,7 @@ At convergence, the utility function represents the optimal expected return from
           const mainU    = getPrevU(mainDest.x, mainDest.y);
           const p1U      = getPrevU(p1Dest.x,  p1Dest.y);
           const p2U      = getPrevU(p2Dest.x,  p2Dest.y);
-          return `0.8 * ${fmtUExpand(mainU)} + 0.1 * ${fmtUExpand(p1U)} + 0.1 * ${fmtUExpand(p2U)}`;
+          return `0.8\u00b7${fmtUExpand(mainU)} + 0.1\u00b7${fmtUExpand(p1U)} + 0.1\u00b7${fmtUExpand(p2U)}`;
         }
 
         function exampleActionDisplay(x, y, action, stage, qvals) {
@@ -3294,7 +3669,9 @@ At convergence, the utility function represents the optimal expected return from
             return `<span class="vi-max-row-val vi-hidden">${fmt3(qvals[action])}</span>`;
           }
           if (exampleCellIndex === 1 && action === 'up') {
-            return `<span class="vi-max-row-val vi-max-row-expand">${formatActionSum(x, y, action)}</span>`;
+            const sum = formatActionSum(x, y, action);
+            const eq = stage >= EXAMPLE_REST_VALS_STAGE ? ` = ${fmt3(qvals[action])}` : "";
+            return `<span class="vi-max-row-val vi-max-row-expand">${sum}${eq}</span>`;
           }
           return `<span class="vi-max-row-val">${fmt3(qvals[action])}</span>`;
         }
@@ -3306,7 +3683,7 @@ At convergence, the utility function represents the optimal expected return from
           let body = `<div class="vi-example">`;
           body += `<div class="arith vi-main-line">U${rnLabel(x, y)} =` +
             viPart(` ${fmtR(R)}`, stage >= 1) +
-            viPart(` + \u03b3`, stage >= 2) +
+            viPart(` + ${GAMMA_LIT}`, stage >= 2) +
             viPart(` \u00b7`, stage >= 3) +
             `</div>`;
 
@@ -3336,9 +3713,10 @@ At convergence, the utility function represents the optimal expected return from
         }
 
         function bellmanUpdatePanel(extraHtml) {
+          const gammaSym = extraHtml ? GAMMA_LIT : "\u03b3";
           return (
             `<div class="section-label">Update U\u2019s using Bellman Equation</div>` +
-            `<div class="bellman-eq">U(s) = R(s) + \u03b3\u00b7max_a \u03a3 P(s\u2019|s,a)\u00b7U(s\u2019)</div>` +
+            `<div class="bellman-eq">U(s) = R(s) + ${gammaSym}\u00b7max_a \u03a3 P(s\u2019|s,a)\u00b7U(s\u2019)</div>` +
             (extraHtml || "")
           );
         }
@@ -3355,7 +3733,7 @@ At convergence, the utility function represents the optimal expected return from
             qvals[a] = sum;
             if (sum > best) { best = sum; bestA = a; }
           }
-          let html = `<div class="cell-label">U${rnLabel(x,y)} = R(s) + \u03b3\u00b7max_a \u03a3 P(s\u2019|s,a)\u00b7U(s\u2019)</div>`;
+          let html = `<div class="cell-label">U${rnLabel(x,y)} = R(s) + ${GAMMA_LIT}\u00b7max_a \u03a3 P(s\u2019|s,a)\u00b7U(s\u2019)</div>`;
           for (const a of ARGMAX_KEYS) {
             const isBest = (a === bestA);
             const baseStyle = isBest ? 'color:#1a7a40;font-weight:700;' : 'color:#888;';
@@ -3367,10 +3745,10 @@ At convergence, the utility function represents the optimal expected return from
             const p1U      = getPrevU(p1Dest.x,  p1Dest.y);
             const p2U      = getPrevU(p2Dest.x,  p2Dest.y);
             const tick     = isBest ? ' \u2713' : '';
-            html += `<div class="arith" style="${baseStyle}margin-bottom:2px;">${DIR_ARROW[a]}: \u03b3[0.8\u00b7U${rnLabel(mainDest.x,mainDest.y)} + 0.1\u00b7U${rnLabel(p1Dest.x,p1Dest.y)} + 0.1\u00b7U${rnLabel(p2Dest.x,p2Dest.y)}]</div>`;
-            html += `<div class="arith" style="${baseStyle}margin-bottom:6px;">&nbsp;&nbsp;&nbsp;= 0.8\u00b7${fmt3(mainU)} + 0.1\u00b7${fmt3(p1U)} + 0.1\u00b7${fmt3(p2U)} = ${fmt3(qvals[a])}${tick}</div>`;
+            html += `<div class="arith" style="${baseStyle}margin-bottom:2px;">${DIR_ARROW[a]}: ${GAMMA_LIT}[0.8\u00b7U${rnLabel(mainDest.x,mainDest.y)} + 0.1\u00b7U${rnLabel(p1Dest.x,p1Dest.y)} + 0.1\u00b7U${rnLabel(p2Dest.x,p2Dest.y)}]</div>`;
+            html += `<div class="arith" style="${baseStyle}margin-bottom:6px;">&nbsp;&nbsp;&nbsp;= ${GAMMA_LIT}\u00b7(0.8\u00b7${fmt3(mainU)} + 0.1\u00b7${fmt3(p1U)} + 0.1\u00b7${fmt3(p2U)}) = ${fmt3(GAMMA * qvals[a])}${tick}</div>`;
           }
-          html += `<div class="arith result" style="margin-top:4px;">U = ${fmtR(R)} + \u03b3\u00b7${fmt3(best)} = ${fmt3(R + GAMMA * best)}</div>`;
+          html += `<div class="arith result" style="margin-top:4px;">U = ${fmtR(R)} + ${GAMMA_LIT}\u00b7${fmt3(best)} = ${fmt3(R + GAMMA * best)}</div>`;
           return html;
         }
 
@@ -3434,7 +3812,7 @@ At convergence, the utility function represents the optimal expected return from
           return (
             `<div class="section-label">Initial Utilities U\u2080</div>` +
             `<div class="arith" style="margin-top:6px;">U\u2080 = 0</div>` +
-            `<div class="vi-gamma-note">\u03b3 = 1 (no discounting)</div>`
+            `<div class="vi-gamma-note">\u03b3 = ${GAMMA} (discount factor)</div>`
           );
         }
 
@@ -3906,7 +4284,7 @@ At convergence, the utility function represents the optimal expected return from
         }
 
         function computeOptimalPolicy() {
-          const GAMMA = 1.0, EPSILON = 0.001;
+          const GAMMA = 0.9, EPSILON = 0.001;
           const utilities = {};
           const navStates = [];
           for (let y = 0; y < ROWS; y++)
@@ -5200,8 +5578,28 @@ At convergence, the utility function represents the optimal expected return from
 
       function handleFormulaFragments(event) {
         var fragment = event && event.fragment;
-        if (!fragment || !fragment.classList.contains("math-part")) return;
-        if (event.type === "fragmentshown") {
+        if (!fragment) return;
+        if (fragment.classList.contains("math-part") && event.type === "fragmentshown") {
+          typesetEtuFragment(fragment);
+        }
+        if (fragment.classList.contains("bellman-compact-part") && event.type === "fragmentshown") {
+          typesetEtuFragment(fragment);
+          var build = fragment.closest(".bellman-compact-build");
+          if (build) {
+            build.querySelectorAll(".bellman-compact-part").forEach(typesetEtuFragment);
+          }
+        }
+        if (event.type === "fragmentshown" && fragment.classList.contains("bellman-proof-part")) {
+          typesetEtuFragment(fragment);
+          var firstBuild = fragment.closest(".bellman-proof-first-build");
+          if (firstBuild) {
+            firstBuild.querySelectorAll(".bellman-proof-part").forEach(typesetEtuFragment);
+          }
+        }
+        if (
+          event.type === "fragmentshown" &&
+          fragment.id === "bellman-proof-pre-cancel"
+        ) {
           typesetEtuFragment(fragment);
         }
       }
@@ -5209,6 +5607,8 @@ At convergence, the utility function represents the optimal expected return from
       function typesetVisibleFormulaParts(slide) {
         if (!slide) return;
         slide.querySelectorAll(".formula-glossary-table .math-part").forEach(typesetEtuFragment);
+        slide.querySelectorAll(".bellman-compact-build .bellman-compact-part").forEach(typesetEtuFragment);
+        slide.querySelectorAll("#bellman-proof-pre-cancel, .bellman-proof-first-build .bellman-proof-part").forEach(typesetEtuFragment);
       }
 
       Reveal.on("fragmentshown", handleFormulaFragments);
