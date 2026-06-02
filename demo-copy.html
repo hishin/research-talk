@@ -22,7 +22,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap"
 			rel="stylesheet"
 		/>
 		<style>
@@ -157,14 +157,23 @@
 
 			.reveal .slides section.title-slide .title-heading {
 				font-family: inherit;
-				font-size: 2.35em;
+				font-size: 1.65em;
 				font-weight: 700;
 				color: #1e3354;
 				text-transform: none;
 				letter-spacing: -0.02em;
-				line-height: 1.15;
+				line-height: 1.12;
 				margin: 0 0 1.35em;
 				text-shadow: none;
+			}
+
+			.reveal .slides section.title-slide .title-heading .title-quote {
+				font-family: Lora, Georgia, 'Times New Roman', serif;
+				font-style: italic;
+				font-weight: 400;
+				display: block;
+				margin-bottom: 0.4em;
+				letter-spacing: 0;
 			}
 
 			.reveal .slides section.title-slide .title-author {
@@ -1373,7 +1382,7 @@
 				color: #5c6778;
 				display: flex;
 				flex-direction: column;
-				gap: 0.55em;
+				gap: 0.25em;
 				min-height: 0;
 				overflow: hidden;
 			}
@@ -1382,6 +1391,15 @@
 				margin: 0;
 				padding: 0;
 				display: block;
+			}
+
+			.reveal .slides section.stacked-slide .stacked-followup {
+				font-size: 0.72em;
+				font-style: italic;
+				line-height: 1.4;
+				color: var(--slide-muted);
+				margin: 0.85em 0 0;
+				text-align: left;
 			}
 
 			.reveal .slides section.stacked-slide .stacked-list .split-number {
@@ -1601,7 +1619,8 @@
 
 			.reveal .slides section.media-slide > .slide-heading + .media-split,
 			.reveal .slides section.media-slide > .slide-heading + .media-frame,
-			.reveal .slides section.media-slide > .slide-heading + .media-stack {
+			.reveal .slides section.media-slide > .slide-heading + .media-stack,
+			.reveal .slides section.media-slide > .slide-heading + .canvas-showcase {
 				flex: 1;
 				min-height: 0;
 			}
@@ -1632,7 +1651,8 @@
 				overflow: hidden;
 			}
 
-			.reveal .slides section.media-slide .media-frame video {
+			.reveal .slides section.media-slide .media-frame video,
+			.reveal .slides section.media-slide .media-frame img {
 				width: 100%;
 				max-width: 100%;
 				max-height: 100%;
@@ -1675,6 +1695,219 @@
 			.reveal .slides section.media-slide .media-dot-list__sep {
 				line-height: 1;
 				opacity: 0.65;
+			}
+
+			.reveal .slides section.media-slide .canvas-panel-captions {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 0.35em 1.25em;
+				width: 100%;
+				margin: 0.45em 0 0;
+				padding: 0;
+				list-style: none;
+				font-size: 0.42em;
+				line-height: 1.35;
+				color: #4a5568;
+				text-align: left;
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .canvas-panel-captions li {
+				margin: 0;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase {
+				flex: 1;
+				display: grid;
+				grid-template-rows: auto minmax(0, 1fr);
+				align-content: start;
+				gap: 0.1em;
+				min-height: 0;
+				width: 100%;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__reveal.fragment:not(.visible) {
+				height: 0;
+				overflow: hidden;
+				opacity: 0;
+				visibility: hidden;
+				margin: 0;
+				padding: 0;
+				pointer-events: none;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__reveal.fragment.visible {
+				height: auto;
+				overflow: visible;
+				opacity: 1;
+				visibility: visible;
+				pointer-events: auto;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .slide-subtitle {
+				margin: 0;
+				font-size: 0.82em;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__visual {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				justify-content: flex-start;
+				gap: 0.15em;
+				min-height: 0;
+				width: 100%;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__visual img,
+			.reveal .slides section.media-slide .canvas-showcase__visual video {
+				flex: 0 0 auto;
+				display: block;
+				width: 100%;
+				height: auto;
+				margin: 0;
+				object-fit: contain;
+				object-position: top center;
+			}
+
+			.reveal .slides section.media-slide #fortunate-cookie-part3-video {
+				width: 70%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions:has(li:only-child) {
+				grid-template-columns: 1fr;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions:has(li:only-child) li {
+				position: static;
+				left: auto;
+				text-align: center;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-two,
+			.reveal .slides section.media-slide .canvas-showcase__panels-three {
+				display: grid;
+				column-gap: 0.85em;
+				width: 100%;
+				align-items: start;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-two {
+				grid-template-columns: repeat(2, 1fr);
+				align-items: stretch;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-three {
+				grid-template-columns: repeat(3, 1fr);
+				align-items: stretch;
+			}
+
+			.reveal .slides section.media-slide.media-slide--showcase-steps .canvas-showcase .slide-subtitle.fragment:not(.visible) {
+				height: 0;
+				overflow: hidden;
+				opacity: 0;
+				visibility: hidden;
+				margin: 0;
+				padding: 0;
+				pointer-events: none;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-two .canvas-showcase__panel.fragment:not(.visible),
+			.reveal .slides section.media-slide .canvas-showcase__panels-three .canvas-showcase__panel.fragment:not(.visible) {
+				opacity: 0;
+				visibility: hidden;
+				pointer-events: none;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-two .canvas-showcase__panel.fragment.visible,
+			.reveal .slides section.media-slide .canvas-showcase__panels-three .canvas-showcase__panel.fragment.visible {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panel {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 0.35em;
+				margin: 0;
+				min-width: 0;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panel .slide-subtitle {
+				text-align: center;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-two img {
+				width: 100%;
+				height: min(37.4vh, 330px);
+				object-fit: contain;
+				object-position: top center;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase__panels-three img {
+				width: 100%;
+				height: min(37.4vh, 330px);
+				object-fit: contain;
+				object-position: top center;
+			}
+
+			.reveal .slides section.media-slide .canvas-panel-caption {
+				margin: 0;
+				padding: 0 0.15em;
+				font-family: var(--font-sans);
+				font-size: 0.62em;
+				font-weight: 400;
+				line-height: 1.35;
+				color: var(--slide-muted);
+				text-align: center;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions--plain {
+				grid-template-columns: repeat(2, 1fr);
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions--plain li {
+				position: static;
+				left: auto;
+				text-align: center;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				column-gap: 0.85em;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				font-family: var(--font-sans);
+				font-size: 0.62em;
+				font-weight: 400;
+				line-height: 1.35;
+				color: var(--slide-muted);
+				flex-shrink: 0;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions li {
+				padding: 0 0.15em;
+				text-align: center;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions li:nth-child(1) {
+				position: relative;
+				left: 50px;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions li:nth-child(2) {
+				position: relative;
+				left: 30px;
+			}
+
+			.reveal .slides section.media-slide .canvas-showcase .canvas-panel-captions li:nth-child(3) {
+				position: relative;
+				left: -30px;
 			}
 
 			.reveal .slides section.media-slide .media-split {
@@ -2936,6 +3169,33 @@
 				visibility: hidden;
 			}
 
+			.reveal .slides section.content-slide#backup-broll-slide .slide-body {
+				align-items: center;
+				justify-content: center;
+				padding-top: 0;
+				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide#backup-broll-slide .backup-broll-video-wrap {
+				width: 100%;
+				flex: 1 1 auto;
+				min-height: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.reveal .slides section.content-slide#backup-broll-slide .backup-broll-video-wrap video {
+				width: 78%;
+				max-width: 960px;
+				max-height: 58vh;
+				height: auto;
+				display: block;
+				object-fit: contain;
+				border-radius: 6px;
+				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+			}
+
 		</style>
 
 		<!-- Theme used for syntax highlighting of code -->
@@ -2948,7 +3208,8 @@
 			<div class="slides">
 				<section class="title-slide" data-background-color="#ffffff">
 					<div class="title-slide-content">
-						<h1 class="title-heading">Beyond the Timeline</h1>
+						<h1 class="title-heading"><span class="title-quote">"Yes, that's what I mean.<br>No, not that"</span><br>
+						Semantics, Common Ground, and Iteration In Human AI Collaboration</h1>
 						<p class="title-author">Valentina Shin</p>
 						<p class="title-affiliation">Adobe Research</p>
 						<p class="title-date">June 4th, 2026</p>
@@ -3007,20 +3268,19 @@
 						<div class="timeline-item fragment">
 							<div class="timeline-year">1933</div>
 							<p class="timeline-body">
-								Walt Disney established the studio&rsquo;s first dedicated <strong>Story Department</strong>.
+								Walt Disney established the studio&rsquo;s first dedicated <strong>Story Department</strong>
 							</p>
 						</div>
 						<div class="timeline-item fragment">
 							<div class="timeline-year">1938</div>
 							<p class="timeline-body">
-								Every major American animation studio had a dedicated story department.
+								Every major American animation studio had a dedicated story department
 							</p>
 						</div>
 						<div class="timeline-item fragment">
 							<div class="timeline-year">1939</div>
 							<p class="timeline-body">
-								William Cameron Menzies used storyboards to plan every single shot of
-								<strong><em>Gone with the Wind</em></strong>.
+								<strong><em>Gone with the Wind</em></strong> used storyboards to plan every single shot
 							</p>
 						</div>
 						<div class="timeline-item fragment">
@@ -3042,7 +3302,7 @@
 					</aside>
 				</section>
 
-				<section class="media-slide">
+				<section class="media-slide" data-deck-video-before-fragments>
 					<h2 class="slide-heading">Before storyboarding</h2>
 					<div class="media-split">
 						<img
@@ -3061,7 +3321,7 @@
 					<p class="media-dot-list fragment">
 						<span>Lack of shared vision</span>
 						<span class="media-dot-list__sep" aria-hidden="true">&middot;</span>
-						<span>Difficult to communicate pacing and timing</span>
+						<span>Difficulty communicating pacing and timing</span>
 						<span class="media-dot-list__sep" aria-hidden="true">&middot;</span>
 						<span>Misinterpretations</span>
 						<span class="media-dot-list__sep" aria-hidden="true">&middot;</span>
@@ -3082,17 +3342,22 @@
 							/>
 						</div>
 						<div class="stacked-bottom">
-							<h2 class="slide-heading">A storyboard&hellip;</h2>
+							<h2 class="slide-heading">Storyboards work because they</h2>
 							<ul class="stacked-list">
-								<li class="fragment">organizes story into <strong>semantic units</strong></li>
+								<li class="fragment">represents story in <strong>semantic units</strong></li>
 								<li class="fragment">creates a <strong>shared reference</strong></li>
-								<li class="fragment">enables easy <strong>iteration</strong></li>
+								<li class="fragment">makes <strong>iteration</strong> cheap and easy</li>
 							</ul>
+							<p class="stacked-followup fragment">These principles apply in human-human collaboration, human-AI interaction and multi-agent coordination</p>
 						</div>
 					</div>
 					<aside class="notes">
-						So how did storyboarding help, and why did it become so important?
-						It did three things: First, it allowed creators to think in semantic units — "the wolf blows the house down" — rather than individual frames. Second, it created a shared reference point for the whole studio to communicate down to the details of shot angle, framing and pacing. And third, it enabled cheaper and easy iteration. Directors could easily switch the order of panels, or redraw panels before going committing to production. But why am I talking about storyboarding today? 
+						So am I talking about storyboarding today?
+						The reason is that the qualities that made storyboards so transformative extend far beyond filmmaking. Storyboards organize stories into semantic units, they create a shared reference that multiple people can point to and discuss, and they enable cheap and easy iteration. 
+
+						These same principles are essential whenever people need to collaborate on complex tasks. They matter in human-human collaboration, in human-AI interaction, and in multi-agent systems.
+						
+						My research explores this question through the lens of media authoring tools. 
 					</aside>
 				</section>
 
@@ -3112,7 +3377,8 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Compare the storyboard to a modern video editing interface. Unfortunately, despite living in a time with an unprecendented amount of media being produced, authoring and editing media remains an extremely difficult and tedious task. These tools give us incredible precision, but often at the cost of ease of use. 
+						Compare the storyboard to a modern video editing interface. 
+						We live in a time when more media is being created than ever before. over 500 hours of video are uploaded to YouTube every minute...authoring and editing media remains an extremely difficult and tedious task. Many tools give us incredible precision, but often at the cost of ease of use. 
 					</aside>
 				</section>
 
@@ -3147,7 +3413,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						In today's talk I will talk about my research that has focused on designing effective interfaces for audiovisual media. And I will use the benefits of storyboards as guiding principles. That is: I will talk about how effective interfaces support semantic authoring, establish common ground, and enable iteration. 
+						In today's talk I will talk about my research that has focused on designing effective interfaces for audiovisual media. And I will use the qualities of storyboards as guiding principles. That is: I will talk about how effective interfaces support semantic authoring, establish common ground, and enable iteration. 
 					</aside>
 				</section>
 
@@ -3325,7 +3591,7 @@
 					<aside class="notes">
 						The other part of the user's high-level intent is spatial. Finding an optimal placement has several components. We operationalize each of these into an energy function. Given the collection of frames spanned by a lyric phrase... First, we don't want to occlude the main subject in the video. So the first energy term computes the overlap between the text and the average foreground mask. Second, we want to place the lyrics near the salient region, where the viewer's attention is likely to be at. The second term tries to minimize the distance between the text and the center of mass of the average focus mask. Third, we want to place the text against background regions with high color contrast. So, we compute the color difference map between the text and the surrounding background pixels. And Finally, we want to place the text close to the previous phrase to have smooth eye gaze movement. So, we compute the distance between the text and the previous phrase's position.
 
-						The optimal position of the text is the positoin that minimizes the weighted sum of the four energy terms.
+						The optimal position of the text is the position that minimizes the weighted sum of the four energy terms.
 					</aside>
 				</section>
 
@@ -3357,8 +3623,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						In this example, we implemented a fully automatic pipeline by mapping intent into meaningful energy functions.
-						But the main insight carries on even if we were to introduce interactive components. We want the unit of interaction to be close to semantic intents. 
+						In this example, we implemented a fully automatic pipeline by mapping intent into meaningful energy functions. Although this reflects a old-school AI approach, the central insight remains the same. Whether users are interacting with tools directly or collaborating with AI agents, the interaction should be grounded in semantic intent rather than low-level controls. 
 					</aside>
 				</section>
 				<section class="content-slide" id="talk-outline-slide">
@@ -4053,7 +4318,7 @@
 							Effective interfaces should surface intermediate artifacts that encode semantic structures
 						</p>
 						<div class="fragment videorigami-intro-reveal">
-							<p class="slide-subtitle">Video Origami: an agent supported video editing interface</p>
+							<p class="slide-subtitle">VideOrigami: human-AI video co-creation environment</p>
 							<div class="videorigami-visual">
 								<div class="videorigami-block">
 									<div class="videorigami-panels">
@@ -4071,73 +4336,125 @@
 						</div>
 					</div>
 					<aside class="notes">
-						we propose that effective interfaces should surface intermediate artifacts that encode semantic structures.
-						And we instantiate this design approach in an agent-supported video editing interface, Video Origami.
-						Video Origami incorporated the 4 intermediate artifacts that are common to video workflows: a canvas, a document editor, a storyboard and a timeline. Let me walk you through an example of a user using VideoOrigami to make an informational video about fortune cookies.
+						we propose that effective interfaces should surface intermediate artifacts that encode semantic structures. We explore this idea through Video Origami, a prototype human Ai co-creation enviornment.
+						Video Origami incorporated the common video workflow into 4 views: a canvas, a document editor, a storyboard and a timeline. Let me walk through a couple of features to to illustrate how these intermediate artifacts support collaboration. You'll see the same principles we've discussed throughout this talk -- supporting semantic authoring, establishing common ground, and enabling iteration show up repeatedly in the design.
 					</aside>
 				</section>
 
-				<section class="media-slide media-slide--video-fill">
-					<h2 class="slide-heading">User and agent collaborates on<br> intermediate artifacts</h2>
-					<div class="media-frame">
-						<video id="vo-canvas-asset-summarize-video" controls preload="auto">
-							<source src="media/vo-canvas-asset-summarize.mp4" type="video/mp4" />
-						</video>
-					</div>
-					<aside class="notes">
-						Instead of the agent simply outputting the final timeline from a user prompt, in Video Origami, the user and the agent collaborate on intermediate artifacts. So here, on the canvas, the user collected several source documents about fortune cookies. She invokes the agent to summarize one of the documents. The agent creates another intermediate artifact, a note with a summary of the article and links it with the orignal asset.
-					</aside>
-				</section>
-
-				<section class="media-slide media-slide--video-fill">
-					<h2 class="slide-heading">Agents help synchronize across<br> intermediate artifacts</h2>
-					<div class="media-frame">
-						<video controls preload="auto">
-							<source src="media/fortunate_cookie_part3.mp4" type="video/mp4" />
-						</video>
-					</div>
-					<aside class="notes">
-						Next, in the narrative editor, as the user works on the script with, the agent tracks provenance, linking each part of the narrative back to the source assets it draws from. So, AI is helping to synchronize across different intermediate artifacts.
-					</aside>
-				</section>
-
-				<section class="media-slide media-slide--video-fill">
-					<h2 class="slide-heading">Agents suggest, <br> users edit</h2>
-					<div class="media-frame">
-						<video id="editor-transform-grid-video" controls preload="auto">
-							<source src="media/editor-transform-grid.mp4" type="video/mp4" />
-						</video>
-					</div>
-					<aside class="notes">
-						 The agent also helps transform the narrative to a storyboard by suggesting how to break the script into pairs of scenes and narrative beats. Agents can suggest, but the user can always edit becuase intermediate artifacts are surfaced as first-class citizens.
-					</aside>
-				</section>
-
-				<section class="media-slide" id="cell-correspondence-slide">
-					<h2 class="slide-heading">Users can iterate between stages <br>through synced intermediate artifacts</h2>
-					<div class="media-frame">
-						<div class="correspondence-stack">
-							<img
-								class="correspondence-img"
-								src="media/video-origami-cell-corresonding.png"
-								alt="Video Origami — scene plan cells corresponding to timeline segments"
-							/>
-							<img
-								class="correspondence-img fragment"
-								data-fragment-index="1"
-								src="media/video-origami-cell-corresonding-2.png"
-								alt="Video Origami — timeline segment highlighted with corresponding scene cell"
-							/>
-							<img
-								class="correspondence-img fragment"
-								data-fragment-index="2"
-								src="media/video-origami-cell-corresonding-3.png"
-								alt="Video Origami — full correspondence between scene plan and timeline"
-							/>
+				<section class="media-slide media-slide--showcase-steps">
+					<h2 class="slide-heading">User and AI collaborate through intermediate artifacts</h2>
+					<div class="canvas-showcase">
+						<p class="slide-subtitle fragment" data-fragment-index="0">Canvas View</p>
+						<div class="canvas-showcase__visual">
+							<div class="canvas-showcase__panels-three">
+								<figure class="canvas-showcase__panel fragment" data-fragment-index="0">
+									<img
+										src="media/canvas-a.png"
+										alt="Canvas — collect assets and take or generate notes"
+									/>
+									<figcaption class="canvas-panel-caption">
+										Collect assets and take or generate notes
+									</figcaption>
+								</figure>
+								<figure class="canvas-showcase__panel fragment" data-fragment-index="1">
+									<img
+										src="media/canvas-b.png"
+										alt="Canvas — generate assets"
+									/>
+									<figcaption class="canvas-panel-caption">
+										Generate assets
+									</figcaption>
+								</figure>
+								<figure class="canvas-showcase__panel fragment" data-fragment-index="2">
+									<img
+										src="media/canvas-c.png"
+										alt="Canvas — generate video from assets"
+									/>
+									<figcaption class="canvas-panel-caption">
+										Generate video from assets
+									</figcaption>
+								</figure>
+							</div>
 						</div>
 					</div>
 					<aside class="notes">
-						Finally, when the user works on the timeline, each portion of the timeline is synced directly to the corresponding cell in the storyboard, and to the original assets. It is easy for users to iterate between steps through synced intermediate artifacts. 
+						First, users and AI collaborate through intermediate artifacts rather than communicating only through prompts and final outputs. On the canvas, users can collect assets, write notes, generate new notes, generate images, and generate videos. These artifacts are not just outputs; they become shared representations that both the user and the AI can build upon.
+						They also provide context for generation. For example, when generating a note, the associated asset provides context. When generating a video, the assets and notes on the canvas become generation context. 
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--showcase-steps">
+					<h2 class="slide-heading">Artifacts become context for AI</h2>
+					<div class="canvas-showcase">
+						<div class="canvas-showcase__reveal fragment" data-fragment-index="0">
+							<p class="slide-subtitle">Narrative Editor</p>
+							<div class="canvas-showcase__visual">
+								<video id="fortunate-cookie-part3-video" controls preload="auto" playsinline>
+									<source src="media/fortunate_cookie_part3.mp4#t=4.7" type="video/mp4" />
+								</video>
+								<ul class="canvas-panel-captions" aria-label="Narrative editor capabilities">
+									<li>Generating narrative content takes as context assets, notes, and surrounding narrative</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						This idea also appears in the narrative editor. Here, a user may have already authored several sections and asks the AI to fill in the story. To generate coherent content, the AI draws not only on the surrounding narrative, but also on the assets and notes from the canvas. 
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--showcase-steps">
+					<h2 class="slide-heading">Semantic structures enable synchronization</h2>
+					<div class="canvas-showcase">
+						<div class="canvas-showcase__visual">
+							<div class="canvas-showcase__panels-two">
+								<figure class="canvas-showcase__panel fragment" data-fragment-index="0">
+									<p class="slide-subtitle">Canvas ↔ Editor</p>
+									<img
+										src="media/canvas-editor.png"
+										alt="Canvas and narrative editor — assets linked to storyline"
+									/>
+									<figcaption class="canvas-panel-caption">
+										Canvas notes are transformed into a coherent narrative taking into account the linear structure of the editor
+									</figcaption>
+								</figure>
+								<figure class="canvas-showcase__panel fragment" data-fragment-index="1">
+									<p class="slide-subtitle">Editor ↔ Storyboard</p>
+									<img
+										src="media/editor-grid.png"
+										alt="Editor and storyboard — narrative content by modality"
+									/>
+									<figcaption class="canvas-panel-caption">
+										Editor content is categorized into visual or narrative and transformed to storyboard columns
+									</figcaption>
+								</figure>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						Because these artifacts encode semantic structure, they can also stay synchronized across different views. On the left, a user drags a note from the canvas into the narrative editor. Rather than simply copying text, the system transforms that note into content that fits its new location and takes surrounding content into account.
+						On the right, the user moves from the narrative editor to the storyboard view. The narrative is automatically reorganized into storyboard elements. For example, a sentence such as “Show a close-up shot of a fortune cookie” is recognized as a visual instruction and placed in the visual column, while the accompanying explanation is placed in the voice-over column.
+					</aside>
+				</section>
+
+				<section class="media-slide media-slide--showcase-steps" id="cell-correspondence-slide">
+					<h2 class="slide-heading">Synchronization supports semantic operations</h2>
+					<div class="canvas-showcase">
+						<div class="canvas-showcase__reveal fragment" data-fragment-index="0">
+							<p class="slide-subtitle">Timeline ↔ Storyboard</p>
+							<div class="canvas-showcase__visual">
+								<img
+									src="media/time-grid.png"
+									alt="Timeline and narrative editor — edits suggested when a segment is shortened"
+								/>
+								<ul class="canvas-panel-captions" aria-label="Timeline and storyboard synchronization">
+									<li>When a user shortens a segment in timeline, <br>edits are suggested to the corresponding storyboard cells to align with new timing</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<aside class="notes">
+						Finally, this synchronization enables higher-level semantic operations. In this example, the user shortens a segment on the timeline by dragging its boundary. Rather than forcing the user to manually update every related artifact, the system suggests revisions to the corresponding storyboard content. Here, it proposes edits that shorten the voice-over while preserving its meaning and alignment with the new duration.
 					</aside>
 				</section>
 
@@ -4244,6 +4561,21 @@
 					</div>
 					<aside class="notes">
 						Optional depth on open challenges. Skip entirely in a short slot; use if the audience asks about branching, provenance, friction, or evaluation.
+					</aside>
+				</section>
+
+				<section class="content-slide" id="backup-broll-slide">
+					<h2 class="slide-heading">B-Roll Suggestions</h2>
+					<p class="slide-subtitle">Identifies descriptive moments and auto-inserts visual clips</p>
+					<div class="slide-body">
+						<div class="backup-broll-video-wrap">
+							<video controls playsinline preload="metadata" title="B-roll suggestion">
+								<source src="media/b-roll-suggestion.mp4" type="video/mp4" />
+							</video>
+						</div>
+					</div>
+					<aside class="notes">
+						B-Roll suggestions from Blink: the system finds descriptive moments and inserts clips. Users tolerated imperfection because they could fix it quickly and still got creative value from the suggestions.
 					</aside>
 				</section>
 
@@ -4445,10 +4777,307 @@
 				plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
 			});
 
-			document.querySelector('.reveal').addEventListener('click', function (e) {
-				if (e.target.closest('a, button, video, iframe, .media-frame, .controls, .navigate-left, .navigate-right, .navigate-up, .navigate-down, #flipCardsRow')) return;
-				Reveal.next();
-			});
+			// Deck video advance: right-arrow / next plays slide videos before changing slides
+			(function deckVideoAdvance() {
+				const STATE = { PENDING: 'pending', PLAYING: 'playing', PLAYED: 'played' };
+				let vimeoPlayer = null;
+				let vimeoSection = null;
+				const VIMEO_START = 217;
+				const VIMEO_END = 252;
+
+				function isNextKey(e) {
+					if (e.altKey || e.ctrlKey || e.metaKey) return false;
+					return e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown';
+				}
+
+				function isEditingTarget() {
+					const el = document.activeElement;
+					if (!el) return false;
+					if (el.isContentEditable) return true;
+					if (el.className && /speaker-notes/i.test(el.className)) return true;
+					return el.tagName && /^(INPUT|TEXTAREA|SELECT)$/i.test(el.tagName);
+				}
+
+				function getSlideVideos(slide) {
+					if (!slide) return [];
+					return Array.from(slide.querySelectorAll('video'));
+				}
+
+				function slideHasAdvanceableMedia(slide) {
+					return getSlideVideos(slide).length > 0 || !!(slide && slide.querySelector('#snapstream-vimeo'));
+				}
+
+				function videoBeforeFragments(slide) {
+					return slide && slide.hasAttribute('data-deck-video-before-fragments');
+				}
+
+				function getPendingVideo(slide) {
+					return getSlideVideos(slide).find((v) => v.dataset.deckPlayState === STATE.PENDING);
+				}
+
+				function isVideoActivelyPlaying(slide) {
+					return getSlideVideos(slide).some(
+						(v) => v.dataset.deckPlayState === STATE.PLAYING && !v.paused && !v.ended
+					);
+				}
+
+				function isVimeoActivelyPlaying(slide) {
+					return (
+						slide &&
+						slide === vimeoSection &&
+						slide.dataset.deckVimeoState === STATE.PLAYING
+					);
+				}
+
+				function resetSlideMedia(slide) {
+					if (!slide) return;
+					getSlideVideos(slide).forEach((video) => {
+						video.pause();
+						video.dataset.deckPlayState = STATE.PENDING;
+					});
+					if (slide.querySelector('#snapstream-vimeo')) {
+						slide.dataset.deckVimeoState = STATE.PENDING;
+						if (vimeoPlayer && vimeoSection === slide) {
+							vimeoPlayer.pause().catch(() => {});
+							vimeoPlayer.setCurrentTime(VIMEO_START).catch(() => {});
+						}
+					}
+				}
+
+				function markVideoPlayed(video) {
+					video.dataset.deckPlayState = STATE.PLAYED;
+				}
+
+				function exitAnyFullscreen() {
+					const exit =
+						document.exitFullscreen ||
+						document.webkitExitFullscreen ||
+						document.msExitFullscreen;
+					if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+						exit.call(document);
+					}
+				}
+
+				function deckPauseAndAdvance(slide) {
+					getSlideVideos(slide).forEach((video) => {
+						if (!video.paused) {
+							video.pause();
+						}
+						if (video.dataset.deckPlayState === STATE.PLAYING) {
+							markVideoPlayed(video);
+						}
+					});
+
+					if (
+						slide.querySelector('#snapstream-vimeo') &&
+						slide.dataset.deckVimeoState === STATE.PLAYING
+					) {
+						slide.dataset.deckVimeoState = STATE.PLAYED;
+						if (vimeoPlayer && vimeoSection === slide) {
+							vimeoPlayer.pause().catch(() => {});
+							const iframe = slide.querySelector('#snapstream-vimeo');
+							if (iframe) {
+								iframe.blur();
+							}
+						}
+					}
+
+					exitAnyFullscreen();
+					Reveal.next();
+				}
+
+				function initVideoStates() {
+					document.querySelectorAll('.reveal .slides section video').forEach((video) => {
+						if (!video.dataset.deckPlayState) {
+							video.dataset.deckPlayState = STATE.PENDING;
+						}
+					});
+				}
+
+				function deckGetAdvanceAction() {
+					if (
+						Reveal.isOverview() ||
+						Reveal.isPaused() ||
+						Reveal.isOverlayOpen() ||
+						isEditingTarget()
+					) {
+						return 'continue';
+					}
+
+					const slide = Reveal.getCurrentSlide();
+					if (!slide || !slideHasAdvanceableMedia(slide)) {
+						return 'continue';
+					}
+
+					const fragmentsNext = Reveal.availableFragments().next;
+					const pendingVideo = getPendingVideo(slide);
+					const vimeoPending =
+						slide.querySelector('#snapstream-vimeo') &&
+						slide.dataset.deckVimeoState === STATE.PENDING;
+
+					if (videoBeforeFragments(slide) && (pendingVideo || vimeoPending)) {
+						return 'play';
+					}
+
+					if (!videoBeforeFragments(slide) && fragmentsNext) {
+						return 'continue';
+					}
+
+					if (pendingVideo || vimeoPending) {
+						return 'play';
+					}
+
+					if (isVideoActivelyPlaying(slide) || isVimeoActivelyPlaying(slide)) {
+						return 'pause-advance';
+					}
+
+					return 'continue';
+				}
+
+				function deckPlayVimeo(slide) {
+					if (!vimeoPlayer) return;
+					slide.dataset.deckVimeoState = STATE.PLAYING;
+					vimeoPlayer
+						.setCurrentTime(VIMEO_START)
+						.then(() => vimeoPlayer.play())
+						.catch(() => {});
+					const iframe = slide.querySelector('#snapstream-vimeo');
+					if (iframe) {
+						setTimeout(() => {
+							iframe.blur();
+							if (document.activeElement === iframe) {
+								document.activeElement.blur();
+							}
+							document.body.focus({ preventScroll: true });
+						}, 100);
+					}
+				}
+
+				function deckPlayCurrent() {
+					const slide = Reveal.getCurrentSlide();
+					if (!slide) return;
+
+					const video = getPendingVideo(slide);
+					if (video) {
+						video.dataset.deckPlayState = STATE.PLAYING;
+						video.play().catch(() => {});
+						return;
+					}
+
+					if (
+						slide.querySelector('#snapstream-vimeo') &&
+						slide.dataset.deckVimeoState === STATE.PENDING
+					) {
+						deckPlayVimeo(slide);
+					}
+				}
+
+				function deckNavigateNext() {
+					const slide = Reveal.getCurrentSlide();
+					const action = deckGetAdvanceAction();
+					if (action === 'play') {
+						deckPlayCurrent();
+						return;
+					}
+					if (action === 'pause-advance' && slide) {
+						deckPauseAndAdvance(slide);
+						return;
+					}
+					Reveal.next();
+				}
+
+				document.addEventListener(
+					'keydown',
+					(e) => {
+						if (!isNextKey(e)) return;
+						const slide = Reveal.getCurrentSlide();
+						const action = deckGetAdvanceAction();
+						if (action === 'continue') return;
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						if (action === 'play') {
+							deckPlayCurrent();
+						} else if (action === 'pause-advance' && slide) {
+							deckPauseAndAdvance(slide);
+						}
+					},
+					true
+				);
+
+				['next', 'right', 'down', 'navigateNext'].forEach((method) => {
+					const original = Reveal[method].bind(Reveal);
+					Reveal[method] = function () {
+						const slide = Reveal.getCurrentSlide();
+						const action = deckGetAdvanceAction();
+						if (action === 'play') {
+							deckPlayCurrent();
+							return;
+						}
+						if (action === 'pause-advance' && slide) {
+							deckPauseAndAdvance(slide);
+							return;
+						}
+						return original.apply(Reveal, arguments);
+					};
+				});
+
+				document.querySelectorAll('.reveal .slides section video').forEach((video) => {
+					video.addEventListener('ended', () => markVideoPlayed(video));
+					video.addEventListener('play', () => {
+						if (video.dataset.deckPlayState === STATE.PENDING) {
+							video.dataset.deckPlayState = STATE.PLAYING;
+						}
+					});
+				});
+
+				Reveal.on('slidechanged', (event) => {
+					if (event.previousSlide) {
+						resetSlideMedia(event.previousSlide);
+					}
+					if (event.currentSlide) {
+						resetSlideMedia(event.currentSlide);
+					}
+				});
+
+				function bootstrap() {
+					initVideoStates();
+					resetSlideMedia(Reveal.getCurrentSlide());
+				}
+
+				Reveal.on('ready', bootstrap);
+
+				window.__deckVideoAdvance = {
+					STATE,
+					bootstrap,
+					setVimeoPlayer(player, section) {
+						vimeoPlayer = player;
+						vimeoSection = section;
+						if (section) {
+							section.dataset.deckVimeoState = STATE.PENDING;
+						}
+						if (Reveal.isReady()) {
+							resetSlideMedia(section);
+						}
+					},
+					markVimeoPlayed() {
+						if (vimeoSection) {
+							vimeoSection.dataset.deckVimeoState = STATE.PLAYED;
+						}
+					},
+					markVideoPlayed,
+				};
+
+				document.querySelector('.reveal').addEventListener('click', function (e) {
+					if (
+						e.target.closest(
+							'a, button, video, iframe, .media-frame, .controls, .navigate-left, .navigate-right, .navigate-up, .navigate-down, #flipCardsRow'
+						)
+					) {
+						return;
+					}
+					deckNavigateNext();
+				});
+			})();
 
 
 			(function () {
@@ -4500,6 +5129,9 @@
 					if (video.currentTime >= END_AT) {
 						video.pause();
 						video.currentTime = END_AT;
+						if (window.__deckVideoAdvance) {
+							window.__deckVideoAdvance.markVideoPlayed(video);
+						}
 						exitFullscreen();
 					}
 				});
@@ -4508,48 +5140,56 @@
 			})();
 
 			(function () {
-				const video = document.getElementById('vo-canvas-asset-summarize-video');
+				const video = document.getElementById('fortunate-cookie-part3-video');
 				if (!video) return;
 
-				const END_AT = 7.7;
+				const START_AT = 4.7;
+				const END_AT = 6.5;
+				const section = video.closest('section');
+				video.playbackRate = 0.3;
 
-				video.addEventListener('play', () => {
-					if (video.currentTime >= END_AT) {
-						video.currentTime = 0;
+				function seekToClipStart() {
+					if (video.readyState < 1) return;
+					video.currentTime = START_AT;
+				}
+
+				function resetToClipStart() {
+					if (video.currentTime < START_AT || video.currentTime >= END_AT) {
+						video.currentTime = START_AT;
 					}
-				});
+				}
+
+				video.addEventListener('loadedmetadata', seekToClipStart);
+				video.addEventListener('loadeddata', seekToClipStart);
+
+				video.addEventListener('play', resetToClipStart);
 
 				video.addEventListener('timeupdate', () => {
 					if (video.currentTime >= END_AT) {
 						video.pause();
 						video.currentTime = END_AT;
-					}
-				});
-			})();
-
-			(function () {
-				const video = document.getElementById('editor-transform-grid-video');
-				if (!video) return;
-
-				const END_AT = 3;
-				video.playbackRate = 2 / 3; // 1.5× slower
-
-				video.addEventListener('play', () => {
-					if (video.currentTime >= END_AT) {
-						video.currentTime = 0;
+						if (window.__deckVideoAdvance) {
+							window.__deckVideoAdvance.markVideoPlayed(video);
+						}
 					}
 				});
 
-				video.addEventListener('timeupdate', () => {
-					if (video.currentTime >= END_AT) {
+				function onSlideChange(event) {
+					if (event.currentSlide === section) {
 						video.pause();
-						video.currentTime = END_AT;
+						seekToClipStart();
+					}
+				}
+
+				Reveal.on('slidechanged', onSlideChange);
+				Reveal.on('ready', () => {
+					if (section === Reveal.getCurrentSlide()) {
+						seekToClipStart();
 					}
 				});
 			})();
 
-
-		// Snapstream Vimeo: autoplay on slide enter, clamp 3:37–4:12, keep focus on deck
+		// Snapstream Vimeo: play on deck advance, clamp 3:37–4:12, keep focus on deck
 		(function () {
 			var iframe = document.getElementById('snapstream-vimeo');
 			if (!iframe || typeof Vimeo === 'undefined') return;
@@ -4566,79 +5206,59 @@
 				document.body.focus({ preventScroll: true });
 			}
 
-			function playClip() {
-				player.setCurrentTime(START).then(function () {
-					return player.play();
-				}).catch(function () {});
-				setTimeout(releaseFocus, 100);
-			}
-
-			function stopClip() {
-				player.pause().catch(function () {});
-				releaseFocus();
-			}
-
 			player.on('timeupdate', function (data) {
 				if (data.seconds > END) {
 					player.pause();
 					player.setCurrentTime(END);
+					if (window.__deckVideoAdvance) {
+						window.__deckVideoAdvance.markVimeoPlayed();
+					}
 					releaseFocus();
 				}
 			});
 
-			function onSlideChange() {
-				if (section === Reveal.getCurrentSlide()) {
-					playClip();
-				} else {
-					stopClip();
+			if (window.__deckVideoAdvance) {
+				window.__deckVideoAdvance.setVimeoPlayer(player, section);
+				if (Reveal.isReady()) {
+					window.__deckVideoAdvance.bootstrap();
 				}
 			}
 
-			Reveal.on('slidechanged', onSlideChange);
-			Reveal.on('ready', onSlideChange);
-		})();
-
-		// Coconut agent trace: autoplay on slide enter
-		(function () {
-			var video = document.getElementById('coconut-agent-trace-video');
-			if (!video) return;
-
-			function playFromStart() {
-				video.muted = true;
-				video.currentTime = 0;
-				video.play().catch(function () {});
-			}
-
-			function onSlideChange(event) {
-				if (event.currentSlide && event.currentSlide.contains(video)) {
-					playFromStart();
-				} else if (event.previousSlide && event.previousSlide.contains(video)) {
-					video.pause();
-					video.currentTime = 0;
-				}
-			}
-
-			Reveal.on('slidechanged', onSlideChange);
-			Reveal.on('ready', function () {
-				if (video.closest('section') === Reveal.getCurrentSlide()) {
-					playFromStart();
+			Reveal.on('slidechanged', function (event) {
+				if (event.previousSlide && event.previousSlide.contains(iframe)) {
+					player.pause().catch(function () {});
+					releaseFocus();
 				}
 			});
 		})();
 
-		// Steamboat Willie: muted autoplay on slide enter (clip is pre-trimmed to 1:17–1:45)
+		// Coconut agent trace: reset on slide leave (play via deck advance)
+		(function () {
+			var video = document.getElementById('coconut-agent-trace-video');
+			if (!video) return;
+
+			video.muted = true;
+
+			Reveal.on('slidechanged', function (event) {
+				if (event.previousSlide && event.previousSlide.contains(video)) {
+					video.pause();
+					video.currentTime = 0;
+				} else if (event.currentSlide && event.currentSlide.contains(video)) {
+					video.pause();
+					video.currentTime = 0;
+				}
+			});
+		})();
+
+		// Steamboat Willie: reset on slide enter (play via deck advance; clip pre-trimmed to 1:17–1:45)
 		(function () {
 			var video = document.getElementById('steamboat-willie-video');
 			if (!video) return;
 
-			function playFromStart() {
-				video.currentTime = 0;
-				video.play().catch(function () {});
-			}
-
 			Reveal.on('slidechanged', function (event) {
 				if (event.currentSlide && event.currentSlide.contains(video)) {
-					playFromStart();
+					video.pause();
+					video.currentTime = 0;
 				} else if (event.previousSlide && event.previousSlide.contains(video)) {
 					video.pause();
 					video.currentTime = 0;
