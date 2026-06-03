@@ -610,10 +610,48 @@
 				overflow: hidden;
 			}
 
-			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-media img {
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-media > img {
 				flex: 1;
 				width: 0;
 				max-height: min(40vh, 13em);
+				object-fit: contain;
+				margin: 0;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-media-stack {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 0.45em;
+				min-width: 0;
+				min-height: 0;
+				width: 0;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-paper-cite {
+				flex: 0 0 auto;
+				font-size: 0.68em;
+				font-weight: 700;
+				color: var(--slide-navy);
+				text-align: center;
+				line-height: 1.2;
+				margin: 0;
+				white-space: nowrap;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-paper-cite-authors {
+				font-weight: 400;
+				color: var(--slide-body, #2c3e50);
+				margin-left: 0.4em;
+			}
+
+			.reveal .slides section.content-slide.theme-pillar-slide--media .theme-pillar-media-stack img {
+				flex: 1 1 auto;
+				width: 100%;
+				min-height: 0;
+				max-height: min(36vh, 12em);
 				object-fit: contain;
 				margin: 0;
 			}
@@ -1579,7 +1617,7 @@
 				opacity: 0.28;
 			}
 
-			/* First click: shift emphasis to common ground */
+			/* First click: shift emphasis to shared references */
 			.reveal .slides section.content-slide#talk-outline-slide:has(.talk-outline-marker[data-fragment-index="0"].visible) .talk-outline-item:not([data-outline-item="2"]) {
 				opacity: 0.28;
 			}
@@ -1588,7 +1626,7 @@
 				opacity: 1;
 			}
 
-			/* Recap slide: start with common ground, click to emphasize iteration */
+			/* Recap slide: start with shared references, click to emphasize iteration */
 			.reveal .slides section.content-slide#talk-outline-recap-slide .talk-outline-item:not([data-outline-item="2"]) {
 				opacity: 0.28;
 			}
@@ -1913,7 +1951,7 @@
 			.reveal .slides section.media-slide .media-split {
 				flex: 1;
 				display: flex;
-				align-items: center;
+				align-items: stretch;
 				justify-content: center;
 				gap: 24px;
 				min-height: 0;
@@ -1921,18 +1959,36 @@
 				overflow: hidden;
 			}
 
-			.reveal .slides section.media-slide .media-split img,
-			.reveal .slides section.media-slide .media-split video {
+			.reveal .slides section.media-slide .media-split__item {
 				flex: 1;
 				width: 0;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 0.3em;
+			}
+
+			.reveal .slides section.media-slide .media-split__item img,
+			.reveal .slides section.media-slide .media-split__item video {
+				flex: 1;
+				width: 100%;
+				min-height: 0;
 				max-height: 100%;
 				object-fit: contain;
 				margin: 0;
 			}
 
-			.reveal .slides section.media-slide .media-split video {
+			.reveal .slides section.media-slide .media-split__item video {
 				background: #000;
 				display: block;
+			}
+
+			.reveal .slides section.media-slide .media-split__item .media-citation {
+				margin: 0;
+				flex-shrink: 0;
+				width: 100%;
 			}
 
 			.reveal .slides section.media-slide .media-stack {
@@ -2906,12 +2962,12 @@
 				list-style: none;
 				margin: 0;
 				padding: 0;
-				font-size: 0.6em;
+				font-size: 0.92em;
 				line-height: 1.45;
 				color: var(--slide-muted);
 				display: flex;
 				flex-direction: column;
-				gap: 0.4em;
+				gap: 0.85em;
 			}
 
 			.reveal .slides section.content-slide .takeaways-list .list-num {
@@ -2923,6 +2979,15 @@
 				color: var(--slide-muted);
 				text-decoration: underline;
 				text-decoration-color: #b8c5d4;
+			}
+
+			.reveal .slides section.content-slide#building-for-slide .theme-callout {
+				margin: 0;
+				font-size: 1.45em;
+				font-weight: 500;
+				line-height: 1.35;
+				color: var(--slide-navy);
+				text-align: center;
 			}
 
 			.reveal .slides section.content-slide .takeaways-divider {
@@ -2972,6 +3037,45 @@
 
 			.reveal .slides section.content-slide .thanks-authors strong {
 				color: var(--slide-navy);
+			}
+
+			.reveal .slides section.content-slide .thanks-institutions {
+				display: flex;
+				gap: 2.2em;
+				justify-content: center;
+				align-items: flex-start;
+				width: 100%;
+				max-width: 92%;
+				margin-top: 0.6em;
+			}
+
+			.reveal .slides section.content-slide .thanks-institution {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.25em;
+			}
+
+			.reveal .slides section.content-slide .thanks-institution-label {
+				font-size: 0.62em;
+				font-weight: 700;
+				color: var(--slide-accent);
+				letter-spacing: 0.07em;
+				text-transform: uppercase;
+				margin-bottom: 0.35em;
+				padding-bottom: 0.25em;
+				border-bottom: 1.5px solid var(--slide-accent);
+				width: 100%;
+				text-align: center;
+			}
+
+			.reveal .slides section.content-slide .thanks-body p.thanks-institution-person {
+				font-size: 0.64em;
+				color: var(--slide-muted);
+				text-align: center;
+				line-height: 1.4;
+				margin: 0;
 			}
 
 			.reveal .slides section.media-slide .videorigami-showcase {
@@ -3169,11 +3273,24 @@
 				visibility: hidden;
 			}
 
+			.reveal .slides section.content-slide#broll-slide .slide-body,
+			.reveal .slides section.content-slide#intent-demo-slide .slide-body,
 			.reveal .slides section.content-slide#backup-broll-slide .slide-body {
 				align-items: center;
 				justify-content: center;
 				padding-top: 0;
 				min-height: 0;
+			}
+
+			.reveal .slides section.content-slide#broll-slide .backup-broll-video-wrap,
+			.reveal .slides section.content-slide#intent-demo-slide .backup-broll-video-wrap {
+				width: 100%;
+				flex: 1 1 auto;
+				min-height: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
 			}
 
 			.reveal .slides section.content-slide#backup-broll-slide .backup-broll-video-wrap {
@@ -3185,6 +3302,18 @@
 				justify-content: center;
 			}
 
+			.reveal .slides section.content-slide#broll-slide .backup-broll-video-wrap video,
+			.reveal .slides section.content-slide#intent-demo-slide .backup-broll-video-wrap video {
+				width: 70.2%;
+				max-width: 864px;
+				max-height: 52.2vh;
+				height: auto;
+				display: block;
+				object-fit: contain;
+				border-radius: 6px;
+				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+			}
+
 			.reveal .slides section.content-slide#backup-broll-slide .backup-broll-video-wrap video {
 				width: 78%;
 				max-width: 960px;
@@ -3194,6 +3323,19 @@
 				object-fit: contain;
 				border-radius: 6px;
 				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+			}
+
+			.reveal .slides section.content-slide#broll-slide > .slide-subtitle,
+			.reveal .slides section.content-slide#intent-demo-slide > .slide-subtitle {
+				font-size: 0.78em;
+				font-weight: 500;
+				color: var(--slide-muted);
+			}
+
+			.reveal .slides section.content-slide#broll-slide .backup-broll-video-wrap .split-media-caption,
+			.reveal .slides section.content-slide#intent-demo-slide .backup-broll-video-wrap .split-media-caption {
+				font-size: 0.6em;
+				color: var(--slide-faint);
 			}
 
 		</style>
@@ -3209,15 +3351,14 @@
 				<section class="title-slide" data-background-color="#ffffff">
 					<div class="title-slide-content">
 						<h1 class="title-heading"><span class="title-quote">"Yes, that's what I mean.<br>No, not that"</span><br>
-						Semantics, Common Ground, and Iteration In Human AI Collaboration</h1>
+						Semantics, Shared References, and Iteration In Human AI Collaboration</h1>
 						<p class="title-author">Valentina Shin</p>
 						<p class="title-affiliation">Adobe Research</p>
 						<p class="title-date">June 4th, 2026</p>
 						<hr class="title-rule" />
 					</div>
 					<aside class="notes">
-						Hi everyone, I'm Valentina Shin. Today I'm going to talk about going beyond the timeline — rethinking how we author and structure video.
-					</aside>
+						Before I begin, I’d like to start with a short clip from a film. 				</aside>
 				</section>
 
 				<section class="media-slide">
@@ -3231,7 +3372,7 @@
 						</video>
 					</div>
 					<aside class="notes">
-						Does anyone know which movie this ending is from?
+						Does anyone recognize where it’s from?	
 					</aside>
 				</section>
 
@@ -3244,7 +3385,8 @@
 						<p><em>Three Little Pigs</em>, 1933. Animated short film produced by Walt Disney.</p>
 					</div>
 					<aside class="notes">
-						"It's Three Little Pigs, an animated short film produced by Watl Disney in 1933. It won the Academy Award for Best Animated Short Film, and in 1994 it was voted #11 of the 50 Greatest cartoons of all times selected by 1000 Animation professionals.
+						It’s from The Three Little Pigs, the Walt Disney animated short released in 1933. 
+						<strong>It won the Academy Award for Best Animated Short Film. Another interesting fact about the Three Little Pigs is that it brought about one of the biggest break-throughs in character animation. </strong>
 					</aside>
 				</section>
 
@@ -3257,8 +3399,8 @@
 						/>
 						</div>
 					<aside class="notes">
-						Another interesting fact about the Three Little Pigs is that it brought about one of the biggest break-throughs in character animation. 
-						And part of that breakthrough is attributed to the fact that it was the first film to be fully story-boarded beat for beat.
+						
+						And part of that breakthrough is attributed to the fact that it was the first film to be fully story-boarded beat for beat. After its release, storyboarding rapidly became standard practice.
 					</aside>
 				</section>
 				
@@ -3296,9 +3438,9 @@
 					<aside class="notes">
 						[CLICK] In 1933, Walt Disney established the studio's first dedicated Story Department.
 						[CLICK] By 1938, all animation studios and the animation production process in the United States had begun using storyboards before they started production.
-						[CLICK] And it wasn't just animation. In 1939, William Cameron Menzies used storyboards to plan every single shot of Gone with the Wind.
-						[CLICK] And then you have Hitchcock, who took it even further. In a 1969 interview with Roger Ebert he said: "Once the screenplay is finished, I'd just as soon not make the film at all. I have a strongly visual mind. I visualize a picture right down to the final cuts."
-						So how did people make films before storyboarding became a standard practice?
+						[CLICK] And it wasn't just animation. In 1939, Gone with the Wind used storyboards to plan every single shot.
+						[CLICK] And then you have Hitchcock, who took it even further. In an interview he said: "Once the screenplay is finished, I'd just as soon not make the film at all. I have a strongly visual mind. I visualize a picture right down to the final cuts." For Hitchcock, much of the creative work was already done before the camera ever started rolling.
+						<strong>But that raises an interesting question: how did people make films before storyboarding became a standard practice?</strong>
 					</aside>
 				</section>
 
@@ -3330,6 +3472,8 @@
 
 					<aside class="notes">
 						Before this animators worked with loose comic strip style story sketches. And each animator had to interpret how exactly to animate each scene. Similarly filmmakers relied heavily on screenplays and written shot lists, treating scenes like stage plays. 
+						<strong>As a result, there was no single visual reference</strong> that everyone on the production could share.
+						This made it difficult to communicate crucial details such as pacing, and timing, and it left considerable room for misinterpretation. <strong>The problem was especially acute because iteration was expensive. In animation, every frame had to be drawn by hand. In live-action filmmaking, shooting and reshooting scenes required significant time and resources.</strong> Storyboarding emerged as a solution to these problems.
 					</aside>
 				</section>
 
@@ -3353,9 +3497,9 @@
 					</div>
 					<aside class="notes">
 						So am I talking about storyboarding today?
-						The reason is that the qualities that made storyboards so transformative extend far beyond filmmaking. Storyboards organize stories into semantic units, they create a shared reference that multiple people can point to and discuss, and they enable cheap and easy iteration. 
+						<strong>The reason is that the qualities that made storyboards so transformative extend far beyond</strong> filmmaking. Storyboards organize stories into semantic units, they create a shared reference that multiple people can point to and discuss, and they enable cheap and easy iteration. 
 
-						These same principles are essential whenever people need to collaborate on complex tasks. They matter in human-human collaboration, in human-AI interaction, and in multi-agent systems.
+						<strong>These same principles are essential whenever people need to collaborate on complex tasks.</strong> They matter in human-human collaboration, in human-AI interaction, and in multi-agent systems.
 						
 						My research explores this question through the lens of media authoring tools. 
 					</aside>
@@ -3401,7 +3545,7 @@
 									src="media/storyboard-painting.jpeg"
 									alt="Storyboard meeting with sketches pinned on the wall"
 								/>
-								<p class="research-principle"><strong>common ground</strong></p>
+								<p class="research-principle"><strong>shared references</strong></p>
 							</div>
 							<div class="research-principle-column fragment" data-fragment-index="3">
 								<img
@@ -3413,7 +3557,49 @@
 						</div>
 					</div>
 					<aside class="notes">
-						In today's talk I will talk about my research that has focused on designing effective interfaces for audiovisual media. And I will use the qualities of storyboards as guiding principles. That is: I will talk about how effective interfaces support semantic authoring, establish common ground, and enable iteration. 
+						In today's talk I will talk about my research that has focused on designing effective interfaces for audiovisual media. And I will use the qualities of storyboards as guiding principles. That is: I will talk about how effective interfaces support semantic authoring, establish shared references, and enable iteration. 
+					</aside>
+				</section>
+				<section class="content-slide">
+					<div class="slide-body slide-body--center thanks-body">
+						<h2 class="slide-heading">Thanks to&hellip;</h2>
+						<div class="thanks-institutions">
+							<div class="thanks-institution">
+								<span class="thanks-institution-label">Adobe Research</span>
+								<p class="thanks-institution-person">Li-Yi Wei</p>
+								<p class="thanks-institution-person">Rubaiat Habib Kazi</p>
+								<p class="thanks-institution-person">Anh Truong</p>
+								<p class="thanks-institution-person">Rob Gonsalves</p>
+							</div>
+							<div class="thanks-institution">
+								<span class="thanks-institution-label">Stanford</span>
+								<p class="thanks-institution-person">Jiaju Ma</p>
+								<p class="thanks-institution-person">Anyi Rao</p>
+								<p class="thanks-institution-person">Maneesh Agrawala</p>
+							</div>
+
+							
+
+							<div class="thanks-institution">
+								<span class="thanks-institution-label">KAIST</span>
+								<p class="thanks-institution-person">Saelyne Yang</p>
+								<p class="thanks-institution-person">Changyoon Lee</p>
+								<p class="thanks-institution-person">Juho Kim</p>
+							</div>
+
+							<div class="thanks-institution">
+								<span class="thanks-institution-label">UCSD</span>
+								<p class="thanks-institution-person">John Chung</p>
+								<p class="thanks-institution-person">Haijun Xia</p>
+								<p class="thanks-institution-person">Yining Cao</p>
+								<p class="thanks-institution-person">Yiyi Huang</p>
+							</div>
+
+						</div>
+					</div>
+					<aside class="notes">
+						Before I dive in, I’d like to acknowledge my wonderful collaborators in and outside of Adobe. <strong>One of the things I particularly appreciate about my time Adobe is the opportunity to collaborate closely with academic partners. Many of the ideas I’ll discuss today emerged from those collaborations</strong> 
+						The talk itself is centered primarily around published research projects, but throughout I’ll also highlight a few Adobe incubation projects. With that let's begin.
 					</aside>
 				</section>
 
@@ -3446,7 +3632,7 @@
 						</p>
 					</div>
 					<aside class="notes">
-						Lyric videos is a type of music video that displays the song lyrics together with video imagery. Many artists like Taylor swift release lyric videos for their songs. For music fans, a common way to make lyric videos is to convert an existing music video by adding text to it. It looks simple but pay attention to how the lyrics are timed precisely with the song, the placement layout of the text move in a way that naturally follows the video imagery.
+						Lyric videos is a <strong>type of music video that displays the song lyrics together with video imagery.</strong> Many artists like Taylor swift release lyric videos for their songs. <strong>For music fans, a common way to make lyric videos</strong> is to convert an existing music video by adding text to it. It looks simple but pay attention to how the lyrics are timed precisely with the song, the placement layout of the text move in a way that naturally follows the video imagery.
 				</section>
 
 				<section
@@ -3543,7 +3729,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Let's break down the user's intent. What it means to place lyrics naturally within the scene. First, there's the temporal element: lyrics should be broken into readable chunks and displayed in sync with the song. To achieve this, we have a pre-processing step to align words to the song and group them into phrases taking into account the beat of the song. We break lines for long lyric phrases. This groups the lyric text into chunks that can be displayed one at a time. 
+						Let's break down the user's intent. What it means to place lyrics naturally within the scene. First, there's the temporal element: lyrics should be broken into readable chunks and displayed in sync with the song. So we align words to the song and group them into phrases taking into account the beat of the song. We break lines for long lyric phrases. This groups the lyric text into chunks that can be displayed one at a time. 
 					</aside>
 				</section>
 
@@ -3613,19 +3799,44 @@
 					</p>
 					<aside class="notes">
 						Here are examples outputs from the full pipeline.
+						<strong>In this example, we implemented a fully automatic pipeline by mapping intent into meaningful energy functions, and used what we might call old-school AI approach. But the central insight remains the same for an interactive system, whether users are interacting with tools directly or collaborating with AI agents. </strong>
+					</aside>
+				</section>
+				<section class="content-slide" id="broll-slide">
+					<h2 class="slide-heading">Semantic Authoring in Text-based Video Editor</h2>
+					<p class="slide-subtitle">Identifies descriptive moments and auto-inserts visual clips</p>
+					<div class="slide-body">
+						<div class="backup-broll-video-wrap">
+							<video controls playsinline preload="metadata" title="B-roll suggestion">
+								<source src="media/b-roll-suggestion.mp4" type="video/mp4" />
+							</video>
+							<p class="split-media-caption">Project Blink: Adobe Incubation Project</p>
+						</div>
+					</div>
+					<aside class="notes">
+						To illustrate this, I’d like to show a short example from an Adobe incubation project called Project Blink. Blink was an AI-first, transcript-based video editor. As you can see, the transcript is already a more semantic representation for narrative driven content than a traditional timeline. 
+
+						One feature of Blink was automatic B-roll suggestion. For those unfamiliar with the term, B-roll refers to visual clips shown while a speaker is talking, typically to illustrate what is being said.
+
+						<strong>To generate these suggestions, the system combined language understanding of the transcript with visual understanding of the available footage. By connecting the meaning of the narration with the content of the video, Blink could perform semantic editing operations. </strong>
+
+						What you will see here is starting with a simple interview video that contains only the speaker footage. The user then selects Suggest B-roll. The purple highlights will show up that indicate the portions of the transcript where the system has inserted B-roll suggestions. And then you will see the result play back.
+
+						More importantly, these edits are represented semantically so users can easily edit them. For example, if a user doesn’t like a particular B-roll suggestion, they can click on it and see the search query that was used to retrieve it, and refine it.
+						
 					</aside>
 				</section>
 
-				<section class="content-slide">
+				<!-- <section class="content-slide">
 					<div class="slide-body slide-body--center">
 						<p class="theme-callout">
 							Map high-level intent to semantic operations
 						</p>
 					</div>
 					<aside class="notes">
-						In this example, we implemented a fully automatic pipeline by mapping intent into meaningful energy functions. Although this reflects a old-school AI approach, the central insight remains the same. Whether users are interacting with tools directly or collaborating with AI agents, the interaction should be grounded in semantic intent rather than low-level controls. 
+						
 					</aside>
-				</section>
+				</section> -->
 				<section class="content-slide" id="talk-outline-slide">
 					<h2 class="slide-heading">Designing effective audiovisual interfaces
 					</h2>
@@ -3643,7 +3854,7 @@
 									src="media/storyboard-painting.jpeg"
 									alt="Storyboard meeting with sketches pinned on the wall"
 								/>
-								<p class="research-principle"><strong>common ground</strong></p>
+								<p class="research-principle"><strong>shared references</strong></p>
 							</div>
 							<div class="research-principle-column talk-outline-item" data-outline-item="3">
 								<img
@@ -3656,31 +3867,35 @@
 						<span class="fragment talk-outline-marker" data-fragment-index="0" aria-hidden="true"></span>
 					</div>
 					<aside class="notes">
-						That's what I wanted to say about supporting semantic authoring. Next, let's talk about establishing common ground.
+						That's what I wanted to say about supporting semantic authoring. Next, let's talk about establishing shared references.
 					</aside>
 				</section>
 
 				<section class="content-slide theme-pillar-slide theme-pillar-slide--media">
 					<div class="slide-body slide-body--center theme-pillar-slide-body">
 						<div class="theme-pillar">
-							<p class="theme-pillar-label">Establish Common Ground</p>
-							<p class="theme-pillar-desc">between humans, and between humans and AI through shared references.</p>
+							<p class="theme-pillar-label">Establish Shared References</p>
+							<p class="theme-pillar-desc">between humans, and between humans and AI through shared references</p>
 						</div>
 						<div class="theme-pillar-media">
 							<img
 								src="media/storyboard-meeting.jpg"
 								alt="Walt Disney story meeting at the studio"
 							/>
-							<img
-								src="media/common-ground.png"
-								alt="Diagram illustrating common ground in communication"
-							/>
+							<div class="theme-pillar-media-stack">
+								<p class="theme-pillar-paper-cite">
+									Clark &amp; Wilkes-Gibbs
+								</p>
+								<img
+									src="media/tangram-experiment.jpg"
+									alt="Tangram referential communication experiment setup and shapes"
+								/>
+							</div>
 						</div>
 					</div>
 					<aside class="notes">
-						Many creative tasks are collaborative. To facilitate communication between collaborators, we need to establish common ground, whether it is between humans or between humans and AI. And one way to do this is through shared references.
-						Psychologists Clark and Brennan developed the theory of common ground and showed that successful collaboration depends on building shared understanding or common ground. 
-						Again, let me explain with a concrete problem in the video domain.						
+						Many creative tasks are collaborative. To facilitate communication between collaborators, we need to establish shared references, whether it is between humans or between humans and AI. And one way to do this is through shared references.
+						In a classic study, Clark and Wilkes-Gibbs asked pairs of participants to <strong>repeatedly communicate about abstract geometric shapes</strong> using only spoken language. Initially, participants relied on long, detailed descriptions to identify each shape, but as they repeated the process, they began to use simpler nicknames. This process illustrates the establishment of common ground. It's what makes communication efficient between collaborators.
 					</aside>
 				</section>
 
@@ -3743,7 +3958,7 @@
 					</aside>
 				</section>
 
-				<section class="content-slide">
+				<section class="content-slide" id="snapstream-demo-slide" data-deck-video-before-fragments>
 					<div class="slide-body slide-body--center" style="justify-content: flex-start; align-items: center; padding-top: 0.8em; gap: 0.8em;">
 						<p class="paper-citation-title" style="font-size: 1.05em; font-weight: 700; color: var(--slide-navy); line-height: 1.3; max-width: 90%; text-align: center; margin: 0 auto;">
 							Snapstream: Snapshot-Based Interaction in Live Streaming for Visual Art
@@ -3761,7 +3976,14 @@
 							ACM CHI Conference on Human Factors in Computing Systems (CHI 2020)
 						</p>
 						<div style="width: 100%; max-width: 44%; margin: 0.2em auto 0;">
-							<video id="snapstream-video" controls preload="metadata" style="width: 100%; border-radius: 6px; cursor: pointer;">
+							<video
+								id="snapstream-video"
+								controls
+								preload="metadata"
+								data-deck-clip-start="12.5"
+								data-deck-clip-end="72"
+								style="width: 100%; border-radius: 6px; cursor: pointer;"
+							>
 								<source src="media/Snapstream - final.mp4" type="video/mp4" />
 							</video>
 							
@@ -3769,53 +3991,10 @@
 						<p style="font-size: 0.52em; color: var(--slide-muted); text-align: center; margin: 0.4em 0 0;">
 							Viewers can capture snapshots and share as conversational anchors.
 						</p>
-						<script>
-							(function () {
-								var vid = document.getElementById('snapstream-video');
-								if (!vid) return;
-
-								var START_AT = 12.5; // 0:12
-								var END_AT = 72;   // 1:12
-
-								function enterFullscreen(el) {
-									if (el.requestFullscreen) el.requestFullscreen();
-									else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-									else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
-								}
-
-								function exitFullscreen() {
-									var exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
-									if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
-										exit.call(document);
-									}
-								}
-
-								function resetToClipStart() {
-									if (vid.currentTime < START_AT || vid.currentTime >= END_AT) {
-										vid.currentTime = START_AT;
-									}
-								}
-
-								vid.addEventListener('play', function () {
-									resetToClipStart();
-									enterFullscreen(vid);
-								});
-
-								vid.addEventListener('timeupdate', function () {
-									if (vid.currentTime >= END_AT) {
-										vid.pause();
-										vid.currentTime = END_AT;
-										exitFullscreen();
-									}
-								});
-
-								vid.addEventListener('ended', exitFullscreen);
-							})();
-						</script>
 					</div>
 					<aside class="notes">
 						That's the problem we tried to address in work Snap stream, with collaborators from KAIST. In this video, we will show an example of a visual art live streaming, where the streamer is drawing a picture during the stream. Viewers try to communicate about the streamers art work using snapshots.
-						Now, snapshots solve one part of the problem, by creating shared visual references. But viewer's inputs are still quite limited to text and screenshots.
+						Now, that's neat but it's still pretty limiting. 
 					</aside>
 				</section>
 
@@ -3835,7 +4014,7 @@
 						<p class="research-question fragment" style="margin-top: 0.4em; text-align: left;">How can we enable flexible and scalable viewer visual input?</p>
 					</div>
 					<aside class="notes">
-						But what about richer visual input from viewers? How can we enable flexible and scalable viewer visual input?
+						What about richer visual input from viewers? Can we allow users to draw and write on the screen? How do we do that in a flexible and scalalbe way?
 					</aside>
 				</section>
 
@@ -3859,12 +4038,12 @@
 						</p>
 					</div>
 					<aside class="notes">
-						In a follow-up work, Beyond Show of Hands, we looked at the problem of collecting visual input from viewers in a scalable way. Our key insight was to use visual attributes as common ground.
+						In a follow-up work, Beyond Show of Hands, we looked at the problem of collecting visual input from viewers in a scalable way. Our key insight was to use visual attributes as shared references.
 					</aside>
 				</section>
 
 				<section class="content-slide">
-					<h2 class="slide-heading">Visual attributes as common ground</h2>
+					<h2 class="slide-heading">Visual attributes as shared references</h2>
 					<div class="slide-body slide-body--center visual-attrs-body">
 						<p class="slide-lead fragment" data-fragment-index="1" style="text-align: left;">
 							Viewer visual inputs can be decomposed into <strong>visual attributes</strong> &mdash; shared dimensions that streamers and viewers use to make sense
@@ -4008,6 +4187,30 @@
 					</aside>
 				</section>
 
+				<section class="content-slide" id="intent-demo-slide">
+					<h2 class="slide-heading">Establishing Shared Reference with Agents</h2>
+					<p class="slide-subtitle">Adding editing rules for agents by demonstration</p>
+					<div class="slide-body">
+						<div class="backup-broll-video-wrap">
+							<video id="intent-demo-video" controls playsinline preload="metadata" title="InTENT demo">
+								<source src="media/InTENT%20Demo.mp4#t=250,333.5" type="video/mp4" />
+							</video>
+							<p class="split-media-caption">Feature prototype and recording by Rob Gonsalves</p>
+						</div>
+					</div>
+					<aside class="notes">
+						Let's zoom out for a second. We looked at two very different ways of establishing shared references between people. One using a screenshot as a visual reference, and the other using visual attributes to parameterize visual inputs. 
+						<strong>But what does shared references look like between a human and an AI agent?
+						I’d like to show a short example from a prototype developed by my colleague, Rob Gonzales. In this system, a video editor collaborates with an AI assistant directly within the editing timeline.</strong>
+
+						You’ll see the editor ask the assistant to insert animated text. The assistant produces a reasonable result, but it’s not quite what the editor had in mind. <strong>Rather than describing the desired effect in words, the editor demonstrates it directly by making edits in the timeline.</strong> The system then translates those demonstrations into a set of editing rules that the assistant can use in future interactions.
+
+						Let’s take a look.
+
+						This example shows how editing rules can serve as a shared reference between the human editor and the AI assistant. The rules make the editor’s intent explicit and accessible to both collaborators. 
+					</aside>
+				</section>
+
 				<section class="content-slide" id="talk-outline-recap-slide">
 					<h2 class="slide-heading">Designing effective audiovisual interfaces</h2>
 					<div class="slide-body research-principles-layout">
@@ -4024,7 +4227,7 @@
 									src="media/storyboard-painting.jpeg"
 									alt="Storyboard meeting with sketches pinned on the wall"
 								/>
-								<p class="research-principle"><strong>common ground</strong></p>
+								<p class="research-principle"><strong>shared references</strong></p>
 							</div>
 							<div class="research-principle-column talk-outline-item" data-outline-item="3">
 								<img
@@ -4035,10 +4238,10 @@
 							</div>
 						</div>
 						<span class="fragment talk-outline-marker" data-fragment-index="0" aria-hidden="true"></span>
-						<p>Effective interfaces provide common ground</p>
+						<p>Effective interfaces provide shared references</p>
 					</div>
 					<aside class="notes">
-						Let's zoom out for a second. We looked at two very different ways of establishing common ground between people. One using a screenshot as a visual reference, and the other using visual attributes to parameterize visual inputs. The principle I want to return to is that effective interfaces provide common ground, which is necessary for collaboration, whether it is between humans like streamers and viewers, or between humans and AI as we will see next. Now, let's talk about supporting iteration. But before we do, I'd like to take a brief detour and talk about agentic video editing.
+						Okay, that was about shared references. Now, let's talk about supporting iteration. But before we do, I'd like to take a brief detour and talk about agentic video editing.
 					</aside>
 				</section>
 
@@ -4284,8 +4487,11 @@
 							<source src="media/coconut_agent_trace_3x_withsound.mp4" type="video/mp4" />
 						</video>
 					</div>
+					<p class="media-caption">CLI for Claude Video Editing Agent (prototype)</p>
 					<aside class="notes">
-						The problem with most video editing apps that claim to be agentic is that they hide these intermediate results or only show them in a chat response. They are not structured intermediate artifacts that you can make sense of and interact with.
+						The problem with most video editing apps that claim to be agentic is that they hide most of their intermediate reasonings and outputs. When intermediate results are exposed, they are often presented as a stream of chat messages or status updates, like this creen recording of video editing agent built on top of Claude. It is streaming a summary of its tool uses and reasoning process to give some visiblity into what it is doing, but I would argue that it's not enough. As a user I can't meaningfully interact with this output. I can't edit it or reorganize it or use it to re-direct the agent in an effective way. 
+						Imagine meeting with a student who has been working on a project for several months. Instead of bringing experimental results, figures, slides or notes, they simply described everything they had done and thougth about since the last meeting.
+						<strong>So far in this talk, I talked about the importance of supporting semantic operatins and establishing shared references. In many ways, these ideas are deeply connected. Effective collaboration requires artifacts that are not only shared but also capture semantic structures. This motivated our CHI paper</strong> 
 					</aside>
 				</section>
 				<section class="content-slide">
@@ -4337,7 +4543,7 @@
 					</div>
 					<aside class="notes">
 						we propose that effective interfaces should surface intermediate artifacts that encode semantic structures. We explore this idea through Video Origami, a prototype human Ai co-creation enviornment.
-						Video Origami incorporated the common video workflow into 4 views: a canvas, a document editor, a storyboard and a timeline. Let me walk through a couple of features to to illustrate how these intermediate artifacts support collaboration. You'll see the same principles we've discussed throughout this talk -- supporting semantic authoring, establishing common ground, and enabling iteration show up repeatedly in the design.
+						Video Origami incorporated the 4 stages of acommon video workflow into 4 views: a canvas, a document editor, a storyboard and a timeline. Let me walk through a couple of features to  illustrate how these intermediate artifacts support collaboration. You'll see the same principles we've discussed throughout this talk -- supporting semantic authoring, establishing shared references, and enabling iteration show up repeatedly in the design.
 					</aside>
 				</section>
 
@@ -4454,7 +4660,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Finally, this synchronization enables higher-level semantic operations. In this example, the user shortens a segment on the timeline by dragging its boundary. Rather than forcing the user to manually update every related artifact, the system suggests revisions to the corresponding storyboard content. Here, it proposes edits that shorten the voice-over while preserving its meaning and alignment with the new duration.
+						Finally, this synchronization enables semantic operations. In this example, the user shortens a segment on the timeline by dragging its boundary. In a conventional editor, that action would only trim the clip end. But because our system maintains links between the timeline segment, the corresonding storyboard panel, the narrative section, and the underlying narration, it understands how these different parts relate to one another. So a change in one representation can be propagated to the others. Here after the user shotents the video segment, the system automatically suggests revisions to the corresponing storyboard panel, here it proposed to shorten the voice-over while maintaing its meaning. Users can accept the suggestion or make their own edits.
 					</aside>
 				</section>
 
@@ -4493,7 +4699,7 @@
 									src="media/storyboard-painting.jpeg"
 									alt="Storyboard meeting with sketches pinned on the wall"
 								/>
-								<p class="research-principle"><strong>common ground</strong></p>
+								<p class="research-principle"><strong>shared references</strong></p>
 							</div>
 							<div class="research-principle-column talk-outline-item" data-outline-item="3">
 								<img
@@ -4505,50 +4711,52 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Recap the three themes before takeaways.
+						So far, I’ve walked through a number of research and incubation projects that explored the importance of semantic representations, shared references, and common ground, primarily in the domain of video authoring. But as I alluded to in the intro, these ideas apply broadly. 
 					</aside>
 				</section>
 
 				<section class="content-slide">
-					<h2 class="slide-heading">Future Directions</h2>
+					<h2 class="slide-heading">Open Research Questions</h2>
 					<div class="slide-body">
 						<ul class="takeaways-list">
-							<li class="fragment"><a href="#/backup-orientation">How do we help users <strong>orient across many parallel branches</strong> of creative exploration?</a></li>
-							<li class="fragment"><a href="#/backup-track-history">How do we <strong>track history</strong> with implicit and explicit creative decisions by agents and humans?</a></li>
-							<li class="fragment"><a href="#/backup-friction">What forms of <strong>friction are beneficial</strong> to the creative process, and how do we design for them?</a></li>
-							<li class="fragment"><a href="#/backup-evaluate">How do we <strong>evaluate these systems</strong> when the outcomes are subjective and the process matters as much as the product?</a></li>
+							<li class="fragment">Supporting exploration across <strong>many parallel artifacts and agent-generated alternatives</strong></li>
+							<li class="fragment">Tracking the <strong>history of decisions</strong> made by both humans and agents</li>
+							<li class="fragment">Designing <strong>productive friction</strong>, not just productivity</li>
 						</ul>
 					</div>
 					<aside class="notes">
-						Close the arc in one breath: semantics through the lyric-video pipeline and its guidelines; common ground through Snapstream and VisPoll; iteration through compositional structures in VideOrigami. The open questions point to backup slides if the room wants depth on branching, provenance, beneficial friction, or evaluation beyond task metrics.
+						As AI systems become increasingly capable and agentic, I think this opens up several exciting research directions. First, as people begin working with multiple agents simultaneously, collaboration will no longer produce a single artifact or a single line of progress. Instead, users with the help of agentsmay be exploring many alternatives, hypotheses, and directions in parallel. How do we help people navigate, compare, and make sense of these branching spaces of work?
+
+						Second, as both humans and agents contribute to a creative task, questions of history and provenance become increasingly important. How do we represent not only what decisions were made, but who made them, why they were made, and how they evolved over time?
+
+						And finally, much of our work in HCI and AI has focused on reducing friction and increasing efficiency. But as systems become more capable, it is worth asking whether efficiency should always be the primary goal. What kinds of reflection, deliberation, or even productive friction help people remain engaged, creative, and in control of their work?
+
+						Before I wrap up, I'd like to share a brief anecdote.
 					</aside>
 				</section>
-
-				<section class="content-slide">
-					<div class="slide-body slide-body--center thanks-body">
-						<h2 class="slide-heading">Thanks to&hellip;</h2>
-						<div class="thanks-groups">
-							<div>
-								<p class="thanks-project">Automated Lyric Videos <span>&mdash; UIST &rsquo;23</span></p>
-								<p class="thanks-authors">Jiaju Ma, Anyi Rao, Li-Yi Wei, Rubaiat Habib Kazi, Maneesh Agrawala</p>
-							</div>
-							<div>
-								<p class="thanks-project">Snapstream <span>&mdash; CHI &rsquo;20</span></p>
-								<p class="thanks-authors">Saelyne Yang, Changyoon Lee, Juho Kim</p>
-							</div>
-							<div>
-								<p class="thanks-project">Beyond Show of Hands <span>&mdash; CHI &rsquo;21</span></p>
-								<p class="thanks-authors">John Joon Young Chung, Haijun Xia, Li-Yi Wei, Rubaiat Habib Kazi</p>
-							</div>
-							<div>
-								<p class="thanks-project">VideOrigami <span>&mdash; CHI &rsquo;25</span></p>
-								<p class="thanks-authors">Yining Cao, Yiyi Huang, Anh Truong, Valentina Shin, Haijun Xia</p>
-							</div>
-						</div>
+				<section class="content-slide" id="building-for-slide">
+					<div class="slide-body slide-body--center">
+						<p class="theme-callout">Who are we building for?</p>
 					</div>
-					<aside class="notes">
-						These projects made the talk possible: UIST twenty three lyric automation with Jiaju Ma and colleagues; Snapstream at CHI twenty twenty with Saelyne Yang and collaborators; Beyond Show of Hands at CHI twenty twenty one with John Chung and colleagues; VideOrigami at CHI twenty twenty five with Yining Cao, Yiyi Huang, Anh Truong, Haijun Xia, and others on the paper. Offer to send PDF links after the session.
-					</aside>
+					<aside class="notes">One of the privileges of working in an industry research lab is the opportunity to spend time with real users of the technologies we build.
+
+						Just last week, I met two creators whose perspectives on AI seemed completely opposite.
+						
+						The first was a generative AI filmmaker who originally came from a traditional animation background. He told me that AI had fundamentally transformed his workflow. Previously, he specialized in character design. Today, he can direct and produce entire short films himself. He described AI as an amplifier of his creative capabilities.
+						
+						The second creator had a very different reaction. When we asked about agentic video editing features that could automatically edit footage from a prompt, he immediately pushed back. He told us, “I don’t like it. It takes the creative fun out of my job.” He described himself as an AI skeptic.
+						
+						At first glance, these creators appear to be on opposite sides of the debate.
+						
+						But I don’t think they are.
+						
+						What I heard from both of them was the same underlying message: people want tools that complement their abilities, not tools that do what they already do well and enjoy doing.
+						
+						As we continue building increasingly capable models, agents, and creative systems, I think this raises an important question:
+						
+						Who are we building for?
+						
+						We've put a enormous effort in building intelligent tools and models. But that's not enough. We need to build intelligently designed intelligent tools. Tools and models that are grounded in the needs and aspirations of the people who use them. And that's what's motivated my work. Thank you.</aside>
 				</section>
 
 			<!-- ═══════════════════════════════════════════════════════ -->
@@ -4777,13 +4985,15 @@
 				plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight],
 			});
 
+			localStorage.setItem('reveal-speaker-layout', 'notes-only');
+
 			// Deck video advance: right-arrow / next plays slide videos before changing slides
 			(function deckVideoAdvance() {
 				const STATE = { PENDING: 'pending', PLAYING: 'playing', PLAYED: 'played' };
 				let vimeoPlayer = null;
 				let vimeoSection = null;
 				const VIMEO_START = 217;
-				const VIMEO_END = 252;
+				const VIMEO_END = 255;
 
 				function isNextKey(e) {
 					if (e.altKey || e.ctrlKey || e.metaKey) return false;
@@ -4816,9 +5026,7 @@
 				}
 
 				function isVideoActivelyPlaying(slide) {
-					return getSlideVideos(slide).some(
-						(v) => v.dataset.deckPlayState === STATE.PLAYING && !v.paused && !v.ended
-					);
+					return getSlideVideos(slide).some((v) => !v.paused && !v.ended);
 				}
 
 				function isVimeoActivelyPlaying(slide) {
@@ -4858,12 +5066,24 @@
 					}
 				}
 
+				function pauseMediaOutsideSlide(activeSlide) {
+					document.querySelectorAll('.reveal .slides section video').forEach((video) => {
+						if (!activeSlide || !activeSlide.contains(video)) {
+							video.pause();
+						}
+					});
+
+					if (vimeoPlayer && vimeoSection && (!activeSlide || !activeSlide.contains(vimeoSection))) {
+						vimeoPlayer.pause().catch(() => {});
+					}
+
+					exitAnyFullscreen();
+				}
+
 				function deckPauseAndAdvance(slide) {
 					getSlideVideos(slide).forEach((video) => {
 						if (!video.paused) {
 							video.pause();
-						}
-						if (video.dataset.deckPlayState === STATE.PLAYING) {
 							markVideoPlayed(video);
 						}
 					});
@@ -4919,16 +5139,17 @@
 						return 'play';
 					}
 
+					// While media is playing, next always advances (fragment or slide), not native seek
+					if (isVideoActivelyPlaying(slide) || isVimeoActivelyPlaying(slide)) {
+						return 'pause-advance';
+					}
+
 					if (!videoBeforeFragments(slide) && fragmentsNext) {
 						return 'continue';
 					}
 
 					if (pendingVideo || vimeoPending) {
 						return 'play';
-					}
-
-					if (isVideoActivelyPlaying(slide) || isVimeoActivelyPlaying(slide)) {
-						return 'pause-advance';
 					}
 
 					return 'continue';
@@ -4959,6 +5180,10 @@
 
 					const video = getPendingVideo(slide);
 					if (video) {
+						const clipStart = parseFloat(video.dataset.deckClipStart);
+						if (!Number.isNaN(clipStart) && video.readyState >= 1) {
+							video.currentTime = clipStart;
+						}
 						video.dataset.deckPlayState = STATE.PLAYING;
 						video.play().catch(() => {});
 						return;
@@ -5031,12 +5256,24 @@
 				});
 
 				Reveal.on('slidechanged', (event) => {
+					pauseMediaOutsideSlide(event.currentSlide);
 					if (event.previousSlide) {
 						resetSlideMedia(event.previousSlide);
 					}
 					if (event.currentSlide) {
 						resetSlideMedia(event.currentSlide);
 					}
+				});
+
+				Reveal.on('fragmentshown', () => {
+					const slide = Reveal.getCurrentSlide();
+					if (!slide || !videoBeforeFragments(slide)) return;
+					getSlideVideos(slide).forEach((video) => {
+						if (!video.paused) {
+							video.pause();
+							markVideoPlayed(video);
+						}
+					});
 				});
 
 				function bootstrap() {
@@ -5140,6 +5377,58 @@
 			})();
 
 			(function () {
+				const video = document.getElementById('intent-demo-video');
+				if (!video) return;
+
+				const START_AT = 4 * 60 + 10; // 4:10
+				const END_AT = 5 * 60 + 34.5; // 5:33.5
+				const section = video.closest('section');
+
+				function seekToClipStart() {
+					if (video.readyState < 1) return;
+					video.currentTime = START_AT;
+				}
+
+				function resetToClipStart() {
+					if (video.currentTime < START_AT || video.currentTime >= END_AT) {
+						video.currentTime = START_AT;
+					}
+				}
+
+				video.addEventListener('loadedmetadata', seekToClipStart);
+				video.addEventListener('loadeddata', seekToClipStart);
+
+				video.addEventListener('play', resetToClipStart);
+
+				video.addEventListener('timeupdate', () => {
+					if (video.currentTime >= END_AT) {
+						video.pause();
+						video.currentTime = END_AT;
+						if (window.__deckVideoAdvance) {
+							window.__deckVideoAdvance.markVideoPlayed(video);
+						}
+					}
+				});
+
+				function onSlideChange(event) {
+					if (event.currentSlide === section) {
+						video.pause();
+						seekToClipStart();
+					} else if (event.previousSlide === section) {
+						video.pause();
+						seekToClipStart();
+					}
+				}
+
+				Reveal.on('slidechanged', onSlideChange);
+				Reveal.on('ready', () => {
+					if (section === Reveal.getCurrentSlide()) {
+						seekToClipStart();
+					}
+				});
+			})();
+
+			(function () {
 				const video = document.getElementById('fortunate-cookie-part3-video');
 				if (!video) return;
 
@@ -5176,6 +5465,9 @@
 
 				function onSlideChange(event) {
 					if (event.currentSlide === section) {
+						video.pause();
+						seekToClipStart();
+					} else if (event.previousSlide === section) {
 						video.pause();
 						seekToClipStart();
 					}
@@ -5250,6 +5542,83 @@
 			});
 		})();
 
+		// Snapstream demo: clip 0:12–1:12, deck advance + fullscreen on play
+		(function () {
+			var video = document.getElementById('snapstream-video');
+			if (!video) return;
+
+			var START_AT = 12.5;
+			var END_AT = 72;
+			var section = video.closest('section');
+
+			function enterFullscreen(el) {
+				if (el.requestFullscreen) el.requestFullscreen();
+				else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+				else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+			}
+
+			function exitFullscreen() {
+				var exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+				if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+					exit.call(document);
+				}
+			}
+
+			function seekToClipStart() {
+				if (video.readyState < 1) return;
+				video.currentTime = START_AT;
+			}
+
+			function resetToClipStart() {
+				if (video.currentTime < START_AT || video.currentTime >= END_AT) {
+					video.currentTime = START_AT;
+				}
+			}
+
+			function onClipEnd() {
+				video.pause();
+				video.currentTime = END_AT;
+				exitFullscreen();
+				if (window.__deckVideoAdvance) {
+					window.__deckVideoAdvance.markVideoPlayed(video);
+				}
+			}
+
+			video.addEventListener('loadedmetadata', seekToClipStart);
+			video.addEventListener('loadeddata', seekToClipStart);
+
+			video.addEventListener('play', function () {
+				resetToClipStart();
+				enterFullscreen(video);
+			});
+
+			video.addEventListener('timeupdate', function () {
+				if (video.currentTime >= END_AT) {
+					onClipEnd();
+				}
+			});
+
+			video.addEventListener('ended', exitFullscreen);
+
+			function onSlideChange(event) {
+				if (event.currentSlide === section) {
+					video.pause();
+					seekToClipStart();
+				} else if (event.previousSlide === section) {
+					video.pause();
+					seekToClipStart();
+					exitFullscreen();
+				}
+			}
+
+			Reveal.on('slidechanged', onSlideChange);
+			Reveal.on('ready', function () {
+				if (section === Reveal.getCurrentSlide()) {
+					seekToClipStart();
+				}
+			});
+		})();
+
 		// Steamboat Willie: reset on slide enter (play via deck advance; clip pre-trimmed to 1:17–1:45)
 		(function () {
 			var video = document.getElementById('steamboat-willie-video');
@@ -5266,13 +5635,13 @@
 			});
 		})();
 
-		// Lyric video: start at 2:51, fade volume out after 3:01 while playback continues
+		// Lyric video: start at 2:51, fade volume out after 7s while playback continues
 		(function () {
 			var vid = document.getElementById('lyric-video');
 			if (!vid) return;
 
 			var START_AT = 171; // 2:51
-			var FADE_START = 181; // 3:01
+			var FADE_START = START_AT + 7; // 2:58
 			var FADE_DURATION = 5; // seconds
 
 			function applyVolumeFade() {
@@ -5293,9 +5662,13 @@
 			vid.addEventListener('play', applyVolumeFade);
 			vid.addEventListener('seeked', applyVolumeFade);
 
-			Reveal.on('slidechanged', function () {
-				if (vid.closest('section') === Reveal.getCurrentSlide()) {
+			Reveal.on('slidechanged', function (event) {
+				if (event.currentSlide && event.currentSlide.contains(vid)) {
 					resetClip();
+					vid.pause();
+				} else {
+					vid.pause();
+					vid.volume = 1;
 				}
 			});
 		})();
