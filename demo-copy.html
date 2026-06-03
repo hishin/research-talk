@@ -4193,7 +4193,7 @@
 					<div class="slide-body">
 						<div class="backup-broll-video-wrap">
 							<video id="intent-demo-video" controls playsinline preload="metadata" title="InTENT demo">
-								<source src="media/InTENT%20Demo.mp4#t=250,333.5" type="video/mp4" />
+								<source src="media/InTENT%20Demo.mov" type="video/quicktime" />
 							</video>
 							<p class="split-media-caption">Feature prototype and recording by Rob Gonsalves</p>
 						</div>
@@ -5380,50 +5380,24 @@
 				const video = document.getElementById('intent-demo-video');
 				if (!video) return;
 
-				const START_AT = 4 * 60 + 10; // 4:10
-				const END_AT = 5 * 60 + 34.5; // 5:33.5
 				const section = video.closest('section');
 
-				function seekToClipStart() {
+				function resetToStart() {
 					if (video.readyState < 1) return;
-					video.currentTime = START_AT;
+					video.currentTime = 0;
 				}
-
-				function resetToClipStart() {
-					if (video.currentTime < START_AT || video.currentTime >= END_AT) {
-						video.currentTime = START_AT;
-					}
-				}
-
-				video.addEventListener('loadedmetadata', seekToClipStart);
-				video.addEventListener('loadeddata', seekToClipStart);
-
-				video.addEventListener('play', resetToClipStart);
-
-				video.addEventListener('timeupdate', () => {
-					if (video.currentTime >= END_AT) {
-						video.pause();
-						video.currentTime = END_AT;
-						if (window.__deckVideoAdvance) {
-							window.__deckVideoAdvance.markVideoPlayed(video);
-						}
-					}
-				});
 
 				function onSlideChange(event) {
-					if (event.currentSlide === section) {
+					if (event.currentSlide === section || event.previousSlide === section) {
 						video.pause();
-						seekToClipStart();
-					} else if (event.previousSlide === section) {
-						video.pause();
-						seekToClipStart();
+						resetToStart();
 					}
 				}
 
 				Reveal.on('slidechanged', onSlideChange);
 				Reveal.on('ready', () => {
 					if (section === Reveal.getCurrentSlide()) {
-						seekToClipStart();
+						resetToStart();
 					}
 				});
 			})();
