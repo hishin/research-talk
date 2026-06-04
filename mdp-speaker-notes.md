@@ -1,0 +1,216 @@
+# Speaker Notes
+
+Extracted from [`mdp.html`](mdp.html).
+
+## Slide 1: Markov Decision Process
+
+Today, we are going to look at Markov Decision Processes.
+
+---
+
+## Slide 2: Deterministic vs. Stochastic
+
+So far we've looked at optimization problems in a deterministic environment.
+By deterministic, I mean the outcome of an action is guaranteed.
+If we tell our agent here to 'Go Up', it will always go up.
+
+Today, we are going to turn out attention to stochastic environments. That is when the outcome of an action becomes uncertain, and instead it's governed by probabilities.
+If we tell our agent to 'Go Up', it does 80% of the time, but 10% of the time it slips sideways.
+
+This is the setting that Markov Decision Processes are designed for.
+
+---
+
+## Slide 3: Stochastic optimization problems in your day
+
+Now you might be wondering how this toy problem relates to you? You are not an agent, and you probably don't slip sideways... when you mean to walk forward.
+
+But think about the many actions you took this morning.
+For example, did you snooze your alarm or did you get up immediately? **You couldn't know exactly what would happen.** Maybe ten more minutes of sleep would help you feel refreshed, or maybe you might not wake up and be late for this class.
+That was an action where the outcome was uncertain.
+
+Or did you wait in line to get a cup of coffee before coming to this lecture? **The outcome was uncertain there too.** If you are lucky the line might move fast and you can get your coffee before class starts. But there's a chance that the line will be longer than expected and you'll be late.
+
+We have agency in our actions but many of our actions have multiple possible outcomes.
+
+---
+
+## Slide 4: Modeling a Markov Decision Process
+
+Let's return to our toy example and see how we can model it as a Markov Decision Process. We have an agent navigating a 4 by 3 grid. The agent's objective is to reach the goal state while avoiding the trap state.
+To represent this problem as an MDP, we need to define several components, starting with states.
+A state represents the current situation of the agent. In this example, the state is simply the agent's location in the grid. The 11 cells that the agent can navigate to are the possible states, which we denote by S. We are going to assume that the environment is fully observable, which means that the agent always knows where it is.
+Next, we need to define the actions.
+
+Actions represent the **choices available** to the agent at each step. In this example, the available actions are the same in every non-terminalstate: move up, move down, move left, or move right. These actions are denoted by A(s).
+Because we’re working in a stochastic environment, the outcome of an action is uncertain. So we need a way to describe what might happen when the agent takes an action. This is captured by the transition model.
+The transition model tells us the ** probability of reaching state s'** after taking action ** a** in state ** s**. We write this as ** P(s' | s, a)**.
+In our example, when the agent is in the cell (1,1) and takes the action Up, there is an 80% probability that it will end up in the cell (1,2).
+For the rest of the lecture, we are going to assume that the transition model is Markovian, which means that this probability only depends on the current state s and the action, and not on the sequence of states that came before. In other words, the future depends on where you are now, not on how you got there.
+Next, we need to define the reward function. The reward function specifies the immediate feedback that the agent received in each state. For example, we can assign a reward of +1 to the goal state, -1 to the trap state, and -0.04 to every other state. The negative reward gives the agent an incentive to reach the goal as quickly as possible.
+What would happen if we were to use a positive reward instead of -0.04? The agent would be incentivized to stay in the grid as long as possible and avoid entering the trap or gaol states. So you see how the reward function can be used to guide the agent's behavior.
+Now that we've defined rewards, we can evaluate an entire sequence of actions and states. For now, we'll do this using additive rewards. The utility of a trajectory is simply the sum of all the rewards collected along that trajectory. For example, for the path shown here, the reward would be -0.04 * 4 + 1 = 0.84.
+So what do we have: we have a sequential decision problem for a fully observable stochastic environment with a Markovian transition model and additive rewards. That is the Markov Decision Process.
+Notice that we are making some assumptions here. We are assuming that the environment is fully observable, that the transition model is Markovian, and that the rewards are additive. These assumptions will allow us to develop an algorithm for solving MDPs.
+
+---
+
+## Slide 5: Definitions
+
+This is a static backup of the definitions slide — use it if the interactive demo is unavailable or you want the full table visible at once. Walk through the same components: S is the set of states, A(s) the actions, P(s'|s,a) the transition model, and R(s) the rewards. The formal definition at the top ties them together into a Markov Decision Process.
+
+---
+
+## Slide 6: What does a solution to MDP look like?
+
+In a deterministic environment it was possible to find a fixed sequence of actions that defined an optimal path.
+In an MDP because the action outcomes are uncertain, a fixed sequence of actions may or may not reach the goal state. In fact, if we tried to execute the optimal sequence from the deterministic problem, at each step there's only 80% chance that our agent will follow that path and overall there's only about 33% chance that we will reach the goal state.
+So, for an MDP: What we need is a policy that prescribes an action for every possible state that an agent can get to.
+Formally, π is a function that maps each state s to an action a.
+So the solution to an MDP is not an optimal path but an optimal policy. But, how do we measure the quality of a policy?
+
+---
+
+## Slide 7: How do we measure the quality of a policy?
+
+Let's first think about a single trajectory through the grid. We said the utility of a trajectory is the sum of the rewards for each state that the agent visited. This was the additive reward.
+But if we assume an infinite horizon, that is if we assume there is no time limit for the agent to reach the goal, this sum can be potentially infinite.
+If every trajectory eventually reaches a terminal state, then this sum will be finite. But in many problems, we assume an infinite horizon, meaning the agent could continue acting indefinitely.
+To ensure that the total utility remains finite, we introduce a discount factor, \gamma, between 0 and 1. This gives us the discounted utility of a trajectory, where rewards received further in the future count for less than rewards received today.
+
+Now, here’s the important point: in a stochastic environment, a policy does not produce a single trajectory. The same policy can lead to many different trajectories because action outcomes are uncertain. So when we evaluate a policy, we don’t look at the utility of one trajectory. Instead, we look at the expected utility over all possible trajectories that could result from following that policy.
+So the utility of a policy is an the expected sum of the discounted rewards. This is what we call utility of a state under a policy.
+The optimal policy π* is the one that maximizes this quantity from every state. So, now how do we compute this optimal policy?
+
+---
+
+## Slide 8: How do we compute π*?
+
+So far, we've defined the value of a state as the expected sum of discounted rewards. The key observation is that this quantity has a recursive structure.
+Why? Because the total reward can be broken into two parts: the reward it receives immediately, plus all the rewards it receives afterwards. That means the value of a state must be related to the value of the states that can come next.
+We can express this as the utility of a state is
+the immediate reward. + the discounted. expected utility of next state. That is the Bellman Expectation Equation.
+Now suppose we are intersted in the optimal policy. In that case, at every state we would choose the action that leads to the highest expected utility. Making that substitution, we have the optimal utility of a state equals the Immediate reward plus the discounted maximum expected utility of the next state.
+That is the Bellman Optimality Equation. These equations are important because they transform the problem of finding an optimal policy into a set of recursive equations that we can solve algorithmically.
+
+---
+
+## Slide 9: Using Bellman Equations to find the optimal policy
+
+The challenge is that these equations are recursive. The value of one state depends on the values of other states, which in turn depend on still more states. So how do we actually compute the solution?
+There are two classical algorithms. [CLICK] Value Iteration starts with arbitrary utilities and repeatedly applies the Bellman update until the values converge. [CLICK] Policy Iteration starts with an arbitrary policy and alternates between evaluating the current policy and improving it until the policy no longer changes. We will walk through Value Iteration in the demo next.
+
+---
+
+## Slide 10: Value Iteration
+
+Let’s walk through the Value Iteration algorithm using our grid-world example.
+The algorithm starts by assigning arbitrary utility values to every state. A common choice is to simply initialize all utilities to zero.
+
+We’ll also use a discount factor of \gamma = 0.9.
+Now let’s see how the Bellman update changes these values. We’ll start with cell (1,1).
+
+According to the Bellman update equation, the new utility is equal to the immediate reward, which is -0.04, plus the discounted maximum expected utility of the next state.
+
+At this point, all of the neighboring states still have utility zero. That means every action has an expected utility of zero.
+
+So the Bellman update gives us a new utility of -0.04.
+
+**Notice what’s happening here. Because we started with arbitrary values, the first update is based almost entirely on the immediate rewards. As we continue iterating, information about the goal and trap states will begin to propagate through the grid, and the utility estimates will become increasingly accurate.**
+
+Now let’s look at a more interesting example: cell (3,3).
+
+According to the Bellman update equation, the new utility is equal to the immediate reward, -0.04, plus \gamma times the maximum expected utility ofthe next state.
+
+** So the first step is to compute the expected utility of each possible action.**
+
+Suppose we choose the Up action. Because the environment is stochastic, there are several possible outcomes.
+
+80% of the time it will hit the wall and remain in the same cell with utility 0. 10% of the time it will slip left, also with utilty 0. 10% of the time it will slip right with utility 1.
+We then repeat the same calculation for the Right, Down, and Left actions.
+
+** Once we have the expected utility of each action, we choose the maximum** and use it to update the utility of the current state.
+
+We perform this update for every state in the grid. Importantly, all updates are based on the utility values from the previous iteration, and the entire grid is updated simultaneously.
+
+We then repeat this process over and over. With each iteration, information about the goal and trap states propagates through the grid, refining the utility estimates.
+
+Eventually, the utility values stop changing significantly and the algorithm converges.
+
+At that point, we have the optimal utility function. From there, deriving the optimal policy is straightforward: in each state, we choose the action with the highest expected utility.
+
+---
+
+## Slide 11: The missing link
+
+We described the algorithm, but we haven't answered an important question: why does this work?
+How can we be certain this iterative process converges? The key idea behind the proof is a contraction mapping. [CLICK] [CLICK] It is a function that brings points closer together. [CLICK] Formally, f maps X to itself: there exists gamma in the unit interval such that for all x and y. [CLICK] The distance between f of x and f of y is less than or equal to gamma times the distance between x and y. Because gamma is less than one, the function shrinks distances. [CLICK] Examples include dividing by n, cosine, and the square root of x plus two.
+
+---
+
+## Slide 12: The missing link
+
+So how is contraction mapping related to our value iteration algorithm? [CLICK] This is where Banach’s Fixed Point Theorem comes in. [CLICK] Banach’s theorem tells us that for any contraction mapping defined on a complete metric space, two very powerful properties hold. [CLICK] First, there exists exactly one fixed point. A fixed point is a point x-star such that f of x-star equals x-star. In other words, applying the function doesn’t change the point. [CLICK] Second, if we repeatedly apply the function starting from any initial point, the sequence will always converge to that unique fixed point.
+Now we’re starting to see some of the ingredients we care about. We have a guarantee of uniqueness, so there is only one solution we can converge to. And we have a guarantee of convergence, meaning that repeated application of the function will eventually reach that solution. But we’re not done yet. We still need to connect this theorem to value iteration.
+Specifically, what is the function being repeatedly applied in value iteration?
+
+---
+
+## Slide 13: The Bellman update
+
+Recall that in value iteration, we repeatedly update the utility function using the Bellman optimality equation.
+So here’s the key idea.
+We can think of the Bellman update as a function $B$. [CLICK] It takes our current estimate $U_i$. [CLICK] and produces the next estimate $U_{i+1}$. [CLICK] Value iteration simply applies this function over and over again.
+
+So, if we can prove that this Bellman update is a contraction mapping, then Banach’s theorem guarantees convergence. The next slide walks through that proof. [CLICK through proof on next slide]
+
+---
+
+## Slide 14: Proof: \( B \) is a contraction mapping
+
+Okay, so let’s fix a state $s$. [CLICK] We take two completely different guesses for our utility, $U$ and $U'$, at that state. [CLICK] Apply the Bellman update $B$. [CLICK] And look at their absolute difference. [CLICK] Let’s write out the Bellman operator. The reward term cancels out. [CLICK]
+We know that the difference of two maximums is less than or equal to the maximum of their differences, so we will pull the 'max' outside.
+Now, what's left is our discount factor, Gamma, times the maximum expected difference. The expected difference is a weighted average over a probability distribution, but it can never be larger than the absolute worst-case difference. So, we can replace the inside of the expectation with the infinity norm.
+And the infinity norm is a constant; it doesn't depend on the state or action. So the maximum expected value of that constant is just the constant itself.
+
+So, this says that for any state $s$, the absolute difference between $BU(s)$ and $BU'(s)$ is bounded by Gamma times the infinity norm. Since this holds for any state, it also holds for the maximum error as well.
+
+---
+
+## Slide 15: A city deciding how to spend its budget
+
+Now that we have defined Markov decision processes and seen how to solve them, let’s apply the idea to a real-world problem with higher stakes. Let's consider a coastal city deciding how to spend its budget. How could we model this as an MDP? First, we need to identify the states.
+The state should capture relevant information for making a decision. In this case, a state might iclude the city's availabe budget, the current sea level, and the infrastructure that has already been built such as sea walls.
+Given this information, the city can decide what action to take next. For example, it might choose to invest in additional infrastructure by spending some its budget. Alternatively, it can decide to postone and save the budget for future years.
+The next step is to define the transition model. We are interested in how the sea level changes over time. For example, we might assume that there is a 50% chance that the sea level rises by 2 centimeters, and a 25% chance that it rises by either 1 centimeter or 3 centimeters.
+Finally, how can we define the reward for this problem? One approach is to base the reward on the city's remaining budget. If the city avoids flooding then the reward is the reaming budget. However, if the sea level rises above the city's infrastructure, then we should assign a large negative penalty.
+
+Every component of an MDP requires modeling choices. We have to choose a time horizon, what to include in the state, a discount factor, a transition model, and a reward function. And each of these have implications.
+
+---
+
+## Slide 16: Modeling decisions reflect value
+
+Let's start with the time horizon. If you were advising the city council, what time horizon would you choose and Why? There's no single correct answer here. Any choice involves trade-offs. Reasonable people could disagree. Some might argue for a shorter horizon because predictions become more uncertain further into the future, while others might argue for a longer horizon because the consequences of climate change can last for generations. Let’s see how that choice affects the model.
+
+What do you think would be a reasonable discount factor in this setting? Should the well-being of people fifty years from now count almost as much as the well-being of people today?
+A low discount factor means we place more importance on the current generation, and a high discount factor means we place more value on the well-being of future generations.
+
+How about the transition model? What could be problematic about the simple transition model we chose?
+In our example, we assumed that the sea level rises gradually each year. But this may miss imoprtant risk factors. For example some cities are much more vulnerable to extreme weather events like hurricanes.
+How can we capture this? We might include a small probability of a major flooding event.
+
+Finally, we need to think about rewards and penalties. How do we estimate the cost of flooding? As we saw in the toy-grid example, the reward directly affects the optimal policy. The same is true here. If we underestimate the cost of flooding, the model may encourage the city to under-invest in protection. If we overestimate it, the model may recommend spending too much and diverting resources from other important needs.
+
+The key takeaway is that MDPs do not simply find the optimal policy—they find the optimal policy for the model we choose. And the choices we make when building that model can have important social and ethical consequences.
+
+---
+
+## Slide 17: Learning Outcomes
+
+Throughout this lecture, we've assumed that the agent knows the states, the transition probabilities, and the reward function. Given all of that information, we were able to compute an optimal policy.
+
+**But in many real-world problems, those assumptions don't hold. In the following weeks, we will look at the next stages of decision making where agents need explore, learn and adapt.**
+
+---
+

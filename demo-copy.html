@@ -1162,7 +1162,7 @@
 			}
 
 			.reveal .slides section.content-slide .energy-cell .energy-term {
-				font-size: calc(var(--text-caption) * 1.38);
+				font-size: calc(var(--text-small) * 1.08);
 				color: #4a6fa5;
 				font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
 				font-style: italic;
@@ -1228,7 +1228,7 @@
 			}
 
 			.reveal .slides section.content-slide .energy-equation .energy-equation-formula {
-				font-size: calc(var(--text-caption) * 1.72);
+				font-size: calc(var(--text-body-lg) * 0.95);
 				color: #4a6fa5;
 				font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
 				font-style: italic;
@@ -3314,6 +3314,18 @@
 				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 			}
 
+			#broll-suggestion-video:fullscreen,
+			#broll-suggestion-video:-webkit-full-screen {
+				width: 100%;
+				height: 100%;
+				max-width: none;
+				max-height: none;
+				border-radius: 0;
+				box-shadow: none;
+				background: #000;
+				object-fit: contain;
+			}
+
 			.reveal .slides section.content-slide#backup-broll-slide .backup-broll-video-wrap video {
 				width: 78%;
 				max-width: 960px;
@@ -3382,7 +3394,7 @@
 							src="media/threelittlepigstitle.jpeg"
 							alt="Walt Disney's Silly Symphony – Three Little Pigs title card"
 						/>
-						<p><em>Three Little Pigs</em>, 1933. Animated short film produced by Walt Disney.</p>
+						<p><em>Three Little Pigs</em>, Walt Disney animated short released in 1933</p>
 					</div>
 					<aside class="notes">
 						It’s from The Three Little Pigs, the Walt Disney animated short released in 1933. 
@@ -3807,7 +3819,7 @@
 					<p class="slide-subtitle">Identifies descriptive moments and auto-inserts visual clips</p>
 					<div class="slide-body">
 						<div class="backup-broll-video-wrap">
-							<video controls playsinline preload="metadata" title="B-roll suggestion">
+							<video id="broll-suggestion-video" controls playsinline preload="metadata" title="B-roll suggestion">
 								<source src="media/b-roll-suggestion.mp4" type="video/mp4" />
 							</video>
 							<p class="split-media-caption">Project Blink: Adobe Incubation Project</p>
@@ -5593,18 +5605,68 @@
 			});
 		})();
 
-		// Steamboat Willie: reset on slide enter (play via deck advance; clip pre-trimmed to 1:17–1:45)
+		// B-roll suggestion: fullscreen on play
+		(function () {
+			var video = document.getElementById('broll-suggestion-video');
+			if (!video) return;
+
+			var section = video.closest('section');
+
+			function enterFullscreen(el) {
+				if (el.requestFullscreen) el.requestFullscreen();
+				else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+				else if (el.webkitEnterFullscreen) el.webkitEnterFullscreen();
+			}
+
+			function exitFullscreen() {
+				var exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+				if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+					exit.call(document);
+				}
+			}
+
+			video.addEventListener('play', function () {
+				enterFullscreen(video);
+			});
+
+			video.addEventListener('ended', exitFullscreen);
+
+			Reveal.on('slidechanged', function (event) {
+				if (event.previousSlide === section) {
+					video.pause();
+					exitFullscreen();
+				}
+			});
+		})();
+
+		// Steamboat Willie: auto-play on slide enter (clip pre-trimmed to 1:17–1:45)
 		(function () {
 			var video = document.getElementById('steamboat-willie-video');
 			if (!video) return;
 
+			function resetVideo() {
+				video.pause();
+				video.currentTime = 0;
+			}
+
+			function playVideo() {
+				video.currentTime = 0;
+				video.play().catch(function () {});
+			}
+
 			Reveal.on('slidechanged', function (event) {
+				if (event.previousSlide && event.previousSlide.contains(video)) {
+					resetVideo();
+				}
 				if (event.currentSlide && event.currentSlide.contains(video)) {
-					video.pause();
-					video.currentTime = 0;
-				} else if (event.previousSlide && event.previousSlide.contains(video)) {
-					video.pause();
-					video.currentTime = 0;
+					playVideo();
+				}
+			});
+
+			Reveal.on('ready', function () {
+				var slide = Reveal.getCurrentSlide();
+				if (slide && slide.contains(video)) {
+					playVideo();
 				}
 			});
 		})();
