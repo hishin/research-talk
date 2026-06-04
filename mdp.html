@@ -855,7 +855,7 @@
       .reveal ol.lo-outcomes {
         display: flex;
         flex-direction: column;
-        gap: 1.35em;
+        gap: 1.08em;
         font-size: calc(var(--prose-size) * 1.2);
         text-align: left;
         margin: 0;
@@ -3350,10 +3350,7 @@
         <section data-background-color="#f5f6f8" class="content-section lo-slide">
           <h2>Learning Outcomes</h2>
           <div class="content-body">
-            <p class="lo-intro muted">
-              By the end of this lecture you will be able to&hellip;
-            </p>
-            <ol class="lo-outcomes">
+           <ol class="lo-outcomes">
               <li>
                 Define a <span class="accent">Markov Decision Process</span> (MDP)
               </li>
@@ -3364,7 +3361,7 @@
                 Trace through the <span class="accent">Value Iteration</span> algorithm to compute an optimal policy
               </li>
               <li>
-                Consider modeling decisions in light of their <span class="accent">social or ethical implications</span>
+                Consider <span class="accent">social or ethical implications</span> of modeling decisions
               </li>
             </ol>
           </div>
@@ -3480,7 +3477,8 @@
       });
 
       document.addEventListener('keydown', function(e) {
-        if (e.key !== 'ArrowRight' || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+        var isNext = (e.key === 'ArrowRight' || e.key === 'PageDown');
+        if (!isNext || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
         var slide = getModelingDecisionsSlide();
         if (!slide || !advanceModelingSlide(slide)) return;
         e.preventDefault();
@@ -4370,7 +4368,7 @@
             const slide = Reveal.getCurrentSlide();
             if (!slide || !slide.querySelector(".pi-demo")) return;
 
-            if (e.key === "ArrowRight") {
+            if (e.key === "ArrowRight" || e.key === "PageDown") {
               if (convergeAnimating) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -4381,7 +4379,7 @@
               e.preventDefault();
               e.stopPropagation();
               advance();
-            } else if (e.key === "ArrowLeft") {
+            } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
               if (convergeAnimating) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -4465,12 +4463,12 @@
           else return;
           const demo = gwDemos[prefix];
           if (!demo) return;
-          if (e.key === "ArrowLeft") {
+          if (e.key === "ArrowLeft" || e.key === "PageUp") {
             e.preventDefault();
             e.stopPropagation();
             if (demo.getMode() === "mdp") demo.setMode("astar");
             else Reveal.prev();
-          } else if (e.key === "ArrowRight") {
+          } else if (e.key === "ArrowRight" || e.key === "PageDown") {
             e.preventDefault();
             e.stopPropagation();
             if (demo.getMode() === "astar") demo.setMode("mdp");
