@@ -2981,9 +2981,9 @@
 				text-decoration-color: #b8c5d4;
 			}
 
-			.reveal .slides section.content-slide#building-for-slide .theme-callout {
+			.reveal .slides section.content-slide .theme-callout {
 				margin: 0;
-				font-size: 1.45em;
+				font-size: 1.55em;
 				font-weight: 500;
 				line-height: 1.35;
 				color: var(--slide-navy);
@@ -3317,7 +3317,11 @@
 			#broll-suggestion-video:fullscreen,
 			#broll-suggestion-video:-webkit-full-screen,
 			#intent-demo-video:fullscreen,
-			#intent-demo-video:-webkit-full-screen {
+			#intent-demo-video:-webkit-full-screen,
+			#runway-idea-to-video:fullscreen,
+			#runway-idea-to-video:-webkit-full-screen,
+			#coconut-agent-trace-video:fullscreen,
+			#coconut-agent-trace-video:-webkit-full-screen {
 				width: 100%;
 				height: 100%;
 				max-width: none;
@@ -3795,11 +3799,10 @@
 					</aside>
 				</section>
 
-				<section class="media-slide">
+				<section class="media-slide" data-deck-vimeo-slide>
 					<div class="media-frame">
 					<iframe
 						id="snapstream-vimeo"
-						data-autoplay
 						tabindex="-1"
 						src="https://player.vimeo.com/video/858468154?title=0&byline=0&portrait=0&api=1#t=217"
 						width="960" height="540"
@@ -4276,7 +4279,7 @@
 					<h2 class="slide-heading">The promise of agentic video editing?</h2>
 					<div class="slide-body slide-body--center">
 						<div class="agentic-video-wrap">
-							<video controls preload="metadata" playsinline>
+							<video id="runway-idea-to-video" controls preload="metadata" playsinline>
 								<source src="media/runway-idea-to-video.mp4" type="video/mp4" />
 							</video>
 							<p class="agentic-source">
@@ -4311,7 +4314,7 @@
 				</section>
 
 				<section class="content-slide" id="creative-process-sources-slide">
-					<h2 class="slide-heading fragment" data-fragment-index="1">Creative process is as important as the creative output, perhaps even more.</h2>
+					<h2 class="slide-heading fragment" data-fragment-index="1">Creative process is as important as the creative output, perhaps even more</h2>
 					<div class="slide-body source-cards">
 						<div class="source-card-wrap">
 							<div class="source-card">
@@ -4572,7 +4575,7 @@
 										alt="Canvas — collect assets and take or generate notes"
 									/>
 									<figcaption class="canvas-panel-caption">
-										Collect assets and take or generate notes
+										Collect or annotate assets
 									</figcaption>
 								</figure>
 								<figure class="canvas-showcase__panel fragment" data-fragment-index="1">
@@ -5005,8 +5008,53 @@
 				const STATE = { PENDING: 'pending', PLAYING: 'playing', PLAYED: 'played' };
 				let vimeoPlayer = null;
 				let vimeoSection = null;
+				let vimeoHandlersAttached = false;
 				const VIMEO_START = 217;
-				const VIMEO_END = 255;
+				const VIMEO_END = 252;
+
+				function releaseVimeoFocus(slide) {
+					const iframe = slide && slide.querySelector('#snapstream-vimeo');
+					if (!iframe) return;
+					iframe.blur();
+					if (document.activeElement === iframe) {
+						document.activeElement.blur();
+					}
+					document.body.focus({ preventScroll: true });
+				}
+
+				function attachVimeoHandlers(player) {
+					if (vimeoHandlersAttached) return;
+					vimeoHandlersAttached = true;
+					player.on('timeupdate', (data) => {
+						if (data.seconds > VIMEO_END) {
+							player.pause().catch(() => {});
+							player.setCurrentTime(VIMEO_END).catch(() => {});
+							if (vimeoSection) {
+								vimeoSection.dataset.deckVimeoState = STATE.PLAYED;
+							}
+							releaseVimeoFocus(vimeoSection);
+						}
+					});
+				}
+
+				function getOrCreateVimeoPlayer(slide) {
+					if (vimeoPlayer) return Promise.resolve(vimeoPlayer);
+					const iframe = slide && slide.querySelector('#snapstream-vimeo');
+					if (!iframe || typeof Vimeo === 'undefined') {
+						return Promise.reject(new Error('Vimeo player unavailable'));
+					}
+					vimeoPlayer = new Vimeo.Player(iframe);
+					vimeoSection = slide;
+					attachVimeoHandlers(vimeoPlayer);
+					return vimeoPlayer.ready().then(() => {
+						if (slide === Reveal.getCurrentSlide()) {
+							vimeoPlayer.pause().catch(() => {});
+							vimeoPlayer.setCurrentTime(VIMEO_START).catch(() => {});
+							slide.dataset.deckVimeoState = STATE.PENDING;
+						}
+						return vimeoPlayer;
+					});
+				}
 
 				function isNextKey(e) {
 					if (e.altKey || e.ctrlKey || e.metaKey) return false;
@@ -5169,22 +5217,15 @@
 				}
 
 				function deckPlayVimeo(slide) {
-					if (!vimeoPlayer) return;
-					slide.dataset.deckVimeoState = STATE.PLAYING;
-					vimeoPlayer
-						.setCurrentTime(VIMEO_START)
-						.then(() => vimeoPlayer.play())
-						.catch(() => {});
-					const iframe = slide.querySelector('#snapstream-vimeo');
-					if (iframe) {
-						setTimeout(() => {
-							iframe.blur();
-							if (document.activeElement === iframe) {
-								document.activeElement.blur();
-							}
-							document.body.focus({ preventScroll: true });
-						}, 100);
-					}
+					getOrCreateVimeoPlayer(slide)
+						.then((player) => {
+							slide.dataset.deckVimeoState = STATE.PLAYING;
+							return player.setCurrentTime(VIMEO_START).then(() => player.play());
+						})
+						.catch(() => {
+							slide.dataset.deckVimeoState = STATE.PENDING;
+						});
+					setTimeout(() => releaseVimeoFocus(slide), 100);
 				}
 
 				function deckPlayCurrent() {
@@ -5275,6 +5316,9 @@
 					}
 					if (event.currentSlide) {
 						resetSlideMedia(event.currentSlide);
+						if (event.currentSlide.querySelector('#snapstream-vimeo')) {
+							getOrCreateVimeoPlayer(event.currentSlide).catch(() => {});
+						}
 					}
 				});
 
@@ -5299,9 +5343,11 @@
 				window.__deckVideoAdvance = {
 					STATE,
 					bootstrap,
+					getOrCreateVimeoPlayer,
 					setVimeoPlayer(player, section) {
 						vimeoPlayer = player;
 						vimeoSection = section;
+						attachVimeoHandlers(player);
 						if (section) {
 							section.dataset.deckVimeoState = STATE.PENDING;
 						}
@@ -5493,60 +5539,65 @@
 				});
 			})();
 
-		// Snapstream Vimeo: play on deck advance, clamp 3:37–4:12, keep focus on deck
+		// Snapstream Vimeo: warm up player when API loads; deck advance handles play
 		(function () {
 			var iframe = document.getElementById('snapstream-vimeo');
-			if (!iframe || typeof Vimeo === 'undefined') return;
-			var player = new Vimeo.Player(iframe);
+			if (!iframe) return;
 			var section = iframe.closest('section');
-			var START = 217;
-			var END = 252;
 
-			function releaseFocus() {
-				iframe.blur();
-				if (document.activeElement === iframe) {
-					document.activeElement.blur();
-				}
-				document.body.focus({ preventScroll: true });
+			function warmUp() {
+				if (!window.__deckVideoAdvance) return false;
+				window.__deckVideoAdvance.getOrCreateVimeoPlayer(section).catch(function () {});
+				return true;
 			}
 
-			player.on('timeupdate', function (data) {
-				if (data.seconds > END) {
-					player.pause();
-					player.setCurrentTime(END);
-					if (window.__deckVideoAdvance) {
-						window.__deckVideoAdvance.markVimeoPlayed();
+			if (!warmUp()) {
+				var attempts = 0;
+				var timer = setInterval(function () {
+					if (warmUp()) {
+						clearInterval(timer);
+						return;
 					}
-					releaseFocus();
-				}
-			});
-
-			if (window.__deckVideoAdvance) {
-				window.__deckVideoAdvance.setVimeoPlayer(player, section);
-				if (Reveal.isReady()) {
-					window.__deckVideoAdvance.bootstrap();
-				}
+					if (++attempts >= 40) {
+						clearInterval(timer);
+					}
+				}, 100);
 			}
 
-			Reveal.on('slidechanged', function (event) {
-				if (event.previousSlide && event.previousSlide.contains(iframe)) {
-					player.pause().catch(function () {});
-					releaseFocus();
-				}
-			});
+			Reveal.on('ready', warmUp);
 		})();
 
-		// Coconut agent trace: reset on slide leave (play via deck advance)
+		// Coconut agent trace: reset on slide leave, fullscreen on play
 		(function () {
 			var video = document.getElementById('coconut-agent-trace-video');
 			if (!video) return;
 
+			function enterFullscreen(el) {
+				if (el.requestFullscreen) el.requestFullscreen();
+				else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+				else if (el.webkitEnterFullscreen) el.webkitEnterFullscreen();
+			}
+
+			function exitFullscreen() {
+				var exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+				if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+					exit.call(document);
+				}
+			}
+
 			video.muted = true;
+
+			video.addEventListener('play', function () {
+				enterFullscreen(video);
+			});
+
+			video.addEventListener('ended', exitFullscreen);
 
 			Reveal.on('slidechanged', function (event) {
 				if (event.previousSlide && event.previousSlide.contains(video)) {
 					video.pause();
 					video.currentTime = 0;
+					exitFullscreen();
 				} else if (event.currentSlide && event.currentSlide.contains(video)) {
 					video.pause();
 					video.currentTime = 0;
@@ -5634,6 +5685,40 @@
 		// B-roll suggestion: fullscreen on play
 		(function () {
 			var video = document.getElementById('broll-suggestion-video');
+			if (!video) return;
+
+			var section = video.closest('section');
+
+			function enterFullscreen(el) {
+				if (el.requestFullscreen) el.requestFullscreen();
+				else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+				else if (el.webkitEnterFullscreen) el.webkitEnterFullscreen();
+			}
+
+			function exitFullscreen() {
+				var exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+				if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+					exit.call(document);
+				}
+			}
+
+			video.addEventListener('play', function () {
+				enterFullscreen(video);
+			});
+
+			video.addEventListener('ended', exitFullscreen);
+
+			Reveal.on('slidechanged', function (event) {
+				if (event.previousSlide === section) {
+					video.pause();
+					exitFullscreen();
+				}
+			});
+		})();
+
+		// Runway promo: fullscreen on play
+		(function () {
+			var video = document.getElementById('runway-idea-to-video');
 			if (!video) return;
 
 			var section = video.closest('section');
