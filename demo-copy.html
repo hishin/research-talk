@@ -3315,7 +3315,9 @@
 			}
 
 			#broll-suggestion-video:fullscreen,
-			#broll-suggestion-video:-webkit-full-screen {
+			#broll-suggestion-video:-webkit-full-screen,
+			#intent-demo-video:fullscreen,
+			#intent-demo-video:-webkit-full-screen {
 				width: 100%;
 				height: 100%;
 				max-width: none;
@@ -4207,7 +4209,7 @@
 							<video id="intent-demo-video" controls playsinline preload="metadata" title="InTENT demo">
 								<source src="media/InTENT-Demo.mp4" type="video/mp4" />
 							</video>
-							<p class="split-media-caption">Feature prototype and recording by Rob Gonsalves</p>
+							<p class="split-media-caption">Recording by Rob Gonsalves</p>
 						</div>
 					</div>
 					<aside class="notes">
@@ -5394,6 +5396,22 @@
 
 				const section = video.closest('section');
 
+				function enterFullscreen(el) {
+					if (el.requestFullscreen) el.requestFullscreen();
+					else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+					else if (el.webkitEnterFullscreen) el.webkitEnterFullscreen();
+				}
+
+				function exitFullscreen() {
+					const exit =
+						document.exitFullscreen ||
+						document.webkitExitFullscreen ||
+						document.mozCancelFullScreen;
+					if (exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+						exit.call(document);
+					}
+				}
+
 				function resetToStart() {
 					if (video.readyState < 1) return;
 					video.currentTime = 0;
@@ -5404,7 +5422,16 @@
 						video.pause();
 						resetToStart();
 					}
+					if (event.previousSlide === section) {
+						exitFullscreen();
+					}
 				}
+
+				video.addEventListener('play', () => {
+					enterFullscreen(video);
+				});
+
+				video.addEventListener('ended', exitFullscreen);
 
 				Reveal.on('slidechanged', onSlideChange);
 				Reveal.on('ready', () => {
