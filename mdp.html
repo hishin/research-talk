@@ -3401,12 +3401,6 @@
 
       localStorage.setItem('reveal-speaker-layout', 'notes-only');
 
-      document.querySelector('.reveal').addEventListener('click', function(e) {
-        if (e.target.closest('button, a, input, .controls, .pi-demo, .gw-demo, .sol-gw-demo, .slr-demo, .slr-r-link, details')) return;
-        var slide = getModelingDecisionsSlide();
-        if (slide && advanceModelingSlide(slide)) return;
-        Reveal.next();
-      });
 
       document.querySelectorAll('details.decision-details').forEach(function(details) {
         details.addEventListener('toggle', function() {
