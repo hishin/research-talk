@@ -3825,7 +3825,7 @@
 					<p class="slide-subtitle">Identifies descriptive moments and auto-inserts visual clips</p>
 					<div class="slide-body">
 						<div class="backup-broll-video-wrap">
-							<video id="broll-suggestion-video" controls playsinline preload="metadata" title="B-roll suggestion">
+							<video id="broll-suggestion-video" controls playsinline preload="metadata" title="B-roll suggestion" onplay="this.requestFullscreen && this.requestFullscreen()">
 								<source src="media/b-roll-suggestion.mp4" type="video/mp4" />
 							</video>
 							<p class="split-media-caption">Project Blink: Adobe Incubation Project</p>
@@ -4001,6 +4001,7 @@
 								data-deck-clip-start="12.5"
 								data-deck-clip-end="72"
 								style="width: 100%; border-radius: 6px; cursor: pointer;"
+								onplay="this.requestFullscreen && this.requestFullscreen()"
 							>
 								<source src="media/Snapstream - final.mp4" type="video/mp4" />
 							</video>
