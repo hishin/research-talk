@@ -3799,17 +3799,18 @@
 					</aside>
 				</section>
 
-				<section class="media-slide" data-deck-vimeo-slide>
+				<section class="media-slide">
 					<div class="media-frame">
-					<iframe
-						id="snapstream-vimeo"
-						tabindex="-1"
-						src="https://player.vimeo.com/video/858468154?title=0&byline=0&portrait=0&api=1#t=217"
-						width="960" height="540"
-						frameborder="0"
-						allow="autoplay; fullscreen"
-						allowfullscreen
-					></iframe>
+						<video
+							id="lyric-pipeline-video"
+							controls
+							preload="metadata"
+							playsinline
+							data-deck-clip-start="217"
+							data-deck-clip-end="252"
+						>
+							<source src="media/lyric-pipeline-results.mp4" type="video/mp4" />
+						</video>
 					</div>
 					<p class="media-caption">
 						Results generated from our pipeline
@@ -4968,7 +4969,6 @@
 		</div>
 
 		<script src="dist/reveal.js"></script>
-	<script src="https://player.vimeo.com/api/player.js"></script>
 		<script src="dist/plugin/zoom.js"></script>
 		<script src="dist/plugin/notes.js"></script>
 		<script src="dist/plugin/search.js"></script>
@@ -5006,55 +5006,6 @@
 			// Deck video advance: right-arrow / next plays slide videos before changing slides
 			(function deckVideoAdvance() {
 				const STATE = { PENDING: 'pending', PLAYING: 'playing', PLAYED: 'played' };
-				let vimeoPlayer = null;
-				let vimeoSection = null;
-				let vimeoHandlersAttached = false;
-				const VIMEO_START = 217;
-				const VIMEO_END = 252;
-
-				function releaseVimeoFocus(slide) {
-					const iframe = slide && slide.querySelector('#snapstream-vimeo');
-					if (!iframe) return;
-					iframe.blur();
-					if (document.activeElement === iframe) {
-						document.activeElement.blur();
-					}
-					document.body.focus({ preventScroll: true });
-				}
-
-				function attachVimeoHandlers(player) {
-					if (vimeoHandlersAttached) return;
-					vimeoHandlersAttached = true;
-					player.on('timeupdate', (data) => {
-						if (data.seconds > VIMEO_END) {
-							player.pause().catch(() => {});
-							player.setCurrentTime(VIMEO_END).catch(() => {});
-							if (vimeoSection) {
-								vimeoSection.dataset.deckVimeoState = STATE.PLAYED;
-							}
-							releaseVimeoFocus(vimeoSection);
-						}
-					});
-				}
-
-				function getOrCreateVimeoPlayer(slide) {
-					if (vimeoPlayer) return Promise.resolve(vimeoPlayer);
-					const iframe = slide && slide.querySelector('#snapstream-vimeo');
-					if (!iframe || typeof Vimeo === 'undefined') {
-						return Promise.reject(new Error('Vimeo player unavailable'));
-					}
-					vimeoPlayer = new Vimeo.Player(iframe);
-					vimeoSection = slide;
-					attachVimeoHandlers(vimeoPlayer);
-					return vimeoPlayer.ready().then(() => {
-						if (slide === Reveal.getCurrentSlide()) {
-							vimeoPlayer.pause().catch(() => {});
-							vimeoPlayer.setCurrentTime(VIMEO_START).catch(() => {});
-							slide.dataset.deckVimeoState = STATE.PENDING;
-						}
-						return vimeoPlayer;
-					});
-				}
 
 				function isNextKey(e) {
 					if (e.altKey || e.ctrlKey || e.metaKey) return false;
@@ -5075,7 +5026,7 @@
 				}
 
 				function slideHasAdvanceableMedia(slide) {
-					return getSlideVideos(slide).length > 0 || !!(slide && slide.querySelector('#snapstream-vimeo'));
+					return getSlideVideos(slide).length > 0;
 				}
 
 				function videoBeforeFragments(slide) {
@@ -5090,27 +5041,12 @@
 					return getSlideVideos(slide).some((v) => !v.paused && !v.ended);
 				}
 
-				function isVimeoActivelyPlaying(slide) {
-					return (
-						slide &&
-						slide === vimeoSection &&
-						slide.dataset.deckVimeoState === STATE.PLAYING
-					);
-				}
-
 				function resetSlideMedia(slide) {
 					if (!slide) return;
 					getSlideVideos(slide).forEach((video) => {
 						video.pause();
 						video.dataset.deckPlayState = STATE.PENDING;
 					});
-					if (slide.querySelector('#snapstream-vimeo')) {
-						slide.dataset.deckVimeoState = STATE.PENDING;
-						if (vimeoPlayer && vimeoSection === slide) {
-							vimeoPlayer.pause().catch(() => {});
-							vimeoPlayer.setCurrentTime(VIMEO_START).catch(() => {});
-						}
-					}
 				}
 
 				function markVideoPlayed(video) {
@@ -5134,10 +5070,6 @@
 						}
 					});
 
-					if (vimeoPlayer && vimeoSection && (!activeSlide || !activeSlide.contains(vimeoSection))) {
-						vimeoPlayer.pause().catch(() => {});
-					}
-
 					exitAnyFullscreen();
 				}
 
@@ -5148,20 +5080,6 @@
 							markVideoPlayed(video);
 						}
 					});
-
-					if (
-						slide.querySelector('#snapstream-vimeo') &&
-						slide.dataset.deckVimeoState === STATE.PLAYING
-					) {
-						slide.dataset.deckVimeoState = STATE.PLAYED;
-						if (vimeoPlayer && vimeoSection === slide) {
-							vimeoPlayer.pause().catch(() => {});
-							const iframe = slide.querySelector('#snapstream-vimeo');
-							if (iframe) {
-								iframe.blur();
-							}
-						}
-					}
 
 					exitAnyFullscreen();
 					Reveal.next();
@@ -5192,16 +5110,13 @@
 
 					const fragmentsNext = Reveal.availableFragments().next;
 					const pendingVideo = getPendingVideo(slide);
-					const vimeoPending =
-						slide.querySelector('#snapstream-vimeo') &&
-						slide.dataset.deckVimeoState === STATE.PENDING;
 
-					if (videoBeforeFragments(slide) && (pendingVideo || vimeoPending)) {
+					if (videoBeforeFragments(slide) && pendingVideo) {
 						return 'play';
 					}
 
 					// While media is playing, next always advances (fragment or slide), not native seek
-					if (isVideoActivelyPlaying(slide) || isVimeoActivelyPlaying(slide)) {
+					if (isVideoActivelyPlaying(slide)) {
 						return 'pause-advance';
 					}
 
@@ -5209,23 +5124,11 @@
 						return 'continue';
 					}
 
-					if (pendingVideo || vimeoPending) {
+					if (pendingVideo) {
 						return 'play';
 					}
 
 					return 'continue';
-				}
-
-				function deckPlayVimeo(slide) {
-					getOrCreateVimeoPlayer(slide)
-						.then((player) => {
-							slide.dataset.deckVimeoState = STATE.PLAYING;
-							return player.setCurrentTime(VIMEO_START).then(() => player.play());
-						})
-						.catch(() => {
-							slide.dataset.deckVimeoState = STATE.PENDING;
-						});
-					setTimeout(() => releaseVimeoFocus(slide), 100);
 				}
 
 				function deckPlayCurrent() {
@@ -5240,14 +5143,6 @@
 						}
 						video.dataset.deckPlayState = STATE.PLAYING;
 						video.play().catch(() => {});
-						return;
-					}
-
-					if (
-						slide.querySelector('#snapstream-vimeo') &&
-						slide.dataset.deckVimeoState === STATE.PENDING
-					) {
-						deckPlayVimeo(slide);
 					}
 				}
 
@@ -5316,9 +5211,6 @@
 					}
 					if (event.currentSlide) {
 						resetSlideMedia(event.currentSlide);
-						if (event.currentSlide.querySelector('#snapstream-vimeo')) {
-							getOrCreateVimeoPlayer(event.currentSlide).catch(() => {});
-						}
 					}
 				});
 
@@ -5343,23 +5235,6 @@
 				window.__deckVideoAdvance = {
 					STATE,
 					bootstrap,
-					getOrCreateVimeoPlayer,
-					setVimeoPlayer(player, section) {
-						vimeoPlayer = player;
-						vimeoSection = section;
-						attachVimeoHandlers(player);
-						if (section) {
-							section.dataset.deckVimeoState = STATE.PENDING;
-						}
-						if (Reveal.isReady()) {
-							resetSlideMedia(section);
-						}
-					},
-					markVimeoPlayed() {
-						if (vimeoSection) {
-							vimeoSection.dataset.deckVimeoState = STATE.PLAYED;
-						}
-					},
 					markVideoPlayed,
 				};
 
@@ -5539,32 +5414,58 @@
 				});
 			})();
 
-		// Snapstream Vimeo: warm up player when API loads; deck advance handles play
+		// Lyric pipeline results: clip 3:37–4:12, deck advance
 		(function () {
-			var iframe = document.getElementById('snapstream-vimeo');
-			if (!iframe) return;
-			var section = iframe.closest('section');
+			var video = document.getElementById('lyric-pipeline-video');
+			if (!video) return;
 
-			function warmUp() {
-				if (!window.__deckVideoAdvance) return false;
-				window.__deckVideoAdvance.getOrCreateVimeoPlayer(section).catch(function () {});
-				return true;
+			var START_AT = 217;
+			var END_AT = 252;
+			var section = video.closest('section');
+
+			function seekToClipStart() {
+				if (video.readyState < 1) return;
+				video.currentTime = START_AT;
 			}
 
-			if (!warmUp()) {
-				var attempts = 0;
-				var timer = setInterval(function () {
-					if (warmUp()) {
-						clearInterval(timer);
-						return;
-					}
-					if (++attempts >= 40) {
-						clearInterval(timer);
-					}
-				}, 100);
+			function resetToClipStart() {
+				if (video.currentTime < START_AT || video.currentTime >= END_AT) {
+					video.currentTime = START_AT;
+				}
 			}
 
-			Reveal.on('ready', warmUp);
+			function onClipEnd() {
+				video.pause();
+				video.currentTime = END_AT;
+				if (window.__deckVideoAdvance) {
+					window.__deckVideoAdvance.markVideoPlayed(video);
+				}
+			}
+
+			video.addEventListener('loadedmetadata', seekToClipStart);
+			video.addEventListener('loadeddata', seekToClipStart);
+
+			video.addEventListener('play', resetToClipStart);
+
+			video.addEventListener('timeupdate', function () {
+				if (video.currentTime >= END_AT) {
+					onClipEnd();
+				}
+			});
+
+			function onSlideChange(event) {
+				if (event.currentSlide === section || event.previousSlide === section) {
+					video.pause();
+					seekToClipStart();
+				}
+			}
+
+			Reveal.on('slidechanged', onSlideChange);
+			Reveal.on('ready', function () {
+				if (section === Reveal.getCurrentSlide()) {
+					seekToClipStart();
+				}
+			});
 		})();
 
 		// Coconut agent trace: reset on slide leave, fullscreen on play
